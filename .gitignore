@@ -7,7 +7,7 @@
 .vscode/
 
 imgui.ini
-
+*.user
 
 
 

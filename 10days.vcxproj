@@ -29,7 +29,9 @@
     <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'=='' and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\CalyxEngine\Application.h') and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\Data\Engine') and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\externals\nlohmann\json.hpp')">$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK</CalyxEngineSdkDir>
     <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'=='' and '$(CALYX_ENGINE_SDK_DIR)'!='' and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\CalyxEngine\Application.h') and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\Data\Engine') and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\externals\nlohmann\json.hpp')">$(CALYX_ENGINE_SDK_DIR)</CalyxEngineSdkDir>
     <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'==''">$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK</CalyxEngineSdkDir>
-    <CalyxReflectionTool>$(CalyxEngineSdkDir)\Tools\Reflection\generate_reflection.ps1</CalyxReflectionTool>
+    <CalyxProjectReflectionTool>$(ProjectDir)Tools\Reflection\generate_reflection.ps1</CalyxProjectReflectionTool>
+    <CalyxReflectionTool Condition="Exists('$(CalyxProjectReflectionTool)')">$(CalyxProjectReflectionTool)</CalyxReflectionTool>
+    <CalyxReflectionTool Condition="'$(CalyxReflectionTool)'==''">$(CalyxEngineSdkDir)\Tools\Reflection\generate_reflection.ps1</CalyxReflectionTool>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"><IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir><OutDir>Generated\Outputs\$(Configuration)\</OutDir><LinkIncremental>true</LinkIncremental></PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir><OutDir>Generated\Outputs\$(Configuration)\</OutDir></PropertyGroup>
@@ -129,7 +131,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Target Name="EnsureCalyxEngineSdk" BeforeTargets="PrepareForBuild" Condition="!Exists('$(CalyxEngineSdkDir)\Include\CalyxEngine\Application.h') or !Exists('$(CalyxEngineSdkDir)\Include\Data\Engine') or !Exists('$(CalyxEngineSdkDir)\Include\externals\nlohmann\json.hpp')">
+  <Target Name="EnsureCalyxEngineSdk" BeforeTargets="PrepareForBuild" Condition="!Exists('$(CalyxEngineSdkDir)\Include\CalyxEngine\Application.h') or !Exists('$(CalyxEngineSdkDir)\Include\Data\Engine') or !Exists('$(CalyxEngineSdkDir)\Include\externals\nlohmann\json.hpp') or !Exists('$(CalyxReflectionTool)') or !Exists('$(CalyxEngineSdkDir)\Lib\$(Configuration)\CalyxEngine.lib') or !Exists('$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe')">
     <Message Importance="high" Text="Installing Calyx SDK $(CalyxEngineVersion) from GitHub Releases..." />
     <Exec Command="&quot;$(ProjectDir)Tools\CalyxLauncher.exe&quot; &quot;$(ProjectDir)10days.calyxproj&quot;" />
   </Target>

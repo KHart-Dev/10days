@@ -21,7 +21,6 @@
     <NMakeBuildCommandLine>&quot;$(ProjectLauncher)&quot; &quot;$(ProjectDir)10days.calyxproj&quot;</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>&quot;$(ProjectLauncher)&quot; &quot;$(ProjectDir)10days.calyxproj&quot; --force</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>echo CalyxLauncher has no generated build outputs to clean.</NMakeCleanCommandLine>
-    <NMakeOutput>$(CalyxEnginePackageDir)SDK\Include\CalyxEngine\Application.h</NMakeOutput>
     <LocalDebuggerCommand>$(ProjectLauncher)</LocalDebuggerCommand>
     <LocalDebuggerCommandArguments>&quot;$(ProjectDir)10days.calyxproj&quot;</LocalDebuggerCommandArguments>
     <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>

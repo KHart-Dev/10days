@@ -18,6 +18,17 @@ public:
 	void SetDriftSpeed(float speed) { driftSpeed_ = speed; }
 	void SetSpinSpeed(float speed) { spinSpeed_ = speed; }
 
+	float GetYaw() const;
+	CalyxEngine::Vector3 GetArmWorld(int hand) const; // 中心から手へのベクトル
+	CalyxEngine::Vector3 GetHandWorld(int hand) const; // 手のワールド座標
+	float GetReachBias() const { return reachBias_; }
+
+	bool IsChained() const { return chained_; }
+	void MarkChained();
+
+	// 向き補正用
+	void ReachTowardArmAngle(int hand, float targetArmAngle, float step);
+
 private:
 
 	void SetupCollider();
@@ -31,5 +42,8 @@ private:
 	float spinRate_ = 0.0f;
 	float driftSpeed_ = 1.2f;
 	float spinSpeed_ = 1.2f;
+	float reachBias_ = 0.0f;
+
+	bool chained_ = false;
 
 };

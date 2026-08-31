@@ -31,7 +31,11 @@ void Floater::Initialize() {
 
 void Floater::Update(float dt) {
 
-	Drift(dt);
+	if (chained_) {
+
+	} else {
+		Drift(dt);
+	}
 	Actor::Update(dt);
 
 }

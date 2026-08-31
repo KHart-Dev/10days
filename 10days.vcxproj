@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration>
-    <ProjectConfiguration Include="Develop|x64"><Configuration>Develop</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Develop|x64">
+      <Configuration>Develop</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -14,15 +23,38 @@
     <ProjectName>10days</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration"><ConfigurationType>DynamicLibrary</ConfigurationType><UseDebugLibraries>true</UseDebugLibraries><PlatformToolset>v145</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration"><ConfigurationType>DynamicLibrary</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v145</PlatformToolset><WholeProgramOptimization>true</WholeProgramOptimization><CharacterSet>Unicode</CharacterSet></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" Label="Configuration"><ConfigurationType>DynamicLibrary</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v145</PlatformToolset><WholeProgramOptimization>true</WholeProgramOptimization><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared" />
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"><Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" /></ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" /></ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Develop|x64'"><Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" /></ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Label="CalyxEngineSdk">
     <CalyxEngineVersion>v1.3.0</CalyxEngineVersion>
@@ -33,12 +65,34 @@
     <CalyxReflectionTool Condition="Exists('$(CalyxProjectReflectionTool)')">$(CalyxProjectReflectionTool)</CalyxReflectionTool>
     <CalyxReflectionTool Condition="'$(CalyxReflectionTool)'==''">$(CalyxEngineSdkDir)\Tools\Reflection\generate_reflection.ps1</CalyxReflectionTool>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"><IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir><OutDir>Generated\Outputs\$(Configuration)\</OutDir><LinkIncremental>true</LinkIncremental></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir><OutDir>Generated\Outputs\$(Configuration)\</OutDir></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'"><IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir><OutDir>Generated\Outputs\$(Configuration)\</OutDir></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"><LocalDebuggerCommand>$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe</LocalDebuggerCommand><LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory><LocalDebuggerCommandArguments>&quot;$(ProjectDir)10days.calyxproj&quot; --config &quot;$(Configuration)&quot;</LocalDebuggerCommandArguments></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><LocalDebuggerCommand>$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe</LocalDebuggerCommand><LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory><LocalDebuggerCommandArguments>&quot;$(ProjectDir)10days.calyxproj&quot; --config &quot;$(Configuration)&quot;</LocalDebuggerCommandArguments></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'"><LocalDebuggerCommand>$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe</LocalDebuggerCommand><LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory><LocalDebuggerCommandArguments>&quot;$(ProjectDir)10days.calyxproj&quot; --config &quot;$(Configuration)&quot;</LocalDebuggerCommandArguments></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>Generated\Outputs\$(Configuration)\</OutDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>Generated\Outputs\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">
+    <IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>Generated\Outputs\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LocalDebuggerCommand>$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerCommandArguments>"$(ProjectDir)10days.calyxproj" --config "$(Configuration)"</LocalDebuggerCommandArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LocalDebuggerCommand>$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerCommandArguments>"$(ProjectDir)10days.calyxproj" --config "$(Configuration)"</LocalDebuggerCommandArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">
+    <LocalDebuggerCommand>$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerCommandArguments>"$(ProjectDir)10days.calyxproj" --config "$(Configuration)"</LocalDebuggerCommandArguments>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;IMGUI_API=__declspec(dllimport);IGFD_API=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -59,10 +113,12 @@
       <AdditionalLibraryDirectories>$(CalyxEngineSdkDir)\Lib\$(Configuration);$(CalyxEngineSdkDir)\Lib\DirectXTex\x64\Debug;$(CalyxEngineSdkDir)\Lib\assimp\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/IGNORE:4099 /FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
-    <PostBuildEvent><Command>if exist "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
+    <PostBuildEvent>
+      <Command>if exist "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
 if not exist "$(TargetDir)CalyxEngine.dll" if exist "$(CalyxEngineSdkDir)\..\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\..\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
 if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir)dxcompiler.dll"
-if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command></PostBuildEvent>
+if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -85,10 +141,12 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
       <AdditionalLibraryDirectories>$(CalyxEngineSdkDir)\Lib\$(Configuration);$(CalyxEngineSdkDir)\Lib\DirectXTex\x64\Release;$(CalyxEngineSdkDir)\Lib\assimp\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/IGNORE:4099 /FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
-    <PostBuildEvent><Command>if exist "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
+    <PostBuildEvent>
+      <Command>if exist "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
 if not exist "$(TargetDir)CalyxEngine.dll" if exist "$(CalyxEngineSdkDir)\..\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\..\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
 if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir)dxcompiler.dll"
-if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command></PostBuildEvent>
+if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">
     <ClCompile>
@@ -111,10 +169,12 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
       <AdditionalLibraryDirectories>$(CalyxEngineSdkDir)\Lib\$(Configuration);$(CalyxEngineSdkDir)\Lib\DirectXTex\x64\Release;$(CalyxEngineSdkDir)\Lib\assimp\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/IGNORE:4099 /FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
-    <PostBuildEvent><Command>if exist "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
+    <PostBuildEvent>
+      <Command>if exist "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
 if not exist "$(TargetDir)CalyxEngine.dll" if exist "$(CalyxEngineSdkDir)\..\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\..\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
 if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir)dxcompiler.dll"
-if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command></PostBuildEvent>
+if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game/Demo/3D/Actor/DemoCamera/DemoCameraPivot.cpp" />
@@ -126,9 +186,11 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Game/GameEditorExtension.cpp" />
     <ClCompile Include="Game/GameMain.cpp" />
     <ClCompile Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.cpp" />
+    <ClCompile Include="Game\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h" />
+    <ClInclude Include="Game\Player\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="EnsureCalyxEngineSdk" BeforeTargets="PrepareForBuild" Condition="!Exists('$(CalyxEngineSdkDir)\Include\CalyxEngine\Application.h') or !Exists('$(CalyxEngineSdkDir)\Include\Data\Engine') or !Exists('$(CalyxEngineSdkDir)\Include\externals\nlohmann\json.hpp') or !Exists('$(CalyxReflectionTool)') or !Exists('$(CalyxEngineSdkDir)\Lib\$(Configuration)\CalyxEngine.lib') or !Exists('$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe')">

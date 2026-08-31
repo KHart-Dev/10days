@@ -11,6 +11,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <numbers>
 
 DemoCameraPivot::DemoCameraPivot() {
 	SceneObject::SetName("DemoCameraPivot", ObjectType::GameObject);
@@ -89,7 +90,6 @@ void DemoCameraPivot::ExtractCameraPivotConfig(nlohmann::json& j) const {
 }
 
 void DemoCameraPivot::AlwaysUpdate(float dt) {
-	UpdateRotationInput(dt);
 
 	// 参照先は削除され得るため、Transformポインタをフレームを越えて信用せず毎フレーム解決する。
 	target_ = ResolveTargetTransform();
@@ -125,6 +125,7 @@ const BaseTransform* DemoCameraPivot::ResolveTargetTransform() {
 		return nullptr;
 	}
 
+	// 旧デモ用の DemoPlayer を優先して探す。
 	if(auto player = lib->FindByName("DemoPlayer")) {
 		return &player->GetWorldTransform();
 	}
@@ -132,6 +133,24 @@ const BaseTransform* DemoCameraPivot::ResolveTargetTransform() {
 	auto players = lib->FindByClassName("DemoPlayer");
 	if(!players.empty()) {
 		return &players.front()->GetWorldTransform();
+	}
+
+	// メインプレイヤー (Player) が存在する場合は、それをターゲットとする。
+	// Player 用のデフォルト設定として見下ろし視点に使えるようピッチとオフセットを調整する。
+	if(auto player = lib->FindByName("Player")) {
+		// プレイヤーの真上に配置して見下ろす設定
+		pitch_ = std::numbers::pi_v<float> / 2.0f;
+		cameraLocalOffset_ = { 0.0f,0.0f, -10.0f };
+		pivotLocalOffset_ = {0.0f, 0.0f, 0.0f};
+		return &player->GetWorldTransform();
+	}
+
+	auto mainPlayers = lib->FindByClassName("Player");
+	if(!mainPlayers.empty()) {
+		pitch_ = -std::numbers::pi_v<float> / 2.0f;
+		cameraLocalOffset_ = {0.0f, 10.0f, 0.0f};
+		pivotLocalOffset_ = {0.0f, 0.0f, 0.0f};
+		return &mainPlayers.front()->GetWorldTransform();
 	}
 
 	return nullptr;
@@ -194,6 +213,11 @@ void DemoCameraPivot::ApplyPivotTransform(float dt) {
 		? 1.0f
 		: 1.0f - std::exp(-followSharpness_ * (std::max)(dt, 0.0f));
 	worldTransform_.translation = CalyxEngine::Vector3::Lerp(worldTransform_.translation, desired, std::clamp(alpha, 0.0f, 1.0f));
+
+	// 常にピボットは位置追従のみを行い、ターゲットの回転を引き継がないように回転をリセットする。
+	worldTransform_.rotation = CalyxEngine::Quaternion::MakeIdentity();
+	worldTransform_.eulerRotation = {0.0f, 0.0f, 0.0f};
+	worldTransform_.rotationSource = RotationSource::Quaternion;
 	worldTransform_.Update();
 }
 

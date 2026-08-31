@@ -17,7 +17,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir><OutDir>Generated\Outputs\$(Configuration)\</OutDir></PropertyGroup>
   <PropertyGroup>
     <ProjectLauncher>$(ProjectDir)Tools\CalyxLauncher.exe</ProjectLauncher>
-    <CalyxEnginePackageDir>$(LOCALAPPDATA)\CalyxEngine\Engines\v1.2.20\</CalyxEnginePackageDir>
+    <CalyxEnginePackageDir>$(LOCALAPPDATA)\CalyxEngine\Engines\v1.3.0\</CalyxEnginePackageDir>
     <NMakeBuildCommandLine>&quot;$(ProjectLauncher)&quot; &quot;$(ProjectDir)10days.calyxproj&quot;</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>&quot;$(ProjectLauncher)&quot; &quot;$(ProjectDir)10days.calyxproj&quot; --force</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>echo CalyxLauncher has no generated build outputs to clean.</NMakeCleanCommandLine>

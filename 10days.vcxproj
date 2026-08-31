@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Develop|x64"><Configuration>Develop</Configuration><Platform>x64</Platform></ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{03D0F83E-0F1B-4371-9543-1C5197052621}</ProjectGuid>
+    <RootNamespace>10days</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>10days</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration"><ConfigurationType>DynamicLibrary</ConfigurationType><UseDebugLibraries>true</UseDebugLibraries><PlatformToolset>v145</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration"><ConfigurationType>DynamicLibrary</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v145</PlatformToolset><WholeProgramOptimization>true</WholeProgramOptimization><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" Label="Configuration"><ConfigurationType>DynamicLibrary</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v145</PlatformToolset><WholeProgramOptimization>true</WholeProgramOptimization><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"><Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" /></ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" /></ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Develop|x64'"><Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" /></ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="CalyxEngineSdk">
+    <CalyxEngineVersion>v1.2.20</CalyxEngineVersion>
+    <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'=='' and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\CalyxEngine\Application.h') and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\Data\Engine') and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\externals\nlohmann\json.hpp')">$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK</CalyxEngineSdkDir>
+    <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'=='' and '$(CALYX_ENGINE_SDK_DIR)'!='' and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\CalyxEngine\Application.h') and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\Data\Engine') and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\externals\nlohmann\json.hpp')">$(CALYX_ENGINE_SDK_DIR)</CalyxEngineSdkDir>
+    <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'==''">$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK</CalyxEngineSdkDir>
+    <CalyxReflectionTool>$(CalyxEngineSdkDir)\Tools\Reflection\generate_reflection.ps1</CalyxReflectionTool>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"><IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir><OutDir>Generated\Outputs\$(Configuration)\</OutDir><LinkIncremental>true</LinkIncremental></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir><OutDir>Generated\Outputs\$(Configuration)\</OutDir></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'"><IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir><OutDir>Generated\Outputs\$(Configuration)\</OutDir></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"><LocalDebuggerCommand>$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe</LocalDebuggerCommand><LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory><LocalDebuggerCommandArguments>&quot;$(ProjectDir)10days.calyxproj&quot; --config &quot;$(Configuration)&quot;</LocalDebuggerCommandArguments></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><LocalDebuggerCommand>$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe</LocalDebuggerCommand><LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory><LocalDebuggerCommandArguments>&quot;$(ProjectDir)10days.calyxproj&quot; --config &quot;$(Configuration)&quot;</LocalDebuggerCommandArguments></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'"><LocalDebuggerCommand>$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe</LocalDebuggerCommand><LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory><LocalDebuggerCommandArguments>&quot;$(ProjectDir)10days.calyxproj&quot; --config &quot;$(Configuration)&quot;</LocalDebuggerCommandArguments></PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;IMGUI_API=__declspec(dllimport);IGFD_API=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Game;$(CalyxEngineSdkDir)\Include;$(CalyxEngineSdkDir)\Include\Engine\Application;$(CalyxEngineSdkDir)\ThirdParty;$(CalyxEngineSdkDir)\ThirdParty\DirectXTex;$(CalyxEngineSdkDir)\ThirdParty\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>CalyxEngine.lib;DirectXTex.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CalyxEngineSdkDir)\Lib\$(Configuration);$(CalyxEngineSdkDir)\Lib\DirectXTex\x64\Debug;$(CalyxEngineSdkDir)\Lib\assimp\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/IGNORE:4099 /FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent><Command>if exist "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
+if not exist "$(TargetDir)CalyxEngine.dll" if exist "$(CalyxEngineSdkDir)\..\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\..\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
+if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir)dxcompiler.dll"
+if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command></PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;IMGUI_API=__declspec(dllimport);IGFD_API=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Game;$(CalyxEngineSdkDir)\Include;$(CalyxEngineSdkDir)\Include\Engine\Application;$(CalyxEngineSdkDir)\ThirdParty;$(CalyxEngineSdkDir)\ThirdParty\DirectXTex;$(CalyxEngineSdkDir)\ThirdParty\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>CalyxEngine.lib;DirectXTex.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CalyxEngineSdkDir)\Lib\$(Configuration);$(CalyxEngineSdkDir)\Lib\DirectXTex\x64\Release;$(CalyxEngineSdkDir)\Lib\assimp\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/IGNORE:4099 /FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent><Command>if exist "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
+if not exist "$(TargetDir)CalyxEngine.dll" if exist "$(CalyxEngineSdkDir)\..\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\..\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
+if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir)dxcompiler.dll"
+if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command></PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>DEVELOP;_WINDOWS;IMGUI_API=__declspec(dllimport);IGFD_API=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Game;$(CalyxEngineSdkDir)\Include;$(CalyxEngineSdkDir)\Include\Engine\Application;$(CalyxEngineSdkDir)\ThirdParty;$(CalyxEngineSdkDir)\ThirdParty\DirectXTex;$(CalyxEngineSdkDir)\ThirdParty\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>CalyxEngine.lib;DirectXTex.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CalyxEngineSdkDir)\Lib\$(Configuration);$(CalyxEngineSdkDir)\Lib\DirectXTex\x64\Release;$(CalyxEngineSdkDir)\Lib\assimp\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/IGNORE:4099 /FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent><Command>if exist "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
+if not exist "$(TargetDir)CalyxEngine.dll" if exist "$(CalyxEngineSdkDir)\..\CalyxEngine.dll" copy "$(CalyxEngineSdkDir)\..\CalyxEngine.dll" "$(TargetDir)CalyxEngine.dll"
+if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir)dxcompiler.dll"
+if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command></PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Game/Demo/3D/Actor/DemoCamera/DemoCameraPivot.cpp" />
+    <ClCompile Include="Game/Demo/3D/Actor/DemoPlayer/DemoPlayer.cpp" />
+    <ClCompile Include="Game/Demo/3D/Actor/DemoPlayer/DemoPlayerMotor.cpp" />
+    <ClCompile Include="Game/Demo/3D/Actor/DemoPlayer/Weapon/Weapon.cpp" />
+    <ClCompile Include="Game/Demo/Input/PlayerInput.cpp" />
+    <ClCompile Include="Game/GameApplication.cpp" />
+    <ClCompile Include="Game/GameEditorExtension.cpp" />
+    <ClCompile Include="Game/GameMain.cpp" />
+    <ClCompile Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Target Name="EnsureCalyxEngineSdk" BeforeTargets="PrepareForBuild" Condition="!Exists('$(CalyxEngineSdkDir)\Include\CalyxEngine\Application.h') or !Exists('$(CalyxEngineSdkDir)\Include\Data\Engine') or !Exists('$(CalyxEngineSdkDir)\Include\externals\nlohmann\json.hpp')">
+    <Message Importance="high" Text="Installing Calyx SDK $(CalyxEngineVersion) from GitHub Releases..." />
+    <Exec Command="&quot;$(ProjectDir)Tools\CalyxLauncher.exe&quot; &quot;$(ProjectDir)10days.calyxproj&quot;" />
+  </Target>
+  <Target Name="ValidateCalyxEngineSdkDir" BeforeTargets="PrepareForBuild" DependsOnTargets="EnsureCalyxEngineSdk">
+    <Error Condition="'$(CalyxEngineSdkDir)'==''" Text="CalyxEngineSdkDir is empty. Set CALYX_ENGINE_SDK_DIR or install the SDK under %LOCALAPPDATA%\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK." />
+    <Error Condition="'$(CalyxEngineSdkDir)'!='' and !Exists('$(CalyxEngineSdkDir)\Include\CalyxEngine\Application.h')" Text="CalyxEngineSdkDir does not point to a Calyx SDK directory: $(CalyxEngineSdkDir)" />
+    <Error Condition="'$(CalyxEngineSdkDir)'!='' and !Exists('$(CalyxEngineSdkDir)\Include\Data\Engine')" Text="CalyxEngineSdkDir is missing Data headers. Update or reinstall the Calyx engine SDK: $(CalyxEngineSdkDir)" />
+    <Error Condition="'$(CalyxEngineSdkDir)'!='' and !Exists('$(CalyxEngineSdkDir)\Include\externals\nlohmann\json.hpp')" Text="CalyxEngineSdkDir is missing external headers. Update or reinstall the Calyx engine SDK: $(CalyxEngineSdkDir)" />
+    <Error Condition="'$(CalyxEngineSdkDir)'!='' and !Exists('$(CalyxReflectionTool)')" Text="Calyx reflection generator was not found. Update or reinstall the Calyx engine SDK: $(CalyxReflectionTool)" />
+    <Error Condition="'$(CalyxEngineSdkDir)'!='' and !Exists('$(CalyxEngineSdkDir)\Lib\$(Configuration)\CalyxEngine.lib')" Text="CalyxEngine.lib was not found for $(Configuration). Update or reinstall the Calyx engine SDK: $(CalyxEngineSdkDir)" />
+    <Error Condition="'$(CalyxEngineSdkDir)'!='' and !Exists('$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe')" Text="CalyxGame.exe was not found for $(Configuration). Update or reinstall the Calyx engine SDK: $(CalyxEngineSdkDir)" />
+  </Target>
+  <Target Name="GenerateCalyxGameReflection" BeforeTargets="ClCompile" DependsOnTargets="ValidateCalyxEngineSdkDir">
+    <Message Importance="high" Text="Generating Calyx game object registry from 10days.calyxproj..." />
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(CalyxReflectionTool)&quot; -ProjectFile &quot;$(ProjectDir)10days.calyxproj&quot; -OutputName CalyxGameObjectRegistry.generated -FunctionName RegisterGeneratedGameSceneObjects" />
+  </Target>
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

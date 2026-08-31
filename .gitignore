@@ -1,0 +1,10 @@
+Generated/
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+*.pdb
+*.ilk
+*.obj
+*.log

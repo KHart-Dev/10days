@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Game"><UniqueIdentifier>{E9AE7F81-CF6A-450E-88E5-67FF3387CA7E}</UniqueIdentifier></Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game/Demo/3D/Actor/DemoCamera/DemoCameraPivot.cpp"><Filter>Game</Filter></ClCompile>
+    <ClCompile Include="Game/Demo/3D/Actor/DemoPlayer/DemoPlayer.cpp"><Filter>Game</Filter></ClCompile>
+    <ClCompile Include="Game/Demo/3D/Actor/DemoPlayer/DemoPlayerMotor.cpp"><Filter>Game</Filter></ClCompile>
+    <ClCompile Include="Game/Demo/3D/Actor/DemoPlayer/Weapon/Weapon.cpp"><Filter>Game</Filter></ClCompile>
+    <ClCompile Include="Game/Demo/Input/PlayerInput.cpp"><Filter>Game</Filter></ClCompile>
+    <ClCompile Include="Game/GameApplication.cpp"><Filter>Game</Filter></ClCompile>
+    <ClCompile Include="Game/GameEditorExtension.cpp"><Filter>Game</Filter></ClCompile>
+    <ClCompile Include="Game/GameMain.cpp"><Filter>Game</Filter></ClCompile>
+    <ClCompile Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.cpp"><Filter>Game</Filter></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h"><Filter>Game</Filter></ClInclude>
+  </ItemGroup>
+</Project>

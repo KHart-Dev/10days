@@ -1,0 +1,15 @@
+{
+  "assetDirectory": "Resources/Assets",
+  "engineVersion": "v1.2.20",
+  "gameModule": "Generated/Outputs/Debug/10days.dll",
+  "gameModules": {
+    "Debug": "Generated/Outputs/Debug/10days.dll",
+    "Develop": "Generated/Outputs/Develop/10days.dll",
+    "Release": "Generated/Outputs/Release/10days.dll"
+  },
+  "generatedDirectory": "Generated",
+  "name": "10days",
+  "sourceDirectory": "Game",
+  "startupScene": "Resources/Assets/Scenes/DemoScene.scene",
+  "template": "Demo"
+}

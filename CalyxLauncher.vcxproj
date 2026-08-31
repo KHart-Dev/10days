@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Develop|x64"><Configuration>Develop</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals"><VCProjectVersion>17.0</VCProjectVersion><Keyword>MakeFileProj</Keyword><ProjectGuid>{4DCDC6DF-A573-4D82-8149-A62F7FA64175}</ProjectGuid><RootNamespace>CalyxLauncher</RootNamespace><WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion><ProjectName>CalyxLauncher</ProjectName></PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration"><ConfigurationType>Makefile</ConfigurationType><UseDebugLibraries>true</UseDebugLibraries><PlatformToolset>v145</PlatformToolset></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" Label="Configuration"><ConfigurationType>Makefile</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v145</PlatformToolset></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration"><ConfigurationType>Makefile</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v145</PlatformToolset></PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"><IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir><OutDir>Generated\Outputs\$(Configuration)\</OutDir></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'"><IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir><OutDir>Generated\Outputs\$(Configuration)\</OutDir></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><IntDir>Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir><OutDir>Generated\Outputs\$(Configuration)\</OutDir></PropertyGroup>
+  <PropertyGroup>
+    <ProjectLauncher>$(ProjectDir)Tools\CalyxLauncher.exe</ProjectLauncher>
+    <CalyxEnginePackageDir>$(LOCALAPPDATA)\CalyxEngine\Engines\v1.2.20\</CalyxEnginePackageDir>
+    <NMakeBuildCommandLine>&quot;$(ProjectLauncher)&quot; &quot;$(ProjectDir)10days.calyxproj&quot;</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>&quot;$(ProjectLauncher)&quot; &quot;$(ProjectDir)10days.calyxproj&quot; --force</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>echo CalyxLauncher has no generated build outputs to clean.</NMakeCleanCommandLine>
+    <NMakeOutput>$(CalyxEnginePackageDir)SDK\Include\CalyxEngine\Application.h</NMakeOutput>
+    <LocalDebuggerCommand>$(ProjectLauncher)</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>&quot;$(ProjectDir)10days.calyxproj&quot;</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Target Name="ValidateProjectLauncher" BeforeTargets="Build;ReBuild"><Error Condition="!Exists('$(ProjectLauncher)')" Text="CalyxLauncher was not found: $(ProjectLauncher)" /></Target>
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

@@ -1,0 +1,132 @@
+{
+  "graph": {
+    "links": [
+      {
+        "fromPinId": 2,
+        "id": 8,
+        "toPinId": 6
+      },
+      {
+        "fromPinId": 7,
+        "id": 9,
+        "toPinId": 4
+      }
+    ],
+    "nextId": 10,
+    "nodes": [
+      {
+        "id": 1,
+        "inputs": [],
+        "outputs": [
+          {
+            "id": 2,
+            "kind": 1,
+            "name": "Color",
+            "type": "core.color"
+          }
+        ],
+        "position": [
+          20.0,
+          120.0
+        ],
+        "properties": {},
+        "title": "Scene Color",
+        "type": "Input"
+      },
+      {
+        "id": 3,
+        "inputs": [
+          {
+            "id": 4,
+            "kind": 0,
+            "name": "Color",
+            "type": "core.color"
+          }
+        ],
+        "outputs": [],
+        "position": [
+          720.0,
+          120.0
+        ],
+        "properties": {},
+        "title": "Output",
+        "type": "Output"
+      },
+      {
+        "id": 5,
+        "inputs": [
+          {
+            "id": 6,
+            "kind": 0,
+            "name": "In",
+            "type": "core.color"
+          }
+        ],
+        "outputs": [
+          {
+            "id": 7,
+            "kind": 1,
+            "name": "Out",
+            "type": "core.color"
+          }
+        ],
+        "position": [
+          396.0,
+          171.0
+        ],
+        "properties": {
+          "applyMode": "Always",
+          "autoDisable": true,
+          "duration": 0.25,
+          "easeIndex": 8,
+          "enabled": true,
+          "floatAnimations": [],
+          "parameters": {
+            "intensity": 0.699999988079071,
+            "radius": 1.0,
+            "softKnee": 0.5,
+            "threshold": 0.800000011920929,
+            "tint": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        "title": "Bloom",
+        "type": "Bloom"
+      }
+    ]
+  },
+  "name": "Default",
+  "nodes": [
+    {
+      "applyMode": "Always",
+      "autoDisable": true,
+      "duration": 0.25,
+      "ease": "",
+      "easeIndex": 8,
+      "enabled": true,
+      "floatAnimations": [],
+      "id": 5,
+      "parameters": {
+        "intensity": 0.699999988079071,
+        "radius": 1.0,
+        "softKnee": 0.5,
+        "threshold": 0.800000011920929,
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "title": "Bloom",
+      "type": "Bloom"
+    }
+  ],
+  "outline": {
+    "enabled": true
+  },
+  "type": "PostEffectPreset",
+  "version": 1
+}

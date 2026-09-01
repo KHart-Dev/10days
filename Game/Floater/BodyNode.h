@@ -11,8 +11,8 @@ namespace BodyNode {
 
 	/// <summary>0 = 左手、1 = 右手</summary>
 	inline const CalyxEngine::Vector3 kHand[kHandCount] = {
-		{ -1.1f, 0.0f, 0.2f },
-		{  1.1f, 0.0f, 0.2f },
+		{ -1.0f, 0.0f, 0.0f },
+		{  1.0f, 0.0f, 0.0f },
 	};
 
 	/// <summary>体のローカルで、その手が生えている向き</summary>

@@ -31,7 +31,7 @@ void Player::Initialize() {
 
 	auto& wt = GetWorldTransform();
 	// 常に X 軸に -90度回転させるため、回転ソースをオイラーにして固定ピッチを設定する
-	wt.eulerRotation.x = -std::numbers::pi_v<float> * 0.5f; // pitch = -90deg
+	wt.eulerRotation.x = std::numbers::pi_v<float> * 0.5f; // pitch = -90deg
 	wt.rotationSource = RotationSource::Euler;
 	wt.Update();
 }
@@ -71,9 +71,23 @@ void Player::Update(float dt) {
 	const float rotSpeed = param_.rotSpeedDeg * std::numbers::pi_v<float> / 180.0f;
 
 	// ユーザー入力から目標角速度を決定
+	// 左右キーは残すが、主要な回転入力はゲームパッドのトリガー（LT/RT）で受け付ける
 	float targetAngularVel = 0.0f;
 	if(CalyxFoundation::Input::PushKey(DIK_LEFT)) targetAngularVel -= rotSpeed;
 	if(CalyxFoundation::Input::PushKey(DIK_RIGHT)) targetAngularVel += rotSpeed;
+
+	// ゲームパッドのトリガー（0.0 - 1.0）を回転入力として扱う
+	const float leftTrigger = CalyxFoundation::Input::GetLeftTrigger();
+	const float rightTrigger = CalyxFoundation::Input::GetRightTrigger();
+	// 両トリガーの差で回転方向を決定（右トリガーが押されているほど正回転）
+	const float triggerInput = rightTrigger - leftTrigger; // -1..1
+	const float triggerDeadzone = 0.05f;
+	if(std::abs(triggerInput) > triggerDeadzone) {
+		// デッドゾーン除去およびスケール適用
+		float scaled = (std::abs(triggerInput) - triggerDeadzone) / (1.0f - triggerDeadzone);
+		scaled = std::copysign(scaled, triggerInput);
+		targetAngularVel += scaled * rotSpeed;
+	}
 
 	// yaw の慣性（線形補間的に角速度を変化させる）
 	// PlayerParam 内の yawAcceleration を使用

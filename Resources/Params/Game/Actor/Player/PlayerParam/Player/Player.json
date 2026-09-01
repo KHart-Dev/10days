@@ -1,7 +1,7 @@
 {
     "fields": {
         "moveSpeed": 5.0,
-        "rotSpeedDeg": 240.0,
-        "yawAcceleration": 7.0
+        "rotSpeedDeg": 250.0,
+        "yawAcceleration": 5.0
     }
 }

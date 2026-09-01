@@ -12,7 +12,7 @@
 #include <nlohmann/json.hpp>
 
 Player::Player()
-	: Actor("plane.obj", "Player") {
+	: Actor("character.obj", "Player") {
 	// パラメータをロード（パラメータデータベースから既定値を読み込む）
 	param_.LoadParams();
 }
@@ -28,12 +28,6 @@ void Player::DerivativeGui() {
 
 void Player::Initialize() {
 	Actor::Initialize();
-
-	auto& wt = GetWorldTransform();
-	// 常に X 軸に -90度回転させるため、回転ソースをオイラーにして固定ピッチを設定する
-	wt.eulerRotation.x = std::numbers::pi_v<float> * 0.5f; // pitch = -90deg
-	wt.rotationSource = RotationSource::Euler;
-	wt.Update();
 }
 
 namespace {

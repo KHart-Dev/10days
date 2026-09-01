@@ -57,7 +57,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Label="CalyxEngineSdk">
-    <CalyxEngineVersion>v1.3.0</CalyxEngineVersion>
+    <CalyxEngineVersion>v1.3.2</CalyxEngineVersion>
     <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'=='' and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\CalyxEngine\Application.h') and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\Data\Engine') and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\externals\nlohmann\json.hpp')">$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK</CalyxEngineSdkDir>
     <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'=='' and '$(CALYX_ENGINE_SDK_DIR)'!='' and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\CalyxEngine\Application.h') and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\Data\Engine') and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\externals\nlohmann\json.hpp')">$(CALYX_ENGINE_SDK_DIR)</CalyxEngineSdkDir>
     <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'==''">$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK</CalyxEngineSdkDir>
@@ -187,12 +187,12 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Game/GameMain.cpp" />
     <ClCompile Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Obstacle.cpp" />
-    <ClCompile Include="Thorn.cpp" />
+    <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h" />
     <ClInclude Include="Game\Actor\Obstacle\Obstacle.h" />
-    <ClInclude Include="Thorn.h" />
+    <ClInclude Include="Game\Actor\Obstacle\Thorn.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="EnsureCalyxEngineSdk" BeforeTargets="PrepareForBuild" Condition="!Exists('$(CalyxEngineSdkDir)\Include\CalyxEngine\Application.h') or !Exists('$(CalyxEngineSdkDir)\Include\Data\Engine') or !Exists('$(CalyxEngineSdkDir)\Include\externals\nlohmann\json.hpp') or !Exists('$(CalyxReflectionTool)') or !Exists('$(CalyxEngineSdkDir)\Lib\$(Configuration)\CalyxEngine.lib') or !Exists('$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe')">

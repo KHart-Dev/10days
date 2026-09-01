@@ -23,6 +23,12 @@ Obstacle::Obstacle() :Actor("debugCube.obj", "Obstacle") {
 //		初期化
 /////////////////////////////////////////////////////////////////////////////////
 void Obstacle::Initialize() noexcept {
+	// Placement previews are transient. Creating scene-owned Thorn children here
+	// leaves them behind when the preview is removed and duplicates them on drop.
+	if (IsTransient()) {
+		return;
+	}
+
 	// 生成と配置を分けることで、初期化時とサイズ変更時に同じ計算を使う。
 	const int width = ToBlockCount(param_.size_.x);
 	const int height = ToBlockCount(param_.size_.y);
@@ -36,11 +42,14 @@ void Obstacle::Initialize() noexcept {
 void Obstacle::AlwaysUpdate(float dt) {
 	const int width = ToBlockCount(param_.size_.x);
 	const int height = ToBlockCount(param_.size_.y);
+	const bool shouldBuildThorns = !IsTransient();
 
 	// GUIやパラメータからサイズが変わっても即座に外周を作り直す。
 	// 個数が同じ場合、RebuildThornsのwhileループは一度も実行されない。
-	RebuildThorns(width, height);
-	ComputeOffset();
+	if (shouldBuildThorns) {
+		RebuildThorns(width, height);
+		ComputeOffset();
+	}
 
 	// サイズを適用
 	worldTransform_.scale.x = baseScale_.x * param_.size_.x;

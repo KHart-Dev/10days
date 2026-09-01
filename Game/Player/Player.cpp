@@ -127,8 +127,30 @@ void Player::Update(float dt) {
 		CheckConnect(*manager, dt);
 	}
 
+	// 塊は自機の姿勢から毎フレーム組み直す
+	ApplyChainTransforms();
+
 	// 基底更新（アニメやコンポーネント処理）
 	Actor::Update(dt);
+}
+
+void Player::ApplyChainTransforms() {
+
+	const auto& selfWt = GetWorldTransform();
+	const CalyxEngine::Vector3 selfPos = selfWt.translation;
+	const float selfYaw = selfWt.eulerRotation.y;
+
+	// 先頭は自機自身なので飛ばす
+	for (size_t i = 1; i < chain_.size(); i++) {
+		const Member& member = chain_[i];
+		if (!member.floater) {
+			continue;
+		}
+
+		member.floater->SetChainedTransform(
+			selfPos + BodyNode::RotateY(member.offset, selfYaw),
+			selfYaw + member.localAngle);
+	}
 }
 
 float Player::CurrentTurnSpeed() const {
@@ -338,16 +360,13 @@ void Player::Attach(const std::shared_ptr<Floater>& floater, const HandAnchor& a
 	member.parentHand = anchor.hand;
 	member.joinHand = ownHand;
 
-	// 親の子にする
-	floater->SetParent(shared_from_this());
-
-	auto& wt = floater->GetWorldTransform();
-	wt.translation = member.offset;
-	wt.eulerRotation.y = member.localAngle;
-	wt.rotationSource = RotationSource::Euler;
-	wt.Update();
-
 	floater->MarkChained();
+
+	// 親子付けは使わず、この場でワールド姿勢を確定させる。
+	// 以降は ApplyChainTransforms が毎フレーム同じ式で組み直す
+	floater->SetChainedTransform(
+		selfWt.translation + BodyNode::RotateY(member.offset, selfYaw),
+		selfYaw + member.localAngle);
 
 	chain_.push_back(member);
 }

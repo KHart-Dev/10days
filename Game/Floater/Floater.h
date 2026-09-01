@@ -31,6 +31,11 @@ public:
 	bool IsChained() const { return chained_; }
 	void MarkChained();
 
+	/// <summary>連結中の姿勢を外から与える</summary>
+	/// <remarks>親子付けは使わない。ピッチを毎フレーム固定値で書き直すので、
+	/// 親の回転がピッチ済みの軸に乗って他軸が回ることが無い</remarks>
+	void SetChainedTransform(const CalyxEngine::Vector3& pos, float worldYaw);
+
 	void ReachTowardArmAngle(int hand, float targetArmAngle, float step);
 
 private:

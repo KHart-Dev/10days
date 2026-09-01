@@ -54,6 +54,10 @@ private:
 	void CheckConnect(FloaterManager& manager, float dt);
 	void ReachToNearestHand(Floater& floater, float reachSq, float dt);
 	void Attach(const std::shared_ptr<Floater>& floater, const HandAnchor& anchor, int ownHand);
+	/// <summary>繋がった全員のワールド姿勢を、自機の姿勢と焼いたローカル値から組み直す</summary>
+	/// <remarks>親子付けを使わないのは、Floater の固定ピッチに親のヨーが合成されて
+	/// 他軸が回ってしまうため。剛体であることは変わらない</remarks>
+	void ApplyChainTransforms();
 	float CurrentTurnSpeed() const;
 
 	PlayerInput input_;

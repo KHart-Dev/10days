@@ -14,6 +14,11 @@
 #include <cmath>
 #include <numbers>
 
+namespace {
+	// 板を寝かせるための固定ピッチ
+	constexpr float kPitch = std::numbers::pi_v<float> * 0.5f;
+}
+
 Floater::Floater()
 	: Actor("plane.obj", "Floater") {}
 
@@ -24,7 +29,7 @@ void Floater::Initialize() {
 	DisableGravity();
 
 	auto& wt = GetWorldTransform();
-	wt.eulerRotation.x = std::numbers::pi_v<float> *0.5f; // pitch = 90deg
+	wt.eulerRotation.x = kPitch;
 	wt.rotationSource = RotationSource::Euler;
 	wt.eulerRotation.y = Random::Generate(0.0f, std::numbers::pi_v<float> *2.0f);
 	wt.Update();
@@ -61,6 +66,17 @@ CalyxEngine::Vector3 Floater::GetArmWorld(int hand) const {
 
 CalyxEngine::Vector3 Floater::GetHandWorld(int hand) const {
 	return GetWorldTransform().GetWorldPosition() + GetArmWorld(hand);
+}
+
+void Floater::SetChainedTransform(const CalyxEngine::Vector3& pos, float worldYaw) {
+	auto& wt = GetWorldTransform();
+
+	wt.translation = pos;
+	// ピッチとロールを毎フレーム固定値で入れ直す。
+	// 親子付けで親のヨーを合成すると、寝かせた軸に乗って板が転がるため
+	wt.eulerRotation = { kPitch, worldYaw, 0.0f };
+	wt.rotationSource = RotationSource::Euler;
+	wt.Update();
 }
 
 void Floater::MarkChained() {

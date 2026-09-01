@@ -10,9 +10,8 @@
 // std
 #include <algorithm>
 
-FloaterManager::FloaterManager() {
-	SceneObject::SetName("FloaterManager", ObjectType::GameObject);
-}
+FloaterManager::FloaterManager()
+	:Actor("cone.obj", "FloaterManager") {}
 
 void FloaterManager::Update([[maybe_unused]] float dt) {
 
@@ -45,7 +44,7 @@ void FloaterManager::Spawn(int count) {
 
 		floater->SetDriftSpeed(driftSpeed_);
 		floater->SetSpinSpeed(spinSpeed_);
-		floater->SetBounds(center, spawnRadius_);
+		floater->SetBounds(center, { spawnRadius_, 0.0f, spawnRadius_ });
 
 		auto& wt = floater->GetWorldTransform();
 		wt.translation = {

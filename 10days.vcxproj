@@ -185,12 +185,14 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Game/GameApplication.cpp" />
     <ClCompile Include="Game/GameEditorExtension.cpp" />
     <ClCompile Include="Game/GameMain.cpp" />
+    <ClCompile Include="Game\Floater\BodyNode.cpp" />
     <ClCompile Include="Game\Floater\Floater.cpp" />
     <ClCompile Include="Game\Floater\FloaterManager.cpp" />
     <ClCompile Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.cpp" />
     <ClCompile Include="Game\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Floater\BodyNode.h" />
     <ClInclude Include="Game\Floater\Floater.h" />
     <ClInclude Include="Game\Floater\FloaterManager.h" />
     <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h" />

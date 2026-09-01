@@ -6,14 +6,13 @@
 #include <Engine/Foundation/Utility/Random/Random.h>
 #include <Engine/Foundation/Math/MathUtil.h>
 
+// game
+#include "BodyNode.h"
+
 // std
+#include <algorithm>
+#include <cmath>
 #include <numbers>
-
-
-namespace {
-	constexpr float kArmLength = 0.6f;
-	constexpr float kArmSpread = std::numbers::pi_v<float>*0.5f;
-}
 
 Floater::Floater()
 	: Actor("plane.obj", "Floater") {}
@@ -25,22 +24,21 @@ void Floater::Initialize() {
 	DisableGravity();
 
 	auto& wt = GetWorldTransform();
-	// 常に X 軸に -90度回転させるため、回転ソースをオイラーにして固定ピッチを設定する
-	wt.eulerRotation.x = std::numbers::pi_v<float> *0.5f; // pitch = -90deg
+	wt.eulerRotation.x = std::numbers::pi_v<float> *0.5f; // pitch = 90deg
 	wt.rotationSource = RotationSource::Euler;
-	// 向きは湧いた時点でばらしておく
 	wt.eulerRotation.y = Random::Generate(0.0f, std::numbers::pi_v<float> *2.0f);
 	wt.Update();
 
 	driftDir_ = { Random::Generate(-1.0f, 1.0f), 0.0f, Random::Generate(-1.0f, 1.0f) };
 	driftDir_ = driftDir_.Normalize();
 	spinRate_ = Random::Generate(-1.0f, 1.0f);
+	reachBias_ = Random::Generate(-1.0f, 1.0f);
 }
 
 void Floater::Update(float dt) {
 
 	if (chained_) {
-
+		// 連結中は自機の子として
 	} else {
 		Drift(dt);
 	}
@@ -49,19 +47,20 @@ void Floater::Update(float dt) {
 }
 
 float Floater::GetYaw() const {
-	return GetWorldTransform().eulerRotation.y;
+	const auto& wt = GetWorldTransform();
+	float yaw = wt.eulerRotation.y;
+	for (const BaseTransform* p = wt.parent; p; p = p->parent) {
+		yaw += p->eulerRotation.y;
+	}
+	return yaw;
 }
 
 CalyxEngine::Vector3 Floater::GetArmWorld(int hand) const {
-	const float sign = (hand == 0) ? 1.0f : -1.0f;
-	const float armAngle = GetYaw() + reachBias_ + kArmSpread * sign;
-
-	const CalyxEngine::Matrix4x4 rot = CalyxEngine::MakeRotateYMatrix(armAngle);
-	return CalyxEngine::TransformNormal({ 0.0f,0.0f,kArmLength }, rot);
+	return BodyNode::RotateY(BodyNode::kHand[hand], GetYaw());
 }
 
 CalyxEngine::Vector3 Floater::GetHandWorld(int hand) const {
-	return GetWorldTransform().translation + GetArmWorld(hand);
+	return GetWorldTransform().GetWorldPosition() + GetArmWorld(hand);
 }
 
 void Floater::MarkChained() {
@@ -71,11 +70,10 @@ void Floater::MarkChained() {
 }
 
 void Floater::ReachTowardArmAngle(int hand, float targetArmAngle, float step) {
-	const float sign = (hand == 0) ? 1.0f : -1.0f;
-	const float desiredYaw = targetArmAngle - reachBias_ - kArmSpread * sign;
+	const float desiredYaw = targetArmAngle - BodyNode::HandAngle(hand);
 
 	auto& wt = GetWorldTransform();
-	wt.eulerRotation.y = CalyxEngine::LerpShortAngle(wt.eulerRotation.y, desiredYaw, step);
+	wt.eulerRotation.y += std::clamp(BodyNode::WrapAngle(desiredYaw - wt.eulerRotation.y), -step, step);
 	wt.Update();
 }
 
@@ -110,20 +108,13 @@ void Floater::Drift(float dt) {
 void Floater::BounceOnEdge() {
 	auto& wt = GetWorldTransform();
 
-	CalyxEngine::Vector3 offset = wt.translation - boundsCenter_;
-	offset.y = 0.0f;
+	const float x = wt.translation.x - boundsCenter_.x;
+	const float z = wt.translation.z - boundsCenter_.z;
 
-	const float dist = offset.Length();
-	if (dist < boundsRadius_ || dist <= 1e-4) {
-		return;
+	if ((x < -boundsHalf_.x && driftDir_.x < 0.0f) || (x > boundsHalf_.x && driftDir_.x > 0.0f)) {
+		driftDir_.x = -driftDir_.x;
 	}
-
-	const CalyxEngine::Vector3 normal = offset / dist;
-	const float dot = CalyxEngine::Vector3::Dot(driftDir_, normal);
-	if (dot > 0.0f) {
-		driftDir_ = driftDir_ - normal * (2.0f * dot);
+	if ((z < -boundsHalf_.z && driftDir_.z < 0.0f) || (z > boundsHalf_.z && driftDir_.z > 0.0f)) {
+		driftDir_.z = -driftDir_.z;
 	}
-
-	wt.translation = boundsCenter_ + normal * boundsRadius_;
-	wt.translation.y = 0.5f;
 }

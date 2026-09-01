@@ -17,7 +17,11 @@ public:
 
 	void SetDriftSpeed(float speed) { driftSpeed_ = speed; }
 	void SetSpinSpeed(float speed) { spinSpeed_ = speed; }
-	void SetBounds(CalyxEngine::Vector3 center, float radius) { boundsCenter_ = center; boundsRadius_ = radius; }
+	//　漂う範囲
+	void SetBounds(const CalyxEngine::Vector3& center, const CalyxEngine::Vector3& half) {
+		boundsCenter_ = center;
+		boundsHalf_ = half;
+	}
 
 	float GetYaw() const;
 	CalyxEngine::Vector3 GetArmWorld(int hand) const; // 中心から手へのベクトル
@@ -27,7 +31,6 @@ public:
 	bool IsChained() const { return chained_; }
 	void MarkChained();
 
-	// 向き補正用
 	void ReachTowardArmAngle(int hand, float targetArmAngle, float step);
 
 private:
@@ -48,6 +51,6 @@ private:
 	bool chained_ = false;
 
 	CalyxEngine::Vector3 boundsCenter_{};
-	float boundsRadius_ = 30.0f;
+	CalyxEngine::Vector3 boundsHalf_{ 30.0f, 0.0f, 30.0f };
 
 };

@@ -1,5 +1,6 @@
 {
     "fields": {
+        "FloaterManagerPtr": "d0906e04-1f2c-4d1d-b98f-9ec57e496b6e",
         "moveSpeed": 5.0,
         "rotSpeedDeg": 250.0,
         "yawAcceleration": 5.0

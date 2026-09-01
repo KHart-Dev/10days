@@ -34,6 +34,7 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\Player\Player.cpp" />
+    <ClCompile Include="Game\Floater\BodyNode.cpp" />
     <ClCompile Include="Game\Floater\Floater.cpp" />
     <ClCompile Include="Game\Floater\FloaterManager.cpp" />
   </ItemGroup>
@@ -44,5 +45,6 @@
     <ClInclude Include="Game\Player\Player.h" />
     <ClInclude Include="Game\Floater\Floater.h" />
     <ClInclude Include="Game\Floater\FloaterManager.h" />
+    <ClInclude Include="Game\Floater\BodyNode.h" />
   </ItemGroup>
 </Project>

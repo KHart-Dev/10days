@@ -80,3 +80,11 @@ std::shared_ptr<Floater> FloaterManager::Detach(const Floater* floater) {
 	floaters_.erase(it);
 	return detached;
 }
+
+void FloaterManager::Reclaim(std::shared_ptr<Floater> floater) {
+	if (!floater) {
+		return;
+	}
+	floater->Unchain();
+	floaters_.push_back(std::move(floater));
+}

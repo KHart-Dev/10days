@@ -48,6 +48,10 @@ void Floater::Update(float dt) {
 		// 連結中は自機の子として
 	} else {
 		Drift(dt);
+
+		if (breakedCooltime_ > 0.0f) {
+			breakedCooltime_ -= dt;
+		}
 	}
 	Actor::Update(dt);
 
@@ -70,6 +74,14 @@ CalyxEngine::Vector3 Floater::GetHandWorld(int hand) const {
 	return GetWorldTransform().GetWorldPosition() + GetArmWorld(hand);
 }
 
+bool Floater::CanConnect() const {
+	bool result = true;
+	if (IsChained() || breakedCooltime_ > 0.0f) {
+		result = false;
+	}
+	return result;
+}
+
 void Floater::SetChainedTransform(const CalyxEngine::Vector3& pos, float worldYaw) {
 	auto& wt = GetWorldTransform();
 
@@ -85,6 +97,19 @@ void Floater::MarkChained() {
 	chained_ = true;
 	driftDir_ = {};
 	spinRate_ = 0.0f;
+}
+
+void Floater::MarkBreak() {
+	breakMark_ = true;
+}
+
+void Floater::Unchain() {
+	chained_ = false;
+	breakMark_ = false;
+	breakedCooltime_ = 3.0f;
+	driftDir_ = { Random::Generate(-1.0f, 1.0f), 0.0f, Random::Generate(-1.0f, 1.0f) }; // とりあえず今はランダム方向に壊れる
+	driftDir_ = driftDir_.Normalize();
+	spinRate_ = Random::Generate(-1.0f, 1.0f);
 }
 
 void Floater::ReachTowardArmAngle(int hand, float targetArmAngle, float step) {

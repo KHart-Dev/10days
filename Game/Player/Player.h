@@ -54,11 +54,10 @@ private:
 	void CheckConnect(FloaterManager& manager, float dt);
 	void ReachToNearestHand(Floater& floater, float reachSq, float dt);
 	void Attach(const std::shared_ptr<Floater>& floater, const HandAnchor& anchor, int ownHand);
-	/// <summary>繋がった全員のワールド姿勢を、自機の姿勢と焼いたローカル値から組み直す</summary>
-	/// <remarks>親子付けを使わないのは、Floater の固定ピッチに親のヨーが合成されて
-	/// 他軸が回ってしまうため。剛体であることは変わらない</remarks>
+	/// <summary>繋がった全員のワールド姿勢を、自機の姿勢から組み直す</summary>
 	void ApplyChainTransforms();
 	float CurrentTurnSpeed() const;
+	bool BreakChain(FloaterManager& manager);
 
 	PlayerInput input_;
 
@@ -111,7 +110,7 @@ private:
 		}
 
 		CalyxEngine::ParamPath GetParamPath() const override {
-			return {CalyxEngine::ParamDomain::Game, "Player", "Actor/Player/PlayerParam"};
+			return { CalyxEngine::ParamDomain::Game, "Player", "Actor/Player/PlayerParam" };
 		}
 
 		float moveSpeed = 5.0f;
@@ -135,6 +134,8 @@ private:
 	std::vector<Member> chain_;
 	std::vector<HandAnchor> handAnchors_;
 	std::vector<float> usedAngles_;
+	std::vector<bool> 	breakMarks_;
+	std::vector<int> 	remap_;
 
 	CalyxEngine::Vector3 prevSelfPos_{};
 	float prevSelfYaw_ = 0.0f;
@@ -142,6 +143,7 @@ private:
 	// 繋がらないときの切り分け用。距離で落ちているのか角度で落ちているのかを見る
 	float debugNearestDist_ = -1.0f;
 	int debugAngleRejects_ = 0;
+	int debugBreakIndex_ = 1;
 
 public:
 	// シリアライズ用インターフェース

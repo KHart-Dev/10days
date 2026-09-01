@@ -25,6 +25,8 @@ public:
 	/// <summary>1体を漂う側の管理から外して受け取る</summary>
 	std::shared_ptr<Floater> Detach(const Floater* floater);
 
+	void Reclaim(std::shared_ptr<Floater> floater);
+
 	/// <summary>全部消してから湧かせ直す</summary>
 	void Respawn();
 

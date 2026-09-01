@@ -34,6 +34,14 @@ void Player::DerivativeGui() {
 		PropertyText("Anchors", "%d", static_cast<int>(handAnchors_.size()));
 		PropertyText("NearestHand", "%.2f m", debugNearestDist_);
 		PropertyText("AngleRejects", "%d", debugAngleRejects_);
+		const int connected = static_cast<int>(chain_.size()) - 1;
+		if (connected > 0) {
+			debugBreakIndex_ = std::clamp(debugBreakIndex_, 1, connected);
+			ImGui::DragInt("Break Index", &debugBreakIndex_, 1.0f, 1, connected);
+			if (ImGui::Button("Break")) {
+				chain_[debugBreakIndex_].floater->MarkBreak();
+			}
+		}
 		param_.ShowGui();
 		EndSection();
 	}
@@ -123,6 +131,7 @@ void Player::Update(float dt) {
 
 	// 手が触れていれば繋ぐ
 	if (std::shared_ptr<FloaterManager> manager = param_.floaterManager.Resolve()) {
+		BreakChain(*manager);
 		BuildHandAnchors();
 		CheckConnect(*manager, dt);
 	}
@@ -161,6 +170,41 @@ float Player::CurrentTurnSpeed() const {
 	}
 	const float count = static_cast<float>(chain_.size() - 1);
 	return base / (1.0f + count * param_.heaviness);
+}
+
+bool Player::BreakChain(FloaterManager& manager) {
+	breakMarks_.assign(chain_.size(), false);
+	bool noneBroken = true;
+	for (size_t i = 1; i < chain_.size(); i++) {
+		const Member& member = chain_[i];
+		const bool selfHit = member.floater && member.floater->IsBreakMarked();
+		if (selfHit || breakMarks_[member.parent]) {
+			breakMarks_[i] = true;
+			noneBroken = false;
+		}
+	}
+	if (noneBroken) return false;
+
+	int writeIndex = 0;
+	remap_.assign(chain_.size(), -1);
+	for (size_t i = 0; i < chain_.size(); i++) {
+		if (breakMarks_[i]) {
+			manager.Reclaim(std::move(chain_[i].floater));
+			continue;
+		}
+
+		remap_[i] = writeIndex;
+		if (i != 0) {
+			chain_[i].parent = remap_[chain_[i].parent];
+		}
+		if (i != static_cast<size_t>(writeIndex)) {
+			chain_[writeIndex] = std::move(chain_[i]);
+		}
+		writeIndex++;
+	}
+
+	chain_.erase(chain_.begin() + writeIndex, chain_.end());
+	return true;
 }
 
 void Player::BuildHandAnchors() {
@@ -209,7 +253,7 @@ void Player::CheckConnect(FloaterManager& manager, float dt) {
 	for (int i = static_cast<int>(manager.GetFloaters().size()) - 1; i >= 0; i--) {
 
 		const std::shared_ptr<Floater> floater = manager.GetFloaters()[i];
-		if (!floater || floater->IsChained()) {
+		if (!floater || !floater->CanConnect()) {
 			continue;
 		}
 

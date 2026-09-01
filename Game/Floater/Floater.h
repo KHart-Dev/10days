@@ -27,9 +27,14 @@ public:
 	CalyxEngine::Vector3 GetArmWorld(int hand) const; // 中心から手へのベクトル
 	CalyxEngine::Vector3 GetHandWorld(int hand) const; // 手のワールド座標
 	float GetReachBias() const { return reachBias_; }
+	bool CanConnect() const;
 
 	bool IsChained() const { return chained_; }
 	void MarkChained();
+	
+	bool IsBreakMarked() const { return breakMark_; }
+	void MarkBreak();
+	void Unchain();
 
 	/// <summary>連結中の姿勢を外から与える</summary>
 	/// <remarks>親子付けは使わない。ピッチを毎フレーム固定値で書き直すので、
@@ -54,6 +59,8 @@ private:
 	float reachBias_ = 0.0f;
 
 	bool chained_ = false;
+	bool breakMark_ = false;
+	float breakedCooltime_ = 0.0f; // 壊れた後、すぐに繋がらないように
 
 	CalyxEngine::Vector3 boundsCenter_{};
 	CalyxEngine::Vector3 boundsHalf_{ 30.0f, 0.0f, 30.0f };

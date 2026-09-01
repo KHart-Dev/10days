@@ -42,15 +42,15 @@ private:
 	//                    private methods
 	//===================================================================*/
 	/**
-	* @brief オフセットの計算
+	 * @brief 現在の障害物サイズから、全ての棘のローカル座標を計算する
 	*/
 	void ComputeOffset()noexcept;
 	/**
-	 * @brief 棘の数を計算
-	 * @param with 
-	 * @param height 
+	 * @brief 外周に必要な数になるよう棘を増減する
+	 * @param width X方向のブロック数
+	 * @param height Z方向のブロック数
 	 */
-	void RebuildThorns(int with, int height);
+	void RebuildThorns(int width, int height);
 
 private:
 	//===================================================================*/

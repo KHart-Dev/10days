@@ -1,5 +1,19 @@
 #include "Obstacle.h"
 #include <Engine/Scene/Utility/SceneUtility.h>
+
+#include <algorithm>
+#include <cmath>
+
+namespace {
+	// パラメータはGUI上ではfloatだが、棘は1ブロックに1本配置する。
+	// そのため、個数と座標の計算で共通の丸め方を使う。
+	int ToBlockCount(float size) noexcept {
+		// Windows.hのmaxマクロと衝突しないよう、明示的に下限を選ぶ。
+		const int roundedSize = static_cast<int>(std::round(size));
+		return roundedSize < 1 ? 1 : roundedSize;
+	}
+}
+
 Obstacle::Obstacle() :Actor("debugCube.obj", "Obstacle") {
 
 	param_.LoadParams();
@@ -9,110 +23,24 @@ Obstacle::Obstacle() :Actor("debugCube.obj", "Obstacle") {
 //		初期化
 /////////////////////////////////////////////////////////////////////////////////
 void Obstacle::Initialize() noexcept {
-
-    if (!thorns_.empty()) {
-        return;
-    }
-
-    const int width =
-        static_cast<int>(std::round(param_.size_.x));
-
-    const int height =
-        static_cast<int>(std::round(param_.size_.y));
-
-    const size_t thornsCount =
-        static_cast<size_t>(width * 2 + height * 2);
-
-    thorns_.reserve(thornsCount);
-
-    constexpr float blockSize = 1.0f;
-    constexpr float thornOffset = 0.5f;
-
-    const float halfWidth =
-        static_cast<float>(width) * blockSize * 0.5f;
-
-    const float halfHeight =
-        static_cast<float>(height) * blockSize * 0.5f;
-
-    // 上下
-    for (int x = 0; x < width; ++x) {
-
-        const float localX =
-            -halfWidth +
-            blockSize * 0.5f +
-            static_cast<float>(x) * blockSize;
-
-        // 上
-        {
-            auto thorn = SceneAPI::Instantiate<Thorn>();
-            thorn->SetParent(shared_from_this(), false);
-
-            thorn->GetWorldTransform().translation = {
-                localX,
-                0.0f,
-                halfHeight + thornOffset
-            };
-
-            thorns_.push_back(thorn);
-        }
-
-        // 下
-        {
-            auto thorn = SceneAPI::Instantiate<Thorn>();
-            thorn->SetParent(shared_from_this(), false);
-
-            thorn->GetWorldTransform().translation = {
-                localX,
-                0.0f,
-                -halfHeight - thornOffset
-            };
-
-            thorns_.push_back(thorn);
-        }
-    }
-
-    // 左右
-    for (int z = 0; z < height; ++z) {
-
-        const float localZ =
-            -halfHeight +
-            blockSize * 0.5f +
-            static_cast<float>(z) * blockSize;
-
-        // 左
-        {
-            auto thorn = SceneAPI::Instantiate<Thorn>();
-            thorn->SetParent(shared_from_this(), false);
-
-            thorn->GetWorldTransform().translation = {
-                -halfWidth - thornOffset,
-                0.0f,
-                localZ
-            };
-
-            thorns_.push_back(thorn);
-        }
-
-        // 右
-        {
-            auto thorn = SceneAPI::Instantiate<Thorn>();
-            thorn->SetParent(shared_from_this(),false);
-
-            thorn->GetWorldTransform().translation = {
-                halfWidth + thornOffset,
-                0.0f,
-                localZ
-            };
-
-            thorns_.push_back(thorn);
-        }
-    }
+	// 生成と配置を分けることで、初期化時とサイズ変更時に同じ計算を使う。
+	const int width = ToBlockCount(param_.size_.x);
+	const int height = ToBlockCount(param_.size_.y);
+	RebuildThorns(width, height);
+	ComputeOffset();
 }
 
 /////////////////////////////////////////////////////////////////////////////////
 //		更新
 /////////////////////////////////////////////////////////////////////////////////
 void Obstacle::AlwaysUpdate(float dt) {
+	const int width = ToBlockCount(param_.size_.x);
+	const int height = ToBlockCount(param_.size_.y);
+
+	// GUIやパラメータからサイズが変わっても即座に外周を作り直す。
+	// 個数が同じ場合、RebuildThornsのwhileループは一度も実行されない。
+	RebuildThorns(width, height);
+	ComputeOffset();
 
 	// サイズを適用
 	worldTransform_.scale.x = baseScale_.x * param_.size_.x;
@@ -140,30 +68,78 @@ void Obstacle::DerivativeGui() {
 /////////////////////////////////////////////////////////////////////////////////
 //		オフセット計算
 /////////////////////////////////////////////////////////////////////////////////
-void Obstacle::ComputeOffset() noexcept {}
+void Obstacle::ComputeOffset() noexcept {
+	constexpr float blockSize = 1.0f;
+
+	// Thornは初期スケールが0.5のため、中心を障害物の面から0.5外側へ出す。
+	// これにより棘の内側の端が障害物の外周に接する。
+	constexpr float thornCenterOffset = 0.5f;
+
+	const int width = ToBlockCount(param_.size_.x);
+	const int height = ToBlockCount(param_.size_.y);
+	const size_t requiredCount = static_cast<size_t>((width + height) * 2);
+
+	// 単独で呼ばれた場合でも配列外アクセスしないよう防御する。
+	if (thorns_.size() != requiredCount) {
+		return;
+	}
+
+	const float halfWidth = static_cast<float>(width) * blockSize * 0.5f;
+	const float halfHeight = static_cast<float>(height) * blockSize * 0.5f;
+	size_t thornIndex = 0;
+
+	// X方向の各ブロックの中心に、奥側(+Z)と手前側(-Z)の棘を1本ずつ配置する。
+	for (int x = 0; x < width; ++x) {
+		// 左端(-halfWidth)から半ブロック進めると、最初のブロック中心になる。
+		const float localX =
+			-halfWidth + blockSize * 0.5f + static_cast<float>(x) * blockSize;
+
+		thorns_[thornIndex++]->GetWorldTransform().translation = {
+			localX, 0.0f, halfHeight + thornCenterOffset
+		};
+		thorns_[thornIndex++]->GetWorldTransform().translation = {
+			localX, 0.0f, -halfHeight - thornCenterOffset
+		};
+	}
+
+	// Z方向も同様に、左側(-X)と右側(+X)の棘を1本ずつ配置する。
+	// 角の棘は上のループと座標が重ならないため、外周は 2 * (width + height) 本になる。
+	for (int z = 0; z < height; ++z) {
+		const float localZ =
+			-halfHeight + blockSize * 0.5f + static_cast<float>(z) * blockSize;
+
+		thorns_[thornIndex++]->GetWorldTransform().translation = {
+			-halfWidth - thornCenterOffset, 0.0f, localZ
+		};
+		thorns_[thornIndex++]->GetWorldTransform().translation = {
+			halfWidth + thornCenterOffset, 0.0f, localZ
+		};
+	}
+}
 
 void Obstacle::RebuildThorns(int width, int height) {
-    const size_t requiredCount =
-        static_cast<size_t>(width * 2 + height * 2);
+	// 上下にwidth本ずつ、左右にheight本ずつ必要。
+	const size_t requiredCount = static_cast<size_t>((width + height) * 2);
 
-    // 足りない分だけ生成
-    while (thorns_.size() < requiredCount) {
+	// 足りない分だけ生成
+	while (thorns_.size() < requiredCount) {
 
-        auto thorn = SceneAPI::Instantiate<Thorn>();
+		auto thorn = SceneAPI::Instantiate<Thorn>();
 
-        thorn->SetParent(shared_from_this(), false);
+		// 親の拡大率を継承すると棘自体まで伸びるため、inheritScaleはfalseにする。
+		thorn->SetParent(shared_from_this(), false);
 
-        thorns_.push_back(thorn);
-    }
+		thorns_.push_back(thorn);
+	}
 
-    // 多すぎる場合
-    while (thorns_.size() > requiredCount) {
+	// 多すぎる場合
+	while (thorns_.size() > requiredCount) {
 
-        // SceneAPI側にDestroyがあるならここで削除
-        SceneAPI::Remove(thorns_.back());
+		// Destroyでシーン側へ破棄を通知してから、所有リストから取り除く。
+		thorns_.back()->Destroy();
 
-        thorns_.pop_back();
-    }
+		thorns_.pop_back();
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////

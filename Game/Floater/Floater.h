@@ -17,6 +17,7 @@ public:
 
 	void SetDriftSpeed(float speed) { driftSpeed_ = speed; }
 	void SetSpinSpeed(float speed) { spinSpeed_ = speed; }
+	void SetBounds(CalyxEngine::Vector3 center, float radius) { boundsCenter_ = center; boundsRadius_ = radius; }
 
 	float GetYaw() const;
 	CalyxEngine::Vector3 GetArmWorld(int hand) const; // 中心から手へのベクトル
@@ -45,5 +46,8 @@ private:
 	float reachBias_ = 0.0f;
 
 	bool chained_ = false;
+
+	CalyxEngine::Vector3 boundsCenter_{};
+	float boundsRadius_ = 30.0f;
 
 };

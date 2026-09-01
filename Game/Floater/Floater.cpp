@@ -4,9 +4,16 @@
 #include <Engine/Graphics/Camera/Manager/CameraManager.h>
 #include <Engine/Foundation/Math/Quaternion.h>
 #include <Engine/Foundation/Utility/Random/Random.h>
+#include <Engine/Foundation/Math/MathUtil.h>
 
 // std
 #include <numbers>
+
+
+namespace {
+	constexpr float kArmLength = 0.6f;
+	constexpr float kArmSpread = std::numbers::pi_v<float>*0.5f;
+}
 
 Floater::Floater()
 	: Actor("plane.obj", "Floater") {}
@@ -26,6 +33,7 @@ void Floater::Initialize() {
 	wt.Update();
 
 	driftDir_ = { Random::Generate(-1.0f, 1.0f), 0.0f, Random::Generate(-1.0f, 1.0f) };
+	driftDir_ = driftDir_.Normalize();
 	spinRate_ = Random::Generate(-1.0f, 1.0f);
 }
 
@@ -38,6 +46,37 @@ void Floater::Update(float dt) {
 	}
 	Actor::Update(dt);
 
+}
+
+float Floater::GetYaw() const {
+	return GetWorldTransform().eulerRotation.y;
+}
+
+CalyxEngine::Vector3 Floater::GetArmWorld(int hand) const {
+	const float sign = (hand == 0) ? 1.0f : -1.0f;
+	const float armAngle = GetYaw() + reachBias_ + kArmSpread * sign;
+
+	const CalyxEngine::Matrix4x4 rot = CalyxEngine::MakeRotateYMatrix(armAngle);
+	return CalyxEngine::TransformNormal({ 0.0f,0.0f,kArmLength }, rot);
+}
+
+CalyxEngine::Vector3 Floater::GetHandWorld(int hand) const {
+	return GetWorldTransform().translation + GetArmWorld(hand);
+}
+
+void Floater::MarkChained() {
+	chained_ = true;
+	driftDir_ = {};
+	spinRate_ = 0.0f;
+}
+
+void Floater::ReachTowardArmAngle(int hand, float targetArmAngle, float step) {
+	const float sign = (hand == 0) ? 1.0f : -1.0f;
+	const float desiredYaw = targetArmAngle - reachBias_ - kArmSpread * sign;
+
+	auto& wt = GetWorldTransform();
+	wt.eulerRotation.y = CalyxEngine::LerpShortAngle(wt.eulerRotation.y, desiredYaw, step);
+	wt.Update();
 }
 
 void Floater::SetupCollider() {
@@ -69,5 +108,22 @@ void Floater::Drift(float dt) {
 }
 
 void Floater::BounceOnEdge() {
+	auto& wt = GetWorldTransform();
 
+	CalyxEngine::Vector3 offset = wt.translation - boundsCenter_;
+	offset.y = 0.0f;
+
+	const float dist = offset.Length();
+	if (dist < boundsRadius_ || dist <= 1e-4) {
+		return;
+	}
+
+	const CalyxEngine::Vector3 normal = offset / dist;
+	const float dot = CalyxEngine::Vector3::Dot(driftDir_, normal);
+	if (dot > 0.0f) {
+		driftDir_ = driftDir_ - normal * (2.0f * dot);
+	}
+
+	wt.translation = boundsCenter_ + normal * boundsRadius_;
+	wt.translation.y = 0.5f;
 }

@@ -8,7 +8,7 @@
 #include <Demo/Input/PlayerInput.h>
 #include <Engine/Foundation/Serialization/SerializableObject.h>
 
-CALYX_OBJECT(Category = GameObject, DisplayName = "Player", Icon = "UI/Tool/cube.dds")
+CALYX_OBJECT(Category = GameObject, DisplayName = "Player", Icon = "Textures/player/player.png")
 class Player : public Actor {
 
 public:

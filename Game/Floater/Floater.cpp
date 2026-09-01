@@ -5,9 +5,11 @@
 #include <Engine/Foundation/Math/Quaternion.h>
 #include <Engine/Foundation/Utility/Random/Random.h>
 #include <Engine/Foundation/Math/MathUtil.h>
+#include <Engine/Objects/Collider/BoxCollider.h>
 
 // game
 #include "BodyNode.h"
+#include <Game/Collision/CollisionLayerUtil.h>
 
 // std
 #include <algorithm>
@@ -97,7 +99,14 @@ void Floater::SetupCollider() {
 	InitializeCollider(ColliderKind::Box);
 
 	if (Collider* collider = GetCollider()) {
-		collider->ApplyConfig(ColliderConfig{});
+		const char* layerName = "Player";
+		const auto layerId = GameCollision::FindLayerId(layerName);
+
+		ColliderConfig config;
+		if (layerId) {
+			config.layerId = *layerId;
+		}
+		collider->ApplyConfig(config);
 	}
 }
 

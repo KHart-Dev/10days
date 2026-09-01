@@ -34,12 +34,12 @@ void FloaterManager::Spawn(int count) {
 
 	for (int i = 0; i < count; i++) {
 
-		std::shared_ptr<Floater> floater = SceneAPI::Instantiate<Floater>();
+		std::shared_ptr<Floater> floater = SceneAPI::InstantiatePrefabRoot<Floater>("Floater.prefab", center);
 		if (!floater) {
 			continue;
 		}
 
-		floater->SetTransient(true);
+		//floater->SetTransient(true);
 		floater->Initialize();
 
 		floater->SetDriftSpeed(driftSpeed_);

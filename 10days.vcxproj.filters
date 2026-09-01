@@ -46,5 +46,6 @@
     <ClInclude Include="Game\Floater\Floater.h" />
     <ClInclude Include="Game\Floater\FloaterManager.h" />
     <ClInclude Include="Game\Floater\BodyNode.h" />
+    <ClInclude Include="Game\Collision\CollisionLayerUtil.h" />
   </ItemGroup>
 </Project>

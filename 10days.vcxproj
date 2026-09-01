@@ -192,6 +192,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Game\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Collision\CollisionLayerUtil.h" />
     <ClInclude Include="Game\Floater\BodyNode.h" />
     <ClInclude Include="Game\Floater\Floater.h" />
     <ClInclude Include="Game\Floater\FloaterManager.h" />

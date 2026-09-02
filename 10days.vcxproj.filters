@@ -34,13 +34,13 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\Actor\Obstacle\Obstacle.cpp" />
-    <ClCompile Include="Thorn.cpp" />
+    <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Actor\Obstacle\Obstacle.h" />
-    <ClInclude Include="Thorn.h" />
+    <ClInclude Include="Game\Actor\Obstacle\Thorn.h" />
   </ItemGroup>
 </Project>

@@ -6,7 +6,7 @@
 #include <Engine/Foundation/Math/Vector3.h>
 
 // game
-#include <Thorn.h>
+#include "Thorn.h"
 
 /*-----------------------------------------------------------------------------------------
  * Obstacle

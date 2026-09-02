@@ -74,7 +74,7 @@ void PlayerTimeUis::InitializeActor() {
 			numberUis_[i]->SetParent(player_);
 			numberUis_[i]->Initialize();
 			float posX = static_cast<float>(i) - 0.5f;
-			numberUis_[i]->SetPosition(CalyxEngine::Vector3(posX, 0.5f, 0.0f));
+			numberUis_[i]->SetPosition(CalyxEngine::Vector3(posX, 0.5f, 3.0f));
 		}
 	}
 	Initialize_ = true;

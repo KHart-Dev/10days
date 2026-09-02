@@ -184,10 +184,10 @@
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.9774869084358215,
-                    "x": -0.019163062795996666,
-                    "y": -0.21008418500423431,
-                    "z": -0.0041185785084962845
+                    "w": 0.8014026284217834,
+                    "x": 0.5546439290046692,
+                    "y": 0.18409417569637299,
+                    "z": -0.12741002440452576
                 },
                 "scale": {
                     "x": 1.0,
@@ -195,9 +195,9 @@
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 2.194704532623291,
-                    "y": 5.4135308265686035,
-                    "z": -12.362855911254883
+                    "x": 0.2342839241027832,
+                    "y": 9.236533164978027,
+                    "z": -0.7694377899169922
                 }
             },
             "type": "DebugCamera"
@@ -713,6 +713,94 @@
                 "y": 0.0,
                 "z": 0.0
             }
+        },
+        {
+            "cameraDitherEnabled": false,
+            "colliderConfig": {
+                "capsuleHeight": 2.0,
+                "capsuleRadius": 0.5,
+                "isCollisionEnabled": true,
+                "isDraw": true,
+                "isTrigger": false,
+                "layerId": 2,
+                "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius": 1.0,
+                "rotate": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "size": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            },
+            "colliderKind": 1,
+            "guid": "c3556e47-1adc-4864-8183-31b7cef454e9",
+            "modelConfig": {
+                "blendMode": 5,
+                "materialGuid": "00000000-0000-0000-0000-000000000000",
+                "modelName": "debugCube.obj",
+                "textureGuid": "00000000-0000-0000-0000-000000000000",
+                "uvTransConfig": {
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            "name": "Obstacle",
+            "objectType": 2,
+            "outlineColor": {
+                "w": 1.0,
+                "x": 0.019999999552965164,
+                "y": 0.019999999552965164,
+                "z": 0.02500000037252903
+            },
+            "outlineEnabled": false,
+            "outlineThickness": 0.03500000014901161,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "physicsBodyConfig": {
+                "bodyType": 1,
+                "enabled": false,
+                "gravityScale": 1.0,
+                "mass": 1.0,
+                "pushbackRatio": 1.0,
+                "useGravity": true
+            },
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 1.4281026124954224,
+                    "y": 0.10302335023880005,
+                    "z": 1.0138416290283203
+                }
+            },
+            "type": "Obstacle",
+            "visualOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         }
     ],
     "sceneName": "TestScene",
@@ -726,12 +814,16 @@
                 {
                     "id": 1,
                     "name": "Player"
+                },
+                {
+                    "id": 2,
+                    "name": "thorn"
                 }
             ],
             "matrixRows": [
                 0,
-                0,
-                0,
+                4,
+                2,
                 0,
                 0,
                 0,

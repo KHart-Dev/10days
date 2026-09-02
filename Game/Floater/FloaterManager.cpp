@@ -7,12 +7,17 @@
 
 // game
 #include "Floater.h"
+#include <Game/Audio/GameAudio.h>
 
 // std
 #include <algorithm>
 
 FloaterManager::FloaterManager()
 	:Actor("cone.obj", "FloaterManager") {}
+
+FloaterManager::~FloaterManager() {
+	GameAudio::StopBgm();
+}
 
 void FloaterManager::Initialize() {
 	param_.ownerGuid_ = GetGuid();
@@ -22,6 +27,7 @@ void FloaterManager::Initialize() {
 void FloaterManager::Update([[maybe_unused]] float dt) {
 
 	if (!isSpawned_) {
+		GameAudio::PlayBgm(GameAudio::kBgmGame); // FloaterManagerがゲーム中しか存在しないとしとく（他シーンにも配置するならば別箇所へ）
 		Spawn(param_.spawnCount);
 		isSpawned_ = true;
 	}

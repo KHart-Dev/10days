@@ -21,7 +21,7 @@ class Player : public Actor {
 public:
 
 	Player();
-	~Player() override = default;
+	~Player() override;
 
 	void Initialize() override;
 	void Update(float dt) override;

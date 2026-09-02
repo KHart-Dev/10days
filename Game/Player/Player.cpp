@@ -25,6 +25,10 @@ Player::Player()
 	param_.LoadParams();
 }
 
+Player::~Player() {
+	GameAudio::StopSe();
+}
+
 void Player::DerivativeGui() {
 	using namespace GuiCmd;
 	if (BeginSection(CalyxEngine::ParamFilterSection::Object)) {

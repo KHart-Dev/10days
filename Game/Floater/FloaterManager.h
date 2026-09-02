@@ -17,7 +17,7 @@ class FloaterManager : public Actor {
 public:
 
 	FloaterManager();
-	~FloaterManager() override = default;
+	~FloaterManager() override;
 
 	void Initialize() override;
 	void Update(float dt) override;

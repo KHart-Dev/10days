@@ -27,8 +27,8 @@ namespace GameAudio {
 
 
 	// 既定音量
-	inline constexpr float kBgmVolume = 0.3f;
-	inline constexpr float kSeVolume = 0.3f;
+	inline constexpr float kBgmVolume = 0.15f;
+	inline constexpr float kSeVolume = 0.15f;
 
 	namespace Detail {
 		inline std::string currentBgm; // 今鳴らしているBGM。空なら無し

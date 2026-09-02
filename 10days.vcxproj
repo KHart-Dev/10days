@@ -194,6 +194,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Thorn.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Audio\GameAudio.h" />
     <ClInclude Include="Game\Collision\CollisionLayerUtil.h" />
     <ClInclude Include="Game\Floater\BodyNode.h" />
     <ClInclude Include="Game\Floater\Floater.h" />

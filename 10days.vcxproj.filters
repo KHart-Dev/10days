@@ -51,5 +51,6 @@
     <ClInclude Include="Game\Collision\CollisionLayerUtil.h" />
     <ClInclude Include="Game\Actor\Obstacle\Obstacle.h" />
     <ClInclude Include="Thorn.h" />
+    <ClInclude Include="Game\Audio\GameAudio.h" />
   </ItemGroup>
 </Project>

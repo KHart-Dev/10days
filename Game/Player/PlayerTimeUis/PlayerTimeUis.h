@@ -28,11 +28,12 @@ private:
 	std::shared_ptr<Player> player_;
 	std::array<std::shared_ptr<NumberUi>, 2> numberUis_;
 
+
+	int currentCount_ = 1;
 	// カウントが始まったかどうか
 	bool isCounting_ = false;
 	// カウントの時間
 	float countTime_ = 0.0f;
-
 	bool Initialize_ = false;
 
 };

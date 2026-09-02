@@ -10,12 +10,53 @@ PlayerTimeUis::PlayerTimeUis()
 
 void PlayerTimeUis::Initialize() {
 	Actor::Initialize();
+	InitializeActor();
 	DisableGravity();
 	Actor::SetDrawEnable(false);
 }
-
 void PlayerTimeUis::Update(float dt) {
-	InitializeActor();
+
+	// カウントが上がっていたら
+	if (currentCount_ < player_->GetConnectedCount()) {
+		if (!isCounting_) {
+			isCounting_ = true;
+		}
+		countTime_ += 5.0f;
+	}
+
+	if (isCounting_) {
+		countTime_ -= dt;
+
+		if (countTime_ <= 0.0f) {
+			countTime_ = 0.0f;
+			player_->AllBreak();
+		}
+	}
+
+	// カウントを更新
+	currentCount_ = player_->GetConnectedCount();
+
+	// 表示用に整数へ変換
+	int time = static_cast<int>(countTime_);
+
+	// 数字の表示を更新
+	for (size_t i = 0; i < numberUis_.size(); i++) {
+
+		int number = 0;
+
+		if (i == 0) {
+			// 2桁目
+			number = (time / 10) % 10;
+		} else if (i == 1) {
+			// 1桁目
+			number = time % 10;
+		}
+
+		if (numberUis_[i]) {
+			numberUis_[i]->SetNumber(number);
+		}
+	}
+
 	Actor::Update(dt);
 }
 
@@ -32,7 +73,7 @@ void PlayerTimeUis::InitializeActor() {
 		if (numberUis_[i]) {
 			numberUis_[i]->SetParent(player_);
 			numberUis_[i]->Initialize();
-			float posX = static_cast<float>(i * 2) - 1.0f;
+			float posX = static_cast<float>(i) - 0.5f;
 			numberUis_[i]->SetPosition(CalyxEngine::Vector3(posX, 0.5f, 0.0f));
 		}
 	}

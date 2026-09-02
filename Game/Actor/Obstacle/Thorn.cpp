@@ -6,3 +6,8 @@ Thorn::Thorn() :Actor("cone.obj", "thorn") {
 }
 Thorn::~Thorn() = default;
 
+// 衝突時処理
+void Thorn::OnCollisionEnter(Collider* other){
+
+}
+

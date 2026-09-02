@@ -97,6 +97,7 @@ void Floater::MarkChained() {
 	chained_ = true;
 	driftDir_ = {};
 	spinRate_ = 0.0f;
+	SetTexture("Textures/connectHuman/connectHuman.png");
 }
 
 void Floater::MarkBreak() {
@@ -110,6 +111,7 @@ void Floater::Unchain() {
 	driftDir_ = { Random::Generate(-1.0f, 1.0f), 0.0f, Random::Generate(-1.0f, 1.0f) }; // とりあえず今はランダム方向に壊れる
 	driftDir_ = driftDir_.Normalize();
 	spinRate_ = Random::Generate(-1.0f, 1.0f);
+	SetTexture("Textures/human/human.png");
 }
 
 void Floater::ReachTowardArmAngle(int hand, float targetArmAngle, float step) {

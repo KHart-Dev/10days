@@ -194,8 +194,8 @@ void Obstacle::RebuildThorns(int width, int height) {
 
 	// 足りない分だけ生成
 	while (thorns_.size() < requiredCount) {
-
-		auto thorn = SceneAPI::Instantiate<Thorn>();
+		CalyxEngine::Vector3 dumy = { 0.0f,0.0f,0.0f };
+		auto thorn = SceneAPI::InstantiatePrefabRoot<Thorn>("thorn.prefab", dumy);
 
 		// 親の拡大率を継承すると棘自体まで伸びるため、inheritScaleはfalseにする。
 		thorn->SetParent(shared_from_this(), false);

@@ -3,6 +3,7 @@
 // engine
 #include <Engine/Scene/Utility/SceneUtility.h>
 #include <Engine/Foundation/Utility/Random/Random.h>
+#include "Engine/System/Command/EditorCommand/GuiCommand/ImGuiHelper/GuiCmd.h"
 
 // game
 #include "Floater.h"
@@ -13,10 +14,15 @@
 FloaterManager::FloaterManager()
 	:Actor("cone.obj", "FloaterManager") {}
 
+void FloaterManager::Initialize() {
+	param_.ownerGuid_ = GetGuid();
+	param_.LoadParams();
+}
+
 void FloaterManager::Update([[maybe_unused]] float dt) {
 
 	if (!isSpawned_) {
-		Spawn(spawnCount_);
+		Spawn(param_.spawnCount);
 		isSpawned_ = true;
 	}
 }
@@ -24,7 +30,7 @@ void FloaterManager::Update([[maybe_unused]] float dt) {
 void FloaterManager::Respawn() {
 
 	Clear();
-	Spawn(spawnCount_);
+	Spawn(param_.spawnCount);
 	isSpawned_ = true;
 }
 
@@ -42,15 +48,15 @@ void FloaterManager::Spawn(int count) {
 		//floater->SetTransient(true);
 		floater->Initialize();
 
-		floater->SetDriftSpeed(driftSpeed_);
-		floater->SetSpinSpeed(spinSpeed_);
-		floater->SetBounds(center, { spawnRadius_, 0.0f, spawnRadius_ });
+		floater->SetDriftSpeed(param_.driftSpeed);
+		floater->SetSpinSpeed(param_.spinSpeed);
+		floater->SetBounds(center, { param_.spawnRadius, 0.0f, param_.spawnRadius });
 
 		auto& wt = floater->GetWorldTransform();
 		wt.translation = {
-				center.x + Random::Generate(-spawnRadius_, spawnRadius_),
+				center.x + Random::Generate(-param_.spawnRadius, param_.spawnRadius),
 				center.y,
-				center.z + Random::Generate(-spawnRadius_, spawnRadius_)
+				center.z + Random::Generate(-param_.spawnRadius, param_.spawnRadius)
 		};
 		wt.Update();
 
@@ -87,4 +93,8 @@ void FloaterManager::Reclaim(std::shared_ptr<Floater> floater) {
 	}
 	floater->Unchain();
 	floaters_.push_back(std::move(floater));
+}
+
+void FloaterManager::DerivativeGui() {
+	param_.ShowGui();
 }

@@ -3,6 +3,7 @@
 // engine
 #include <Engine/Foundation/Reflection/CalyxReflection.h>
 #include <Engine/Objects/3D/Actor/Actor.h>
+#include <Engine/Foundation/Serialization/SerializableObject.h>
 
 // std
 #include <memory>
@@ -18,6 +19,7 @@ public:
 	FloaterManager();
 	~FloaterManager() override = default;
 
+	void Initialize() override;
 	void Update(float dt) override;
 
 	const std::vector<std::shared_ptr<Floater>>& GetFloaters() const { return floaters_; }
@@ -37,10 +39,45 @@ private:
 
 	std::vector<std::shared_ptr<Floater>> floaters_;
 
-	int spawnCount_ = 40;
-	float spawnRadius_ = 30.0f;
-	float driftSpeed_ = 1.2f;
-	float spinSpeed_ = 1.2f;
+
+	struct FloaterManagerParam : CalyxEngine::SerializableObject {
+		FloaterManagerParam() {
+			AddField("spawnCount", spawnCount)
+				.Category("Spawner")
+				.Tooltip("湧き数");
+
+			AddField("spawnRadius", spawnRadius)
+				.Category("Spawner")
+				.Tooltip("湧き範囲（フィールドの広さ）");
+
+			AddField("driftSpeed", driftSpeed)
+				.Category("Spawner")
+				.Tooltip("漂う人の速さ");
+
+			AddField("spinSpeed", spinSpeed)
+				.Category("Spawner")
+				.Tooltip("漂う人の回転速度");
+		}
+
+		Guid ownerGuid_;
+		CalyxEngine::ParamPath GetParamPath() const override {
+			return { CalyxEngine::ParamDomain::Game, ownerGuid_.ToString(), "Actor/Floater/FloaterManager" };
+		}
+
+		int spawnCount = 40;
+		float spawnRadius = 30.0f;
+		float driftSpeed = 1.2f;
+		float spinSpeed = 1.2f;
+
+	};
+
+
+	FloaterManagerParam param_;
 
 	bool isSpawned_ = false;
+
+public:
+
+	void DerivativeGui() override;
+
 };

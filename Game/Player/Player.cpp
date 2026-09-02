@@ -9,6 +9,7 @@
 #include "UI/Panels/InspectorPanel.h"
 
 // game
+#include <Game/Audio/GameAudio.h>
 #include <Game/Floater/BodyNode.h>
 #include <Game/Floater/Floater.h>
 
@@ -74,6 +75,8 @@ namespace {
 
 		return direction;
 	}
+
+	constexpr float kMoveSeYawThreshold = 0.5f; // 移動SEを鳴らす角速度の下限
 }
 
 void Player::Update(float dt) {
@@ -127,6 +130,12 @@ void Player::Update(float dt) {
 		wt.eulerRotation.y += yawVelocity_ * dt;
 		wt.rotationSource = RotationSource::Euler;
 		wt.Update();
+	}
+
+	if (worldDir.LengthSquared() > 0.0f || std::abs(yawVelocity_) > kMoveSeYawThreshold) {
+		GameAudio::PlaySeLoop(GameAudio::kSeMove);
+	} else {
+		GameAudio::StopSe();
 	}
 
 	// 手が触れていれば繋ぐ

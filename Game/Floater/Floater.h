@@ -15,6 +15,8 @@ public:
 	void Initialize() override;
 	void Update(float dt) override;
 
+	void OnCollisionEnter([[maybe_unused]] Collider* other)override;
+
 	void SetDriftSpeed(float speed) { driftSpeed_ = speed; }
 	void SetSpinSpeed(float speed) { spinSpeed_ = speed; }
 	//　漂う範囲

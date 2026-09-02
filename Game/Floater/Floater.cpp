@@ -58,6 +58,11 @@ void Floater::Update(float dt) {
 
 }
 
+void Floater::OnCollisionEnter(Collider* other) {
+	// 障害物に当たったらこの関数呼んでフラグ立てておく
+	//MarkBreak();
+}
+
 float Floater::GetYaw() const {
 	const auto& wt = GetWorldTransform();
 	float yaw = wt.eulerRotation.y;

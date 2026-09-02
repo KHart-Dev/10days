@@ -458,3 +458,14 @@ void Player::ExtractConfigToJson(nlohmann::json& j) const {
 		j[typeKey] = std::move(derived);
 	}
 }
+
+void Player::AllBreak() {
+
+	// 0番目はPlayer自身なので飛ばす
+	for (size_t i = 1; i < chain_.size(); i++) {
+
+		if (chain_[i].floater) {
+			chain_[i].floater->MarkBreak();
+		}
+	}
+}

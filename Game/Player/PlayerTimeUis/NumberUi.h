@@ -2,6 +2,7 @@
 
 #include <Engine/Objects/3D/Actor/Actor.h>
 #include <memory>
+#include <string>
 
 CALYX_OBJECT(Category = GameObject, DisplayName = "NumberUi", Icon = "Textures/player/player.png")
 class NumberUi : public Actor {
@@ -15,8 +16,8 @@ public:
 	void Update(float dt) override;
 
 	void SetNumber(int number) {
-		number_ = number;
-		Actor::SetTexture(std::to_string(number) + ".png");
+		std::string texturePath = "Textures/Numbers/" + std::to_string(number) + ".png";
+		Actor::SetTexture(texturePath);
 	}
 	void SetPosition(const CalyxEngine::Vector3& pos) {
 		auto& wt = GetWorldTransform();
@@ -32,9 +33,6 @@ public:
 private:
 
 	void DisableGravity();
-
-	// 現在の表示番号
-	uint32_t number_ = 0;
 
 };
 

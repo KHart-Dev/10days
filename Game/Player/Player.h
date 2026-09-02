@@ -153,5 +153,6 @@ public:
 
 	// 接続されている人数を返す（UI や外部管理用）
 	size_t GetConnectedCount() const { return chain_.size(); }
+	void AllBreak();
 
 };

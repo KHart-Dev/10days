@@ -10,6 +10,7 @@ void NumberUi::Initialize() {
 
 	// 回転: X軸に90度 (板を寝かせる)
 	auto& wt = GetWorldTransform();
+	wt.scale = CalyxEngine::Vector3(0.5f, 0.9f, 1.0f);
 	wt.eulerRotation.x = std::numbers::pi_v<float> * 0.5f;
 	wt.rotationSource = RotationSource::Euler;
 	wt.inheritRotate = false;

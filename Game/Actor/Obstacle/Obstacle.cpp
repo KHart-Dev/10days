@@ -3,6 +3,9 @@
 
 #include <algorithm>
 #include <cmath>
+#include <numbers>
+
+using namespace CalyxEngine;
 
 namespace {
 	// パラメータはGUI上ではfloatだが、棘は1ブロックに1本配置する。
@@ -23,8 +26,6 @@ Obstacle::Obstacle() :Actor("debugCube.obj", "Obstacle") {
 //		初期化
 /////////////////////////////////////////////////////////////////////////////////
 void Obstacle::Initialize() noexcept {
-	// Placement previews are transient. Creating scene-owned Thorn children here
-	// leaves them behind when the preview is removed and duplicates them on drop.
 	if (IsTransient()) {
 		return;
 	}
@@ -97,32 +98,93 @@ void Obstacle::ComputeOffset() noexcept {
 	const float halfHeight = static_cast<float>(height) * blockSize * 0.5f;
 	size_t thornIndex = 0;
 
+	// Thornモデルの初期方向。
+	const Vector3 thornBaseDirection = Vector3::Up();
+
+	// 各辺の外向き方向。
+	const Vector3 frontDirection = { 0.0f, 0.0f, 1.0f };
+	const Vector3 backDirection = { 0.0f, 0.0f, -1.0f };
+	const Vector3 leftDirection = { -1.0f, 0.0f, 0.0f };
+	const Vector3 rightDirection = { 1.0f, 0.0f, 0.0f };
+
 	// X方向の各ブロックの中心に、奥側(+Z)と手前側(-Z)の棘を1本ずつ配置する。
 	for (int x = 0; x < width; ++x) {
-		// 左端(-halfWidth)から半ブロック進めると、最初のブロック中心になる。
 		const float localX =
 			-halfWidth + blockSize * 0.5f + static_cast<float>(x) * blockSize;
 
-		thorns_[thornIndex++]->GetWorldTransform().translation = {
-			localX, 0.0f, halfHeight + thornCenterOffset
-		};
-		thorns_[thornIndex++]->GetWorldTransform().translation = {
-			localX, 0.0f, -halfHeight - thornCenterOffset
-		};
+		// 奥側(+Z)
+		{
+			auto& transform =
+				thorns_[thornIndex++]->GetWorldTransform();
+
+			transform.translation = {
+				localX,
+				0.0f,
+				halfHeight + thornCenterOffset
+			};
+
+			transform.rotation = CalyxEngine::Quaternion::FromToQuaternion(
+				thornBaseDirection,
+				frontDirection
+			);
+		}
+
+		// 手前側(-Z)
+		{
+			auto& transform =
+				thorns_[thornIndex++]->GetWorldTransform();
+
+			transform.translation = {
+				localX,
+				0.0f,
+				-halfHeight - thornCenterOffset
+			};
+
+			transform.rotation = CalyxEngine::Quaternion::FromToQuaternion(
+				thornBaseDirection,
+				backDirection
+			);
+		}
 	}
 
-	// Z方向も同様に、左側(-X)と右側(+X)の棘を1本ずつ配置する。
-	// 角の棘は上のループと座標が重ならないため、外周は 2 * (width + height) 本になる。
+	// Z方向の各ブロックの中心に、左側(-X)と右側(+X)の棘を1本ずつ配置する。
 	for (int z = 0; z < height; ++z) {
 		const float localZ =
 			-halfHeight + blockSize * 0.5f + static_cast<float>(z) * blockSize;
 
-		thorns_[thornIndex++]->GetWorldTransform().translation = {
-			-halfWidth - thornCenterOffset, 0.0f, localZ
-		};
-		thorns_[thornIndex++]->GetWorldTransform().translation = {
-			halfWidth + thornCenterOffset, 0.0f, localZ
-		};
+		// 左側(-X)
+		{
+			auto& transform =
+				thorns_[thornIndex++]->GetWorldTransform();
+
+			transform.translation = {
+				-halfWidth - thornCenterOffset,
+				0.0f,
+				localZ
+			};
+
+			transform.rotation = CalyxEngine::Quaternion::FromToQuaternion(
+				thornBaseDirection,
+				leftDirection
+			);
+		}
+
+		// 右側(+X)
+		{
+			auto& transform =
+				thorns_[thornIndex++]->GetWorldTransform();
+
+			transform.translation = {
+				halfWidth + thornCenterOffset,
+				0.0f,
+				localZ
+			};
+
+			transform.rotation = CalyxEngine::Quaternion::FromToQuaternion(
+				thornBaseDirection,
+				rightDirection
+			);
+		}
 	}
 }
 

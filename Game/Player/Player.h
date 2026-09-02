@@ -21,7 +21,7 @@ class Player : public Actor {
 public:
 
 	Player();
-	~Player() override = default;
+	~Player() override;
 
 	void Initialize() override;
 	void Update(float dt) override;
@@ -150,5 +150,9 @@ public:
 	void ApplyConfigFromJson(const nlohmann::json& j) override;
 	void ExtractConfigToJson(nlohmann::json& j) const override;
 	void DerivativeGui() override;
+
+	// 接続されている人数を返す（UI や外部管理用）
+	size_t GetConnectedCount() const { return chain_.size(); }
+	void AllBreak();
 
 };

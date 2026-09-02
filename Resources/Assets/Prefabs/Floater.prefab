@@ -28,12 +28,12 @@
         },
         "colliderKind": 1,
         "drawEnable": true,
-        "guid": "ddd096a9-4e39-419a-a870-afaa36aa1282",
+        "guid": "050fcc3d-5e5b-4cf9-8059-777e486e6e40",
         "modelConfig": {
             "blendMode": 5,
             "materialGuid": "00000000-0000-0000-0000-000000000000",
             "modelName": "plane.obj",
-            "textureGuid": "2afd4995-a7fd-4869-b509-4e1e29329497",
+            "textureGuid": "8bcc5d2f-fb22-4d4b-a53e-064a43b4f159",
             "uvTransConfig": {
                 "rotation": 0.0,
                 "scale": {
@@ -55,7 +55,7 @@
         "parentGuid": "00000000-0000-0000-0000-000000000000",
         "physicsBodyConfig": {
             "bodyType": 1,
-            "enabled": true,
+            "enabled": false,
             "gravityScale": 1.0,
             "mass": 1.0,
             "pushbackRatio": 1.0,
@@ -77,9 +77,9 @@
                 "z": 1.0
             },
             "translation": {
-                "x": 0.0,
-                "y": 0.5,
-                "z": 3.4551365388324484e-05
+                "x": -7.161334991455078,
+                "y": 0.9592199325561523,
+                "z": 2.792919158935547
             }
         },
         "type": "Floater",

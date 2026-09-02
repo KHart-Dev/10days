@@ -9,6 +9,7 @@
 
 // game
 #include "BodyNode.h"
+#include <Game/Audio/GameAudio.h>
 #include <Game/Collision/CollisionLayerUtil.h>
 
 // std
@@ -57,6 +58,11 @@ void Floater::Update(float dt) {
 
 }
 
+void Floater::OnCollisionEnter(Collider* other) {
+	// 障害物に当たったらこの関数呼んでフラグ立てておく
+	//MarkBreak();
+}
+
 float Floater::GetYaw() const {
 	const auto& wt = GetWorldTransform();
 	float yaw = wt.eulerRotation.y;
@@ -97,6 +103,8 @@ void Floater::MarkChained() {
 	chained_ = true;
 	driftDir_ = {};
 	spinRate_ = 0.0f;
+	GameAudio::PlaySe(GameAudio::kSeConnect);
+	SetTexture("Textures/connectHuman/connectHuman.png");
 }
 
 void Floater::MarkBreak() {
@@ -110,6 +118,8 @@ void Floater::Unchain() {
 	driftDir_ = { Random::Generate(-1.0f, 1.0f), 0.0f, Random::Generate(-1.0f, 1.0f) }; // とりあえず今はランダム方向に壊れる
 	driftDir_ = driftDir_.Normalize();
 	spinRate_ = Random::Generate(-1.0f, 1.0f);
+	GameAudio::PlaySe(GameAudio::kSeDamage);
+	SetTexture("Textures/human/human.png");
 }
 
 void Floater::ReachTowardArmAngle(int hand, float targetArmAngle, float step) {

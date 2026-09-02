@@ -9,6 +9,7 @@
 #include "UI/Panels/InspectorPanel.h"
 
 // game
+#include <Game/Audio/GameAudio.h>
 #include <Game/Floater/BodyNode.h>
 #include <Game/Floater/Floater.h>
 
@@ -22,6 +23,10 @@ Player::Player()
 	: Actor("character.obj", "Player") {
 	// パラメータをロード（パラメータデータベースから既定値を読み込む）
 	param_.LoadParams();
+}
+
+Player::~Player() {
+	GameAudio::StopSe();
 }
 
 void Player::DerivativeGui() {
@@ -74,6 +79,8 @@ namespace {
 
 		return direction;
 	}
+
+	constexpr float kMoveSeYawThreshold = 0.5f; // 移動SEを鳴らす角速度の下限
 }
 
 void Player::Update(float dt) {
@@ -127,6 +134,12 @@ void Player::Update(float dt) {
 		wt.eulerRotation.y += yawVelocity_ * dt;
 		wt.rotationSource = RotationSource::Euler;
 		wt.Update();
+	}
+
+	if (worldDir.LengthSquared() > 0.0f || std::abs(yawVelocity_) > kMoveSeYawThreshold) {
+		GameAudio::PlaySeLoop(GameAudio::kSeMove);
+	} else {
+		GameAudio::StopSe();
 	}
 
 	// 手が触れていれば繋ぐ
@@ -443,5 +456,16 @@ void Player::ExtractConfigToJson(nlohmann::json& j) const {
 	derived["yawAcceleration"] = param_.yawAcceleration;
 	if (!derived.empty()) {
 		j[typeKey] = std::move(derived);
+	}
+}
+
+void Player::AllBreak() {
+
+	// 0番目はPlayer自身なので飛ばす
+	for (size_t i = 1; i < chain_.size(); i++) {
+
+		if (chain_[i].floater) {
+			chain_[i].floater->MarkBreak();
+		}
 	}
 }

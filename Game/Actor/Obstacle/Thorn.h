@@ -19,7 +19,7 @@ public:
 	Thorn();
 	~Thorn()override;
 
-	void OnCollisionEnter([[maybe_unused]] Collider* other);
+	void OnCollisionEnter([[maybe_unused]] Collider* other) override;
 
 	std::string_view GetObjectClassName() const override { return "Thorn"; }
 

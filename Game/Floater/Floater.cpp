@@ -5,12 +5,16 @@
 #include <Engine/Foundation/Math/Quaternion.h>
 #include <Engine/Foundation/Utility/Random/Random.h>
 #include <Engine/Foundation/Math/MathUtil.h>
+#include <Engine/Objects/3D/Actor/Library/SceneObjectLibrary.h>
 #include <Engine/Objects/Collider/BoxCollider.h>
+#include <Engine/Scene/Context/SceneContext.h>
 
 // game
 #include "BodyNode.h"
 #include <Game/Audio/GameAudio.h>
+#include <Game/Actor/Obstacle/Thorn.h>
 #include <Game/Collision/CollisionLayerUtil.h>
+#include <Game/Demo/3D/Actor/DemoCamera/DemoCameraPivot.h>
 
 // std
 #include <algorithm>
@@ -20,6 +24,23 @@
 namespace {
 	// 板を寝かせるための固定ピッチ
 	constexpr float kPitch = std::numbers::pi_v<float> * 0.5f;
+	constexpr float kBreakShakeDuration = 0.5f;
+	constexpr float kBreakShakeIntensity = 15.0f;
+
+	void RequestBreakCameraShake() {
+		auto* context = SceneContext::Current();
+		auto* library = context ? context->GetObjectLibrary() : nullptr;
+		if(!library) {
+			return;
+		}
+
+		auto pivots = library->FindByClassName("DemoCameraPivot");
+		if(!pivots.empty()) {
+			if(auto* pivot = dynamic_cast<DemoCameraPivot*>(pivots.front().get())) {
+				pivot->RequestShake(kBreakShakeDuration, kBreakShakeIntensity);
+			}
+		}
+	}
 }
 
 Floater::Floater()
@@ -59,8 +80,11 @@ void Floater::Update(float dt) {
 }
 
 void Floater::OnCollisionEnter(Collider* other) {
-	// 障害物に当たったらこの関数呼んでフラグ立てておく
-	//MarkBreak();
+	BaseGameObject* owner = other ? other->GetOwner() : nullptr;
+	if(chained_ && dynamic_cast<Thorn*>(owner)) {
+		MarkBreak();
+		RequestBreakCameraShake();
+	}
 }
 
 float Floater::GetYaw() const {

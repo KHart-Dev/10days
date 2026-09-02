@@ -52,10 +52,10 @@
         },
         "outlineEnabled": false,
         "outlineThickness": 0.03500000014901161,
-        "parentGuid": "00000000-0000-0000-0000-000000000000",
+        "parentGuid": "cc16ac2d-3ddd-4447-8aae-3bb8427f42b9",
         "physicsBodyConfig": {
             "bodyType": 1,
-            "enabled": true,
+            "enabled": false,
             "gravityScale": 1.0,
             "mass": 1.0,
             "pushbackRatio": 1.0,
@@ -63,13 +63,13 @@
         },
         "transform": {
             "inheritRotate": true,
-            "inheritScale": true,
+            "inheritScale": false,
             "inheritTranslate": true,
             "rotation": {
-                "w": 0.5080459117889404,
-                "x": 0.5080463886260986,
-                "y": -0.4918223023414612,
-                "z": 0.4918222427368164
+                "w": 0.7071067690849304,
+                "x": -0.0,
+                "y": -0.0,
+                "z": 0.7071067690849304
             },
             "scale": {
                 "x": 0.5,
@@ -77,9 +77,9 @@
                 "z": 0.5
             },
             "translation": {
-                "x": -2.416257619857788,
-                "y": 0.004139618016779423,
-                "z": -3.2593977451324463
+                "x": -1.0,
+                "y": 0.0,
+                "z": 0.0
             }
         },
         "type": "Thorn",
@@ -93,10 +93,10 @@
             "inheritScale": true,
             "inheritTranslate": true,
             "rotation": {
-                "w": 0.5080459117889404,
-                "x": 0.5080463886260986,
-                "y": -0.4918223023414612,
-                "z": 0.4918222427368164
+                "w": 0.7071067690849304,
+                "x": -0.0,
+                "y": -0.0,
+                "z": 0.7071067690849304
             },
             "scale": {
                 "x": 0.5,

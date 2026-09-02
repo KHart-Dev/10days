@@ -550,12 +550,16 @@
                 {
                     "id": 1,
                     "name": "Player"
+                },
+                {
+                    "id": 2,
+                    "name": "Thorn"
                 }
             ],
             "matrixRows": [
                 0,
-                0,
-                0,
+                4,
+                2,
                 0,
                 0,
                 0,

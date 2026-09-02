@@ -38,6 +38,8 @@
     <ClCompile Include="Game\Floater\Floater.cpp" />
     <ClCompile Include="Game\Floater\FloaterManager.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Obstacle.cpp" />
+    <ClCompile Include="Game\Player\PlayerTimeUis\NumberUi.cpp" />
+    <ClCompile Include="Game\Player\PlayerTimeUis\PlayerTimeUis.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +52,8 @@
     <ClInclude Include="Game\Floater\BodyNode.h" />
     <ClInclude Include="Game\Collision\CollisionLayerUtil.h" />
     <ClInclude Include="Game\Actor\Obstacle\Obstacle.h" />
+    <ClInclude Include="Game\Player\PlayerTimeUis\NumberUi.h" />
+    <ClInclude Include="Game\Player\PlayerTimeUis\PlayerTimeUis.h" />
     <ClInclude Include="Game\Audio\GameAudio.h" />
     <ClInclude Include="Game\Actor\Obstacle\Thorn.h" />
   </ItemGroup>

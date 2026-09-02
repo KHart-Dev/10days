@@ -188,6 +188,8 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Game\Floater\BodyNode.cpp" />
     <ClCompile Include="Game\Floater\Floater.cpp" />
     <ClCompile Include="Game\Floater\FloaterManager.cpp" />
+    <ClCompile Include="Game\Player\PlayerTimeUis\NumberUi.cpp" />
+    <ClCompile Include="Game\Player\PlayerTimeUis\PlayerTimeUis.cpp" />
     <ClCompile Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.cpp" />
     <ClCompile Include="Game\Player\Player.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Obstacle.cpp" />
@@ -199,6 +201,8 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClInclude Include="Game\Floater\BodyNode.h" />
     <ClInclude Include="Game\Floater\Floater.h" />
     <ClInclude Include="Game\Floater\FloaterManager.h" />
+    <ClInclude Include="Game\Player\PlayerTimeUis\NumberUi.h" />
+    <ClInclude Include="Game\Player\PlayerTimeUis\PlayerTimeUis.h" />
     <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h" />
     <ClInclude Include="Game\Player\Player.h" />
     <ClInclude Include="Game\Actor\Obstacle\Obstacle.h" />

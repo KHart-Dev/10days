@@ -1,0 +1,16 @@
+{
+    "fields": {
+        "colliderRadius": 1.0,
+        "despawnRadius": 60.0,
+        "directionSpread": 25.0,
+        "flowAngle": 215.0,
+        "intervalMax": 3.0,
+        "intervalMin": 1.0,
+        "maxAlive": 8,
+        "spawnDistance": 40.0,
+        "spawnHeight": 0.5,
+        "spawnSpread": 10.0,
+        "speedMax": 12.0,
+        "speedMin": 6.0
+    }
+}

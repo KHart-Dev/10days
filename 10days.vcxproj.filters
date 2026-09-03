@@ -40,6 +40,11 @@
     <ClCompile Include="Game\Actor\Obstacle\Obstacle.cpp" />
     <ClCompile Include="Game\Player\PlayerTimeUis\PlayerTimeUis.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
+    <ClCompile Include="Game\Meteorite\InGame\Meteorite.cpp" />
+    <ClCompile Include="Game\Meteorite\InGame\MeteoriteSpawner.cpp" />
+    <ClCompile Include="Game\Meteorite\InResult\MeteoriteWarning.cpp" />
+    <ClCompile Include="Game\Meteorite\InResult\FallingMeteorite.cpp" />
+    <ClCompile Include="Game\Meteorite\InResult\MeteoriteDirector.cpp" />
     <ClCompile Include="Game\Player\PlayerTimeUis\NumberUi.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -56,5 +61,12 @@
     <ClInclude Include="Game\Player\PlayerTimeUis\PlayerTimeUis.h" />
     <ClInclude Include="Game\Audio\GameAudio.h" />
     <ClInclude Include="Game\Actor\Obstacle\Thorn.h" />
+    <ClInclude Include="Game\Meteorite\InGame\Meteorite.h" />
+    <ClInclude Include="Game\Meteorite\InGame\MeteoriteSpawner.h" />
+    <ClInclude Include="Game\Meteorite\InResult\MeteoriteWarning.h" />
+    <ClInclude Include="Game\Meteorite\InResult\FallingMeteorite.h" />
+    <ClInclude Include="Game\Meteorite\InResult\MeteoriteDirector.h" />
+    <ClInclude Include="Game\Result\ResultCarry.h" />
+    <ClInclude Include="Game\Floater\ChainMemberData.h" />
   </ItemGroup>
 </Project>

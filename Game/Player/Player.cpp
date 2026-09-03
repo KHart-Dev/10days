@@ -12,6 +12,7 @@
 #include <Game/Audio/GameAudio.h>
 #include <Game/Floater/BodyNode.h>
 #include <Game/Floater/Floater.h>
+#include <Game/Result/ResultCarry.h>
 
 // std
 #include <algorithm>
@@ -33,8 +34,8 @@ void Player::DerivativeGui() {
 	using namespace GuiCmd;
 	if (BeginSection(CalyxEngine::ParamFilterSection::Object)) {
 		// SerializableObject ベースの param_ を GUI 表示
-		GuiCmd::SceneObjectReferenceField("Target(FloaterManager)", param_.floaterManager);
-		PropertyText("Manager", "%s", param_.floaterManager.Resolve() ? "OK" : "MISSING");
+		GuiCmd::SceneObjectReferenceField("Target(FloaterManager)", floaterManager_);
+		PropertyText("Manager", "%s", floaterManager_.Resolve() ? "OK" : "MISSING");
 		PropertyText("Connected", "%d", static_cast<int>(chain_.size()) - 1);
 		PropertyText("Anchors", "%d", static_cast<int>(handAnchors_.size()));
 		PropertyText("NearestHand", "%.2f m", debugNearestDist_);
@@ -47,6 +48,7 @@ void Player::DerivativeGui() {
 				chain_[debugBreakIndex_].floater->MarkBreak();
 			}
 		}
+		ImGui::Checkbox("Result Mode", &resultMode_);
 		param_.ShowGui();
 		EndSection();
 	}
@@ -84,6 +86,16 @@ namespace {
 }
 
 void Player::Update(float dt) {
+	if (resultMode_) {
+		if (!restored_) { restored_ = RestoreChain(); }
+		if (auto manager = floaterManager_.Resolve()) {
+			BreakChain(*manager);
+		}
+		ApplyChainTransforms();
+		Actor::Update(dt);
+		return;
+	}
+
 	// 入力更新
 	input_.Update();
 	const PlayerInputState& state = input_.GetState();
@@ -143,7 +155,7 @@ void Player::Update(float dt) {
 	}
 
 	// 手が触れていれば繋ぐ
-	if (std::shared_ptr<FloaterManager> manager = param_.floaterManager.Resolve()) {
+	if (std::shared_ptr<FloaterManager> manager = floaterManager_.Resolve()) {
 		BreakChain(*manager);
 		BuildHandAnchors();
 		CheckConnect(*manager, dt);
@@ -217,6 +229,32 @@ bool Player::BreakChain(FloaterManager& manager) {
 	}
 
 	chain_.erase(chain_.begin() + writeIndex, chain_.end());
+	return true;
+}
+
+bool Player::RestoreChain() {
+	auto manager = floaterManager_.Resolve();
+	if (!manager) return false;
+
+	auto& wt = GetWorldTransform();
+	//wt.translation = ResultCarry::playerPos;
+	//wt.eulerRotation.y = ResultCarry::playerYaw;
+	wt.rotationSource = RotationSource::Euler;
+	wt.Update();
+
+	chain_.clear();
+	for (size_t i = 0; i < ResultCarry::chain.size(); i++) {
+		const ChainMemberData& d = ResultCarry::chain[i];
+		std::shared_ptr<Floater> floater;
+		if (i != 0) {                                  // [0] は自機
+			floater = manager->CreateChained(d.offset);
+			if (floater) {
+				floater->RestoreChained();
+			}
+		}
+		chain_.push_back(Member{ d, floater });
+	}
+	ApplyChainTransforms();
 	return true;
 }
 
@@ -443,6 +481,8 @@ void Player::ApplyConfigFromJson(const nlohmann::json& j) {
 	param_.moveSpeed = src->value("moveSpeed", param_.moveSpeed);
 	param_.rotSpeedDeg = src->value("rotSpeedDeg", param_.rotSpeedDeg);
 	param_.yawAcceleration = src->value("yawAcceleration", param_.yawAcceleration);
+	resultMode_ = src->value("resultMode", resultMode_);
+	floaterManager_ = src->value("FloaterManagerPtr", floaterManager_);
 }
 
 void Player::ExtractConfigToJson(nlohmann::json& j) const {
@@ -454,6 +494,8 @@ void Player::ExtractConfigToJson(nlohmann::json& j) const {
 	derived["moveSpeed"] = param_.moveSpeed;
 	derived["rotSpeedDeg"] = param_.rotSpeedDeg;
 	derived["yawAcceleration"] = param_.yawAcceleration;
+	derived["resultMode"] = resultMode_;
+	derived["FloaterManagerPtr"] = floaterManager_;
 	if (!derived.empty()) {
 		j[typeKey] = std::move(derived);
 	}
@@ -468,4 +510,10 @@ void Player::AllBreak() {
 			chain_[i].floater->MarkBreak();
 		}
 	}
+}
+
+void Player::ExportChain() const {
+	ResultCarry::chain.assign(chain_.begin(), chain_.end());
+	ResultCarry::playerPos = GetWorldTransform().translation;
+	ResultCarry::playerYaw = GetWorldTransform().eulerRotation.y;
 }

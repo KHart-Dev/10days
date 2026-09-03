@@ -70,7 +70,9 @@
         },
         {
             "Player": {
+                "FloaterManagerPtr": "d0906e04-1f2c-4d1d-b98f-9ec57e496b6e",
                 "moveSpeed": 5.0,
+                "resultMode": false,
                 "rotSpeedDeg": 250.0,
                 "yawAcceleration": 5.0
             },
@@ -171,10 +173,10 @@
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.9774869084358215,
-                    "x": -0.019163062795996666,
-                    "y": -0.21008418500423431,
-                    "z": -0.0041185785084962845
+                    "w": 0.9720109105110168,
+                    "x": 0.22799795866012573,
+                    "y": -0.05517430230975151,
+                    "z": 0.012941858731210232
                 },
                 "scale": {
                     "x": 1.0,
@@ -182,9 +184,9 @@
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 0.12142038345336914,
-                    "y": 5.6114583015441895,
-                    "z": -7.762331485748291
+                    "x": -1.1506166458129883,
+                    "y": 9.140426635742188,
+                    "z": -9.927497863769531
                 }
             },
             "type": "DebugCamera"
@@ -712,6 +714,94 @@
                 }
             },
             "type": "PlayerTimeUis",
+            "visualOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "cameraDitherEnabled": false,
+            "colliderConfig": {
+                "capsuleHeight": 2.0,
+                "capsuleRadius": 0.5,
+                "isCollisionEnabled": true,
+                "isDraw": true,
+                "isTrigger": false,
+                "layerId": 0,
+                "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius": 1.0,
+                "rotate": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "size": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            },
+            "colliderKind": 0,
+            "guid": "80aed650-0c99-4ea0-a8b9-73085af33cff",
+            "modelConfig": {
+                "blendMode": 5,
+                "materialGuid": "00000000-0000-0000-0000-000000000000",
+                "modelName": "cone.obj",
+                "textureGuid": "00000000-0000-0000-0000-000000000000",
+                "uvTransConfig": {
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            "name": "Meteorite Spawner",
+            "objectType": 2,
+            "outlineColor": {
+                "w": 1.0,
+                "x": 0.019999999552965164,
+                "y": 0.019999999552965164,
+                "z": 0.02500000037252903
+            },
+            "outlineEnabled": false,
+            "outlineThickness": 0.03500000014901161,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "physicsBodyConfig": {
+                "bodyType": 1,
+                "enabled": true,
+                "gravityScale": 1.0,
+                "mass": 1.0,
+                "pushbackRatio": 1.0,
+                "useGravity": true
+            },
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612
+                },
+                "translation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "type": "MeteoriteSpawner",
             "visualOffset": {
                 "x": 0.0,
                 "y": 0.0,

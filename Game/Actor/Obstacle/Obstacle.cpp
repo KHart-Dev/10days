@@ -17,9 +17,14 @@ namespace {
 	}
 }
 
-Obstacle::Obstacle() :Actor("debugCube.obj", "Obstacle") {
+Obstacle::Obstacle() :Actor("plane.obj", "Obstacle") {
 
 	param_.LoadParams();
+	SetTexture("Textures/Obstacle/block.png");
+
+	// plane.obj is authored on XY. Lay it on XZ for the pseudo-2D obstacle.
+	worldTransform_.eulerRotation.x = std::numbers::pi_v<float> * 0.5f;
+	worldTransform_.rotationSource = RotationSource::Euler;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -29,6 +34,11 @@ void Obstacle::Initialize() noexcept {
 	if (IsTransient()) {
 		return;
 	}
+
+	// Serialized scene transforms can overwrite the constructor default.
+	worldTransform_.eulerRotation.x = std::numbers::pi_v<float> * 0.5f;
+	worldTransform_.rotationSource = RotationSource::Euler;
+	SetTexture("Textures/Obstacle/block.png");
 
 	// 生成と配置を分けることで、初期化時とサイズ変更時に同じ計算を使う。
 	const int width = ToBlockCount(param_.size_.x);
@@ -54,7 +64,7 @@ void Obstacle::AlwaysUpdate(float dt) {
 
 	// サイズを適用
 	worldTransform_.scale.x = baseScale_.x * param_.size_.x;
-	worldTransform_.scale.z = baseScale_.y * param_.size_.y;
+	worldTransform_.scale.y = baseScale_.y * param_.size_.y;
 
 	// 行列更新など
 	Actor::AlwaysUpdate(dt);
@@ -98,14 +108,14 @@ void Obstacle::ComputeOffset() noexcept {
 	const float halfHeight = static_cast<float>(height) * blockSize * 0.5f;
 	size_t thornIndex = 0;
 
-	// Thornモデルの初期方向。
-	const Vector3 thornBaseDirection = Vector3::Up();
-
-	// 各辺の外向き方向。
-	const Vector3 frontDirection = { 0.0f, 0.0f, 1.0f };
-	const Vector3 backDirection = { 0.0f, 0.0f, -1.0f };
-	const Vector3 leftDirection = { -1.0f, 0.0f, 0.0f };
-	const Vector3 rightDirection = { 1.0f, 0.0f, 0.0f };
+	// The texture tip is local +Y. Pitching +90 degrees lays the plane on XZ
+	// and maps the tip to +Z; yaw then points it towards the relevant edge.
+	constexpr float halfPi = std::numbers::pi_v<float> * 0.5f;
+	constexpr float pi = std::numbers::pi_v<float>;
+	const auto setThornRotation = [](WorldTransform& transform, float yaw) {
+		transform.eulerRotation = { halfPi, yaw, 0.0f };
+		transform.rotationSource = RotationSource::Euler;
+	};
 
 	// X方向の各ブロックの中心に、奥側(+Z)と手前側(-Z)の棘を1本ずつ配置する。
 	for (int x = 0; x < width; ++x) {
@@ -123,10 +133,7 @@ void Obstacle::ComputeOffset() noexcept {
 				halfHeight + thornCenterOffset
 			};
 
-			transform.rotation = CalyxEngine::Quaternion::FromToQuaternion(
-				thornBaseDirection,
-				frontDirection
-			);
+			setThornRotation(transform, 0.0f);
 		}
 
 		// 手前側(-Z)
@@ -140,10 +147,7 @@ void Obstacle::ComputeOffset() noexcept {
 				-halfHeight - thornCenterOffset
 			};
 
-			transform.rotation = CalyxEngine::Quaternion::FromToQuaternion(
-				thornBaseDirection,
-				backDirection
-			);
+			setThornRotation(transform, pi);
 		}
 	}
 
@@ -163,10 +167,7 @@ void Obstacle::ComputeOffset() noexcept {
 				localZ
 			};
 
-			transform.rotation = CalyxEngine::Quaternion::FromToQuaternion(
-				thornBaseDirection,
-				leftDirection
-			);
+			setThornRotation(transform, -halfPi);
 		}
 
 		// 右側(+X)
@@ -180,10 +181,7 @@ void Obstacle::ComputeOffset() noexcept {
 				localZ
 			};
 
-			transform.rotation = CalyxEngine::Quaternion::FromToQuaternion(
-				thornBaseDirection,
-				rightDirection
-			);
+			setThornRotation(transform, halfPi);
 		}
 	}
 }
@@ -199,6 +197,9 @@ void Obstacle::RebuildThorns(int width, int height) {
 
 		// 親の拡大率を継承すると棘自体まで伸びるため、inheritScaleはfalseにする。
 		thorn->SetParent(shared_from_this(), false);
+		// Both parent and thorn planes have their own XZ rotation. Do not apply
+		// the obstacle rotation to the thorn a second time.
+		thorn->GetWorldTransform().inheritRotate = false;
 
 		thorns_.push_back(thorn);
 	}

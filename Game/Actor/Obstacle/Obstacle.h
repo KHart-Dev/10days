@@ -67,7 +67,8 @@ private:
 		CalyxEngine::Vector2 size_{ 1.0f,1.0f };		//< 5でサイズ1 サイズ１ごとに棘が増える
 	}param_;
 
-	CalyxEngine::Vector3 baseScale_{ 1.0f,1.0f,1.0f };	//< 基準になる大きさ
+	// plane.obj is 2x2, so 0.5 corresponds to one obstacle block.
+	CalyxEngine::Vector3 baseScale_{ 0.5f,0.5f,0.5f };	//< 基準になる大きさ
 
 	std::vector<std::shared_ptr<Thorn>> thorns_;		//< 棘
 	

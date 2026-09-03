@@ -4,9 +4,10 @@
 
 #include <Game/Player/Player.h>
 
-Thorn::Thorn() :Actor("cone.obj", "thorn") {
+Thorn::Thorn() :Actor("plane.obj", "thorn") {
 	//初期化時にスケールを小さくしておく
 	worldTransform_.scale *= 0.5f;
+	SetTexture("Textures/Obstacle/needle.png");
 }
 Thorn::~Thorn() = default;
 

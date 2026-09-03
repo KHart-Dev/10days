@@ -1,0 +1,573 @@
+[
+    {
+        "cameraDitherEnabled": false,
+        "castShadow": true,
+        "colliderConfig": {
+            "capsuleHeight": 2.0,
+            "capsuleRadius": 0.5,
+            "isCollisionEnabled": false,
+            "isDraw": true,
+            "isTrigger": false,
+            "layerId": 0,
+            "offset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "radius": 1.0,
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            }
+        },
+        "colliderKind": 1,
+        "drawEnable": true,
+        "guid": "cc16ac2d-3ddd-4447-8aae-3bb8427f42b9",
+        "modelConfig": {
+            "blendMode": 5,
+            "materialGuid": "00000000-0000-0000-0000-000000000000",
+            "modelName": "plane.obj",
+            "textureGuid": "20127f2d-4329-4910-9fa2-6bfe86890417",
+            "uvTransConfig": {
+                "rotation": 0.0,
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            }
+        },
+        "name": "Obstacle",
+        "objectType": 2,
+        "outlineColor": {
+            "w": 1.0,
+            "x": 0.019999999552965164,
+            "y": 0.019999999552965164,
+            "z": 0.02500000037252903
+        },
+        "outlineEnabled": false,
+        "outlineThickness": 0.03500000014901161,
+        "parentGuid": "00000000-0000-0000-0000-000000000000",
+        "physicsBodyConfig": {
+            "bodyType": 1,
+            "enabled": false,
+            "gravityScale": 1.0,
+            "mass": 1.0,
+            "pushbackRatio": 1.0,
+            "useGravity": true
+        },
+        "serializableParams": {
+            "Game/Actor/CharacterMovementComponent": {
+                "fields": {
+                    "floorProbeDistance": 0.3499999940395355,
+                    "floorSnapDistance": 0.30000001192092896,
+                    "gravity": 22.100000381469727,
+                    "jumpVelocity": 5.900000095367432,
+                    "maxFallSpeed": 50.0,
+                    "maxWalkSpeed": 5.900000095367432,
+                    "movementDebugLineScale": 0.20000000298023224,
+                    "showMovementDebugLine": true,
+                    "skinWidth": 0.009999999776482582,
+                    "walkableFloorAngle": 61.0
+                }
+            }
+        },
+        "transform": {
+            "inheritRotate": true,
+            "inheritScale": true,
+            "inheritTranslate": true,
+            "rotation": {
+                "w": 0.7071067690849304,
+                "x": 0.7071067690849304,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "scale": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 1.0
+            },
+            "translation": {
+                "x": -0.2219235897064209,
+                "y": 0.030879465863108635,
+                "z": 2.454794406890869
+            }
+        },
+        "type": "Obstacle",
+        "visualOffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "worldTransform": {
+            "inheritRotate": true,
+            "inheritScale": true,
+            "inheritTranslate": true,
+            "rotation": {
+                "w": 0.7071067690849304,
+                "x": 0.7071067690849304,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "scale": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 1.0
+            },
+            "translation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "cameraDitherEnabled": false,
+        "castShadow": true,
+        "colliderConfig": {
+            "capsuleHeight": 2.0,
+            "capsuleRadius": 0.5,
+            "isCollisionEnabled": true,
+            "isDraw": true,
+            "isTrigger": true,
+            "layerId": 2,
+            "offset": {
+                "x": 0.0,
+                "y": -0.18000000715255737,
+                "z": 0.0
+            },
+            "radius": 1.0,
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.6000000238418579,
+                "y": 0.6000000238418579,
+                "z": 1.0
+            }
+        },
+        "colliderKind": 1,
+        "drawEnable": true,
+        "guid": "fb1a9bbb-ab93-46b1-b3b6-c3e9d3bab670",
+        "modelConfig": {
+            "blendMode": 5,
+            "materialGuid": "00000000-0000-0000-0000-000000000000",
+            "modelName": "plane.obj",
+            "textureGuid": "adc4c73e-0453-4ecb-93a9-5d187e9d1be8",
+            "uvTransConfig": {
+                "rotation": 0.0,
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            }
+        },
+        "name": "thorn",
+        "objectType": 2,
+        "outlineColor": {
+            "w": 1.0,
+            "x": 0.019999999552965164,
+            "y": 0.019999999552965164,
+            "z": 0.02500000037252903
+        },
+        "outlineEnabled": false,
+        "outlineThickness": 0.03500000014901161,
+        "parentGuid": "cc16ac2d-3ddd-4447-8aae-3bb8427f42b9",
+        "physicsBodyConfig": {
+            "bodyType": 1,
+            "enabled": false,
+            "gravityScale": 1.0,
+            "mass": 1.0,
+            "pushbackRatio": 1.0,
+            "useGravity": true
+        },
+        "transform": {
+            "inheritRotate": false,
+            "inheritScale": false,
+            "inheritTranslate": true,
+            "rotation": {
+                "w": 0.7071067690849304,
+                "x": 0.7071067690849304,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "scale": {
+                "x": 0.4999999701976776,
+                "y": 0.4999999701976776,
+                "z": 0.4999999701976776
+            },
+            "translation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+            }
+        },
+        "type": "Thorn",
+        "visualOffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "worldTransform": {
+            "inheritRotate": false,
+            "inheritScale": false,
+            "inheritTranslate": true,
+            "rotation": {
+                "w": 0.7071067690849304,
+                "x": 0.7071067690849304,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "scale": {
+                "x": 0.4999999701976776,
+                "y": 0.4999999701976776,
+                "z": 0.4999999701976776
+            },
+            "translation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+            }
+        }
+    },
+    {
+        "cameraDitherEnabled": false,
+        "castShadow": true,
+        "colliderConfig": {
+            "capsuleHeight": 2.0,
+            "capsuleRadius": 0.5,
+            "isCollisionEnabled": true,
+            "isDraw": true,
+            "isTrigger": true,
+            "layerId": 2,
+            "offset": {
+                "x": 0.0,
+                "y": -0.18000000715255737,
+                "z": 0.0
+            },
+            "radius": 1.0,
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.6000000238418579,
+                "y": 0.6000000238418579,
+                "z": 1.0
+            }
+        },
+        "colliderKind": 1,
+        "drawEnable": true,
+        "guid": "c0833889-dfa4-4a03-98dd-0d67988d5e59",
+        "modelConfig": {
+            "blendMode": 5,
+            "materialGuid": "00000000-0000-0000-0000-000000000000",
+            "modelName": "plane.obj",
+            "textureGuid": "adc4c73e-0453-4ecb-93a9-5d187e9d1be8",
+            "uvTransConfig": {
+                "rotation": 0.0,
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            }
+        },
+        "name": "thorn",
+        "objectType": 2,
+        "outlineColor": {
+            "w": 1.0,
+            "x": 0.019999999552965164,
+            "y": 0.019999999552965164,
+            "z": 0.02500000037252903
+        },
+        "outlineEnabled": false,
+        "outlineThickness": 0.03500000014901161,
+        "parentGuid": "cc16ac2d-3ddd-4447-8aae-3bb8427f42b9",
+        "physicsBodyConfig": {
+            "bodyType": 1,
+            "enabled": false,
+            "gravityScale": 1.0,
+            "mass": 1.0,
+            "pushbackRatio": 1.0,
+            "useGravity": true
+        },
+        "transform": {
+            "inheritRotate": false,
+            "inheritScale": false,
+            "inheritTranslate": true,
+            "rotation": {
+                "w": -3.0908619663705394e-08,
+                "x": -3.0908619663705394e-08,
+                "y": 0.7071067690849304,
+                "z": -0.7071067690849304
+            },
+            "scale": {
+                "x": 0.4999999701976776,
+                "y": 0.4999999701976776,
+                "z": 0.4999999701976776
+            },
+            "translation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -1.0
+            }
+        },
+        "type": "Thorn",
+        "visualOffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "worldTransform": {
+            "inheritRotate": false,
+            "inheritScale": false,
+            "inheritTranslate": true,
+            "rotation": {
+                "w": -3.0908619663705394e-08,
+                "x": -3.0908619663705394e-08,
+                "y": 0.7071067690849304,
+                "z": -0.7071067690849304
+            },
+            "scale": {
+                "x": 0.4999999701976776,
+                "y": 0.4999999701976776,
+                "z": 0.4999999701976776
+            },
+            "translation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -1.0
+            }
+        }
+    },
+    {
+        "cameraDitherEnabled": false,
+        "castShadow": true,
+        "colliderConfig": {
+            "capsuleHeight": 2.0,
+            "capsuleRadius": 0.5,
+            "isCollisionEnabled": true,
+            "isDraw": true,
+            "isTrigger": true,
+            "layerId": 2,
+            "offset": {
+                "x": 0.0,
+                "y": -0.18000000715255737,
+                "z": 0.0
+            },
+            "radius": 1.0,
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.6000000238418579,
+                "y": 0.6000000238418579,
+                "z": 1.0
+            }
+        },
+        "colliderKind": 1,
+        "drawEnable": true,
+        "guid": "4c13f373-038f-45dc-9eb8-646d9d376b68",
+        "modelConfig": {
+            "blendMode": 5,
+            "materialGuid": "00000000-0000-0000-0000-000000000000",
+            "modelName": "plane.obj",
+            "textureGuid": "adc4c73e-0453-4ecb-93a9-5d187e9d1be8",
+            "uvTransConfig": {
+                "rotation": 0.0,
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            }
+        },
+        "name": "thorn",
+        "objectType": 2,
+        "outlineColor": {
+            "w": 1.0,
+            "x": 0.019999999552965164,
+            "y": 0.019999999552965164,
+            "z": 0.02500000037252903
+        },
+        "outlineEnabled": false,
+        "outlineThickness": 0.03500000014901161,
+        "parentGuid": "cc16ac2d-3ddd-4447-8aae-3bb8427f42b9",
+        "physicsBodyConfig": {
+            "bodyType": 1,
+            "enabled": false,
+            "gravityScale": 1.0,
+            "mass": 1.0,
+            "pushbackRatio": 1.0,
+            "useGravity": true
+        },
+        "transform": {
+            "inheritRotate": false,
+            "inheritScale": false,
+            "inheritTranslate": true,
+            "rotation": {
+                "w": 0.4999999701976776,
+                "x": 0.4999999701976776,
+                "y": -0.4999999701976776,
+                "z": 0.4999999701976776
+            },
+            "scale": {
+                "x": 0.4999999701976776,
+                "y": 0.4999999701976776,
+                "z": 0.4999999701976776
+            },
+            "translation": {
+                "x": -1.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "type": "Thorn",
+        "visualOffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "worldTransform": {
+            "inheritRotate": false,
+            "inheritScale": false,
+            "inheritTranslate": true,
+            "rotation": {
+                "w": 0.4999999701976776,
+                "x": 0.4999999701976776,
+                "y": -0.4999999701976776,
+                "z": 0.4999999701976776
+            },
+            "scale": {
+                "x": 0.4999999701976776,
+                "y": 0.4999999701976776,
+                "z": 0.4999999701976776
+            },
+            "translation": {
+                "x": -1.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "cameraDitherEnabled": false,
+        "castShadow": true,
+        "colliderConfig": {
+            "capsuleHeight": 2.0,
+            "capsuleRadius": 0.5,
+            "isCollisionEnabled": true,
+            "isDraw": true,
+            "isTrigger": true,
+            "layerId": 2,
+            "offset": {
+                "x": 0.0,
+                "y": -0.18000000715255737,
+                "z": 0.0
+            },
+            "radius": 1.0,
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.6000000238418579,
+                "y": 0.6000000238418579,
+                "z": 1.0
+            }
+        },
+        "colliderKind": 1,
+        "drawEnable": true,
+        "guid": "5d3e339c-c439-49fa-8b5f-530648f0a1b7",
+        "modelConfig": {
+            "blendMode": 5,
+            "materialGuid": "00000000-0000-0000-0000-000000000000",
+            "modelName": "plane.obj",
+            "textureGuid": "adc4c73e-0453-4ecb-93a9-5d187e9d1be8",
+            "uvTransConfig": {
+                "rotation": 0.0,
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            }
+        },
+        "name": "thorn",
+        "objectType": 2,
+        "outlineColor": {
+            "w": 1.0,
+            "x": 0.019999999552965164,
+            "y": 0.019999999552965164,
+            "z": 0.02500000037252903
+        },
+        "outlineEnabled": false,
+        "outlineThickness": 0.03500000014901161,
+        "parentGuid": "cc16ac2d-3ddd-4447-8aae-3bb8427f42b9",
+        "physicsBodyConfig": {
+            "bodyType": 1,
+            "enabled": false,
+            "gravityScale": 1.0,
+            "mass": 1.0,
+            "pushbackRatio": 1.0,
+            "useGravity": true
+        },
+        "transform": {
+            "inheritRotate": false,
+            "inheritScale": false,
+            "inheritTranslate": true,
+            "rotation": {
+                "w": 0.4999999701976776,
+                "x": 0.4999999701976776,
+                "y": 0.4999999701976776,
+                "z": -0.4999999701976776
+            },
+            "scale": {
+                "x": 0.4999999701976776,
+                "y": 0.4999999701976776,
+                "z": 0.4999999701976776
+            },
+            "translation": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "type": "Thorn",
+        "visualOffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "worldTransform": {
+            "inheritRotate": false,
+            "inheritScale": false,
+            "inheritTranslate": true,
+            "rotation": {
+                "w": 0.4999999701976776,
+                "x": 0.4999999701976776,
+                "y": 0.4999999701976776,
+                "z": -0.4999999701976776
+            },
+            "scale": {
+                "x": 0.4999999701976776,
+                "y": 0.4999999701976776,
+                "z": 0.4999999701976776
+            },
+            "translation": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    }
+]

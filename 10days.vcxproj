@@ -226,5 +226,11 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <Message Importance="high" Text="Generating Calyx game object registry from 10days.calyxproj..." />
     <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(CalyxReflectionTool)&quot; -ProjectFile &quot;$(ProjectDir)10days.calyxproj&quot; -OutputName CalyxGameObjectRegistry.generated -FunctionName RegisterGeneratedGameSceneObjects" />
   </Target>
+  <Target Name="CopyCalyxGameHost" AfterTargets="Build" DependsOnTargets="ValidateCalyxEngineSdkDir">
+    <Message Importance="high" Text="Copying the Calyx game host to $(TargetDir)$(ProjectName).exe..." />
+    <Copy SourceFiles="$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe"
+          DestinationFiles="$(TargetDir)$(ProjectName).exe"
+          SkipUnchangedFiles="true" />
+  </Target>
   <ImportGroup Label="ExtensionTargets" />
 </Project>

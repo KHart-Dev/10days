@@ -5,6 +5,8 @@
 #include "NumberUi.h"
 #include "../Player.h"
 
+#include <Engine/System/Command/EditorCommand/GuiCommand/ImGuiHelper/GuiCmd.h>
+
 PlayerTimeUis::PlayerTimeUis()
 	: Actor("plane.obj", "PlayerTimeUis") {}
 
@@ -16,12 +18,15 @@ void PlayerTimeUis::Initialize() {
 }
 void PlayerTimeUis::Update(float dt) {
 
-	// カウントが上がっていたら
+	// カウントが上がっていたら（接続時に追加する時間は param_.addTimePerConnect、上限は param_.maxTime）
 	if (currentCount_ < player_->GetConnectedCount()) {
 		if (!isCounting_) {
 			isCounting_ = true;
 		}
-		countTime_ += 5.0f;
+		countTime_ += param_.addTimePerConnect;
+		if (countTime_ > param_.maxTime) {
+			countTime_ = param_.maxTime;
+		}
 	}
 
 	if (isCounting_) {
@@ -58,6 +63,35 @@ void PlayerTimeUis::Update(float dt) {
 	}
 
 	Actor::Update(dt);
+}
+
+void PlayerTimeUis::ApplyConfigFromJson(const nlohmann::json& j) {
+	Actor::ApplyConfigFromJson(j);
+
+	const std::string typeKey(GetTypeName());
+	const nlohmann::json* src = &j;
+	if (j.contains(typeKey)) {
+		src = &j.at(typeKey);
+	}
+
+	param_.addTimePerConnect = src->value("addTimePerConnect", param_.addTimePerConnect);
+	param_.maxTime = src->value("maxTime", param_.maxTime);
+}
+
+void PlayerTimeUis::ExtractConfigToJson(nlohmann::json& j) const {
+	Actor::ExtractConfigToJson(j);
+
+	const std::string typeKey(GetTypeName());
+	nlohmann::json derived;
+	derived["addTimePerConnect"] = param_.addTimePerConnect;
+	derived["maxTime"] = param_.maxTime;
+	if (!derived.empty()) {
+		j[typeKey] = std::move(derived);
+	}
+}
+
+void PlayerTimeUis::DerivativeGui() {
+	param_.ShowGui();
 }
 
 void PlayerTimeUis::InitializeActor() {

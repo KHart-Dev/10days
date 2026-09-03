@@ -62,7 +62,7 @@
                 },
                 "translation": {
                     "x": -2.8404932022094727,
-                    "y": 10.100000381469727,
+                    "y": 20.100000381469727,
                     "z": 2.8225138187408447
                 }
             },
@@ -301,7 +301,7 @@
                 "cameraLocalOffset": {
                     "x": 0.0,
                     "y": 0.0,
-                    "z": -10.0
+                    "z": -20.0
                 },
                 "followSharpness": 18.0,
                 "keyRotateSpeed": 2.094395160675049,
@@ -627,6 +627,10 @@
             }
         },
         {
+            "PlayerTimeUis": {
+                "addTimePerConnect": 3.5,
+                "maxTime": 10.0
+            },
             "cameraDitherEnabled": false,
             "colliderConfig": {
                 "capsuleHeight": 2.0,

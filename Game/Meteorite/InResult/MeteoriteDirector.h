@@ -12,7 +12,7 @@
 #include <memory>
 #include <vector>
 
-/// <summary>リザルトシーンに1個置く。置かれている予告円を集めて号令を出すだけ</summary>
+/// <summary>リザルトシーンに1個置く。落下地点ぶんの予告円を子として持ち、号令を出す</summary>
 CALYX_PLACEABLE_OBJECT(Category = GameObject, DisplayName = "Meteorite Director", Icon = "UI/Tool/event.png")
 class MeteoriteDirector : public Actor {
 
@@ -23,65 +23,55 @@ public:
 
 	void Initialize() override;
 	void Update(float dt) override;
+	void AlwaysUpdate(float dt) override;
 
 	/// 最終人数を出す合図用
 	bool IsFinished() const;
 
 private:
 
-	/// シーンに置かれている MeteoriteWarning を集める
-	void CollectWarnings();
+	/// 落下地点の上限。パラメータは配列を持てないので固定スロットで持つ
+	static constexpr int kMaxSpots = 8;
 
-	/// 集めた警告に号令を出す
+	/// count に合わせて子の予告円を増減する
+	void RebuildWarnings(int count);
+
+	/// 子の予告円の位置をパラメータ側へ書き戻す
+	void SyncSpotPositions();
+
+	/// 子の予告円に号令を出す
 	void StartAll();
+
+	/// ステージを切り替えてパラメータを読み直し、予告円を生やし直す
+	void LoadStage(int stageIndex);
 
 	void DisableGravity();
 
 	std::vector<std::shared_ptr<MeteoriteWarning>> warnings_;
 
 	float timer_ = 0.0f;
-	bool collected_ = false;
 	bool started_ = false;
 
+	// GUI から要求されたステージ番号。-1 は要求なし。
+	// DerivativeGui から直に読み直すとインスペクター描画中に子を Destroy することに
+	// なるため、AlwaysUpdate まで持ち越す。
+	int pendingStage_ = -1;
+
 	struct MeteoriteDirectorParam : CalyxEngine::SerializableObject {
-		MeteoriteDirectorParam() {
-			AddField("startDelay", startDelay)
-				.Category("Timing")
-				.Tooltip("リザルトが始まってから号令を出すまでの秒数");
+		MeteoriteDirectorParam();
 
-			AddField("blinkTimes", settings.blinkTimes)
-				.Category("Warning")
-				.Tooltip("何回点滅させてから落とすか");
-
-			AddField("blinkPeriod", settings.blinkPeriod)
-				.Category("Warning")
-				.Tooltip("点滅1回ぶんの秒数");
-
-			AddField("fallHeight", settings.fallHeight)
-				.Category("Fall")
-				.Tooltip("予告円の何メートル上から落とすか");
-
-			AddField("fallSpeed", settings.fallSpeed)
-				.Category("Fall")
-				.Tooltip("落下速度 (m/s)");
-
-			AddField("colliderRadius", settings.colliderRadius)
-				.Category("Impact")
-				.Tooltip("着弾時に出す判定の半径");
-
-			AddField("impactHold", settings.impactHold)
-				.Category("Impact")
-				.Tooltip("判定を出しておく秒数。BreakChain が拾えるよう数フレームぶん要る");
-		}
-
-		Guid ownerGuid_;
-		CalyxEngine::ParamPath GetParamPath() const override {
-			return { CalyxEngine::ParamDomain::Game, ownerGuid_.ToString(), "Actor/Meteorite/MeteoriteDirector" };
-		}
+		// どのステージのファイルを読むかを決める値。保存される中身ではないので
+		// AddField しないこと。登録すると json 側の値が選択を上書きしてしまう。
+		int stageIndex_ = 0;
+		CalyxEngine::ParamPath GetParamPath() const override;
 
 		float startDelay = 1.0f;
 
 		MeteoriteFallSettings settings{};
+
+		int                  count = 0;
+		CalyxEngine::Vector3 pos[kMaxSpots]{};
+		float                delay[kMaxSpots]{};
 	};
 
 	MeteoriteDirectorParam param_;

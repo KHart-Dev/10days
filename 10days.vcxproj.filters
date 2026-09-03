@@ -41,6 +41,7 @@
     <ClCompile Include="Game\Player\PlayerTimeUis\NumberUi.cpp" />
     <ClCompile Include="Game\Player\PlayerTimeUis\PlayerTimeUis.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
+    <ClCompile Include="Game\Scene\Transitioner\SceneTransitionScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h">
@@ -56,5 +57,6 @@
     <ClInclude Include="Game\Player\PlayerTimeUis\PlayerTimeUis.h" />
     <ClInclude Include="Game\Audio\GameAudio.h" />
     <ClInclude Include="Game\Actor\Obstacle\Thorn.h" />
+    <ClInclude Include="Game\Scene\Transitioner\SceneTransitionScene.h" />
   </ItemGroup>
 </Project>

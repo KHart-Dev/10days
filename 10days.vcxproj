@@ -194,6 +194,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Game\Player\Player.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Obstacle.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
+    <ClCompile Include="Game\Scene\Transitioner\SceneTransitionScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Audio\GameAudio.h" />
@@ -207,6 +208,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClInclude Include="Game\Player\Player.h" />
     <ClInclude Include="Game\Actor\Obstacle\Obstacle.h" />
     <ClInclude Include="Game\Actor\Obstacle\Thorn.h" />
+    <ClInclude Include="Game\Scene\Transitioner\SceneTransitionScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="EnsureCalyxEngineSdk" BeforeTargets="PrepareForBuild" Condition="!Exists('$(CalyxEngineSdkDir)\Include\CalyxEngine\Application.h') or !Exists('$(CalyxEngineSdkDir)\Include\Data\Engine') or !Exists('$(CalyxEngineSdkDir)\Include\externals\nlohmann\json.hpp') or !Exists('$(CalyxReflectionTool)') or !Exists('$(CalyxEngineSdkDir)\Lib\$(Configuration)\CalyxEngine.lib') or !Exists('$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe')">
@@ -228,9 +230,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
   </Target>
   <Target Name="CopyCalyxGameHost" AfterTargets="Build" DependsOnTargets="ValidateCalyxEngineSdkDir">
     <Message Importance="high" Text="Copying the Calyx game host to $(TargetDir)$(ProjectName).exe..." />
-    <Copy SourceFiles="$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe"
-          DestinationFiles="$(TargetDir)$(ProjectName).exe"
-          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe" DestinationFiles="$(TargetDir)$(ProjectName).exe" SkipUnchangedFiles="true" />
   </Target>
   <ImportGroup Label="ExtensionTargets" />
 </Project>

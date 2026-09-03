@@ -57,7 +57,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Label="CalyxEngineSdk">
-    <CalyxEngineVersion>v1.3.4</CalyxEngineVersion>
+    <CalyxEngineVersion>v1.3.5</CalyxEngineVersion>
     <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'=='' and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\CalyxEngine\Application.h') and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\Data\Engine') and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\externals\nlohmann\json.hpp')">$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK</CalyxEngineSdkDir>
     <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'=='' and '$(CALYX_ENGINE_SDK_DIR)'!='' and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\CalyxEngine\Application.h') and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\Data\Engine') and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\externals\nlohmann\json.hpp')">$(CALYX_ENGINE_SDK_DIR)</CalyxEngineSdkDir>
     <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'==''">$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK</CalyxEngineSdkDir>

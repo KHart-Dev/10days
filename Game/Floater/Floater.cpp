@@ -60,6 +60,7 @@ void Floater::Update(float dt) {
 
 void Floater::OnCollisionEnter(Collider* other) {
 	// 障害物に当たったらこの関数呼んでフラグ立てておく
+	//if (!IsChained()) return;
 	//MarkBreak();
 }
 
@@ -100,11 +101,12 @@ void Floater::SetChainedTransform(const CalyxEngine::Vector3& pos, float worldYa
 }
 
 void Floater::MarkChained() {
-	chained_ = true;
-	driftDir_ = {};
-	spinRate_ = 0.0f;
+	ApplyChainedLook();
 	GameAudio::PlaySe(GameAudio::kSeConnect);
-	SetTexture("Textures/connectHuman/connectHuman.png");
+}
+
+void Floater::RestoreChained() {
+	ApplyChainedLook();
 }
 
 void Floater::MarkBreak() {
@@ -177,4 +179,11 @@ void Floater::BounceOnEdge() {
 	if ((z < -boundsHalf_.z && driftDir_.z < 0.0f) || (z > boundsHalf_.z && driftDir_.z > 0.0f)) {
 		driftDir_.z = -driftDir_.z;
 	}
+}
+
+void Floater::ApplyChainedLook() {
+	chained_ = true;
+	driftDir_ = {};
+	spinRate_ = 0.0f;
+	SetTexture("Textures/connectHuman/connectHuman.png");
 }

@@ -32,6 +32,8 @@ public:
 	/// <summary>全部消してから湧かせ直す</summary>
 	void Respawn();
 
+	std::shared_ptr<Floater> CreateChained(const CalyxEngine::Vector3& pos);
+
 private:
 
 	void Spawn(int count);
@@ -57,6 +59,9 @@ private:
 			AddField("spinSpeed", spinSpeed)
 				.Category("Spawner")
 				.Tooltip("漂う人の回転速度");
+
+			AddField("playBgmOnStart", playBgmOnStart)
+				.Category("Spawner");
 		}
 
 		Guid ownerGuid_;
@@ -68,7 +73,8 @@ private:
 		float spawnRadius = 30.0f;
 		float driftSpeed = 1.2f;
 		float spinSpeed = 1.2f;
-
+		
+		bool playBgmOnStart = true;
 	};
 
 

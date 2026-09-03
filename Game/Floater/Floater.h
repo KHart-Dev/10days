@@ -33,7 +33,8 @@ public:
 
 	bool IsChained() const { return chained_; }
 	void MarkChained();
-	
+	void RestoreChained();
+
 	bool IsBreakMarked() const { return breakMark_; }
 	void MarkBreak();
 	void Unchain();
@@ -52,6 +53,8 @@ private:
 
 	void Drift(float dt);
 	void BounceOnEdge();
+
+	void ApplyChainedLook();
 
 	CalyxEngine::Vector3 driftDir_{};
 

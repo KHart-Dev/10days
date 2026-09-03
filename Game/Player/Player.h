@@ -10,6 +10,7 @@
 #include <Demo/Input/PlayerInput.h>
 #include <Game/Floater/BodyNode.h>
 #include <Game/Floater/FloaterManager.h>
+#include <Game/Floater/ChainMemberData.h>
 
 // std
 #include <vector>
@@ -29,15 +30,8 @@ public:
 private:
 
 	/// <summary>塊に繋がった1人</summary>
-	struct Member {
+	struct Member : ChainMemberData {
 		std::shared_ptr<Floater> floater;                 // 自機自身は nullptr
-		CalyxEngine::Vector3 offset{};
-		float localAngle = 0.0f;
-		CalyxEngine::Vector3 handLocal[BodyNode::kHandCount]{};
-		int parent = -1;
-		int parentHand = 0;
-		// 繋ぐのに使った自分の手
-		int joinHand = 0;
 	};
 
 	struct HandAnchor {
@@ -59,6 +53,8 @@ private:
 	float CurrentTurnSpeed() const;
 	bool BreakChain(FloaterManager& manager);
 
+	bool RestoreChain();
+
 	PlayerInput input_;
 
 	// 回転慣性（Y軸）
@@ -67,7 +63,6 @@ private:
 	// 保存可能なパラメータは SerializableObject を使ってまとめる
 	struct PlayerParam : CalyxEngine::SerializableObject {
 		PlayerParam() {
-			AddField("FloaterManagerPtr", floaterManager);
 			AddField("moveSpeed", moveSpeed)
 				.Category("Movement")
 				.Tooltip("移動速度 (m/s)");
@@ -126,10 +121,10 @@ private:
 		float reachSpeed = 0.5f;
 		float reachSpread = 40.0f;
 
-		CalyxEngine::SceneObjectRef<FloaterManager> floaterManager;
 	};
 
 	PlayerParam param_;
+	CalyxEngine::SceneObjectRef<FloaterManager> floaterManager_;
 
 	std::vector<Member> chain_;
 	std::vector<HandAnchor> handAnchors_;
@@ -145,6 +140,9 @@ private:
 	int debugAngleRejects_ = 0;
 	int debugBreakIndex_ = 1;
 
+	bool resultMode_ = false;
+	bool restored_ = false;
+
 public:
 	// シリアライズ用インターフェース
 	void ApplyConfigFromJson(const nlohmann::json& j) override;
@@ -154,5 +152,7 @@ public:
 	// 接続されている人数を返す（UI や外部管理用）
 	size_t GetConnectedCount() const { return chain_.size(); }
 	void AllBreak();
+
+	void ExportChain() const;
 
 };

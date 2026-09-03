@@ -27,8 +27,10 @@ void FloaterManager::Initialize() {
 void FloaterManager::Update([[maybe_unused]] float dt) {
 
 	if (!isSpawned_) {
-		GameAudio::PlayBgm(GameAudio::kBgmGame); // FloaterManagerがゲーム中しか存在しないとしとく（他シーンにも配置するならば別箇所へ）
-		Spawn(param_.spawnCount);
+		if (param_.playBgmOnStart) {
+			GameAudio::PlayBgm(GameAudio::kBgmGame); // FloaterManagerがゲーム中しか存在しないとしとく（他シーンにも配置するならば別箇所へ）
+			Spawn(param_.spawnCount);
+		}
 		isSpawned_ = true;
 	}
 }
@@ -38,6 +40,24 @@ void FloaterManager::Respawn() {
 	Clear();
 	Spawn(param_.spawnCount);
 	isSpawned_ = true;
+}
+
+std::shared_ptr<Floater> FloaterManager::CreateChained(const CalyxEngine::Vector3& pos) {
+	std::shared_ptr<Floater> floater = SceneAPI::InstantiatePrefabRoot<Floater>("Floater.prefab", pos);
+	if (!floater) {
+		return nullptr;
+	}
+
+	floater->Initialize();
+	floater->SetDriftSpeed(param_.driftSpeed);
+	floater->SetSpinSpeed(param_.spinSpeed);
+	const CalyxEngine::Vector3 center = GetWorldTransform().translation;
+	floater->SetBounds(center, { param_.spawnRadius, 0.0f, param_.spawnRadius });
+
+	auto& wt = floater->GetWorldTransform();
+	wt.Update();
+
+	return floater;
 }
 
 void FloaterManager::Spawn(int count) {

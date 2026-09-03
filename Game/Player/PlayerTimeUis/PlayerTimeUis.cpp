@@ -57,9 +57,9 @@ void PlayerTimeUis::Update(float dt) {
 			number = time % 10;
 		}
 
-		if (numberUis_[i]) {
+		/*if (numberUis_[i]) {
 			numberUis_[i]->SetNumber(number);
-		}
+		}*/
 	}
 
 	Actor::Update(dt);

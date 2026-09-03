@@ -14,6 +14,8 @@ void NumberUi::Initialize() {
 	wt.eulerRotation.x = std::numbers::pi_v<float> * 0.5f;
 	wt.rotationSource = RotationSource::Euler;
 	wt.inheritRotate = false;
+	SetUvScale(CalyxEngine::Vector2(0.1f, 1.0f));
+	SetTexture("Textures/Numbers/Number.png");
 	wt.Update();
 }
 

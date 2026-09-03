@@ -38,9 +38,9 @@
     <ClCompile Include="Game\Floater\Floater.cpp" />
     <ClCompile Include="Game\Floater\FloaterManager.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Obstacle.cpp" />
-    <ClCompile Include="Game\Player\PlayerTimeUis\NumberUi.cpp" />
     <ClCompile Include="Game\Player\PlayerTimeUis\PlayerTimeUis.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
+    <ClCompile Include="Game\Player\PlayerTimeUis\NumberUi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h">

@@ -90,6 +90,18 @@ void DemoCameraPivot::ExtractCameraPivotConfig(nlohmann::json& j) const {
 }
 
 void DemoCameraPivot::AlwaysUpdate(float dt) {
+	if(shakeElapsed_ < shakeDuration_) {
+		shakeElapsed_ = (std::min)(shakeElapsed_ + (std::max)(dt, 0.0f), shakeDuration_);
+		const float remaining = 1.0f - shakeElapsed_ / shakeDuration_;
+		const float phase = shakeElapsed_ * 55.0f;
+		shakeOffset_ = {
+			std::sin(phase) * shakeIntensity_ * remaining,
+			0.0f,
+			std::sin(phase * 1.37f + 1.2f) * shakeIntensity_ * remaining
+		};
+	} else {
+		shakeOffset_ = {};
+	}
 
 	// 参照先は削除され得るため、Transformポインタをフレームを越えて信用せず毎フレーム解決する。
 	target_ = ResolveTargetTransform();
@@ -101,6 +113,17 @@ void DemoCameraPivot::AlwaysUpdate(float dt) {
 
 	mainCamera_ = ResolveMainCamera();
 	ApplyCameraTransform();
+}
+
+void DemoCameraPivot::RequestShake(float duration, float intensity) {
+	duration = (std::max)(duration, 0.0f);
+	intensity = (std::max)(intensity, 0.0f);
+	if(duration <= 0.0f || intensity <= 0.0f) {
+		return;
+	}
+	shakeDuration_ = duration;
+	shakeElapsed_ = 0.0f;
+	shakeIntensity_ = intensity;
 }
 
 const BaseTransform* DemoCameraPivot::ResolveTargetTransform() {
@@ -140,7 +163,7 @@ const BaseTransform* DemoCameraPivot::ResolveTargetTransform() {
 	if(auto player = lib->FindByName("Player")) {
 		// プレイヤーの真上に配置して見下ろす設定
 		pitch_ = std::numbers::pi_v<float> / 2.0f;
-		cameraLocalOffset_ = { 0.0f,0.0f, -10.0f };
+		cameraLocalOffset_ = { 0.0f,0.0f, -20.0f };
 		pivotLocalOffset_ = {0.0f, 0.0f, 0.0f};
 		return &player->GetWorldTransform();
 	}
@@ -228,7 +251,7 @@ void DemoCameraPivot::ApplyCameraTransform() {
 	}
 
 	const CalyxEngine::Quaternion cameraRotation = CalyxEngine::Quaternion::EulerToQuaternion({pitch_, yaw_, 0.0f});
-	const CalyxEngine::Vector3 pivotPosition = worldTransform_.GetWorldPosition();
+	const CalyxEngine::Vector3 pivotPosition = worldTransform_.GetWorldPosition() + shakeOffset_;
 	const CalyxEngine::Vector3 cameraPosition =
 		pivotPosition + CalyxEngine::Quaternion::RotateVector(cameraLocalOffset_, cameraRotation);
 

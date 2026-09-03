@@ -30,6 +30,7 @@ public:
 	void ApplyConfigFromJson(const nlohmann::json& j) override;
 	void ExtractConfigToJson(nlohmann::json& j) const override;
 	void RemapSceneObjectReferences(const std::unordered_map<Guid, Guid>& guidMap) override;
+	void RequestShake(float duration, float intensity);
 
 private:
 	//==================================================================*//
@@ -62,4 +63,8 @@ private:
 	float keyRotateSpeed_ = CalyxEngine::ToRadians(120.0f);
 	float minPitch_ = CalyxEngine::ToRadians(-35.0f);
 	float maxPitch_ = CalyxEngine::ToRadians(60.0f);
+	float shakeDuration_ = 0.0f;
+	float shakeElapsed_ = 0.0f;
+	float shakeIntensity_ = 0.0f;
+	CalyxEngine::Vector3 shakeOffset_{};
 };

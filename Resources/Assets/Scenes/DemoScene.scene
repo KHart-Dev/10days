@@ -62,7 +62,7 @@
                 },
                 "translation": {
                     "x": -2.8404932022094727,
-                    "y": 10.100000381469727,
+                    "y": 20.100000381469727,
                     "z": 2.8225138187408447
                 }
             },
@@ -303,7 +303,7 @@
                 "cameraLocalOffset": {
                     "x": 0.0,
                     "y": 0.0,
-                    "z": -10.0
+                    "z": -20.0
                 },
                 "followSharpness": 18.0,
                 "keyRotateSpeed": 2.094395160675049,
@@ -629,6 +629,10 @@
             }
         },
         {
+            "PlayerTimeUis": {
+                "addTimePerConnect": 3.5,
+                "maxTime": 10.0
+            },
             "cameraDitherEnabled": false,
             "colliderConfig": {
                 "capsuleHeight": 2.0,
@@ -803,6 +807,94 @@
                 "y": 0.0,
                 "z": 0.0
             }
+        },
+        {
+            "cameraDitherEnabled": false,
+            "colliderConfig": {
+                "capsuleHeight": 2.0,
+                "capsuleRadius": 0.5,
+                "isCollisionEnabled": false,
+                "isDraw": true,
+                "isTrigger": false,
+                "layerId": 0,
+                "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius": 1.0,
+                "rotate": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "size": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            },
+            "colliderKind": 1,
+            "guid": "cc16ac2d-3ddd-4447-8aae-3bb8427f42b9",
+            "modelConfig": {
+                "blendMode": 5,
+                "materialGuid": "00000000-0000-0000-0000-000000000000",
+                "modelName": "debugCube.obj",
+                "textureGuid": "00000000-0000-0000-0000-000000000000",
+                "uvTransConfig": {
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            "name": "Obstacle",
+            "objectType": 2,
+            "outlineColor": {
+                "w": 1.0,
+                "x": 0.019999999552965164,
+                "y": 0.019999999552965164,
+                "z": 0.02500000037252903
+            },
+            "outlineEnabled": false,
+            "outlineThickness": 0.03500000014901161,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "physicsBodyConfig": {
+                "bodyType": 1,
+                "enabled": false,
+                "gravityScale": 1.0,
+                "mass": 1.0,
+                "pushbackRatio": 1.0,
+                "useGravity": true
+            },
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": -0.2219235897064209,
+                    "y": 0.030879465863108635,
+                    "z": 2.454794406890869
+                }
+            },
+            "type": "Obstacle",
+            "visualOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         }
     ],
     "sceneName": "TestScene",
@@ -816,12 +908,16 @@
                 {
                     "id": 1,
                     "name": "Player"
+                },
+                {
+                    "id": 2,
+                    "name": "Thorn"
                 }
             ],
             "matrixRows": [
                 0,
-                0,
-                0,
+                4,
+                2,
                 0,
                 0,
                 0,

@@ -173,10 +173,10 @@
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.9720109105110168,
-                    "x": 0.22799795866012573,
-                    "y": -0.05517430230975151,
-                    "z": 0.012941858731210232
+                    "w": 0.8027418255805969,
+                    "x": 0.4157737195491791,
+                    "y": -0.3795855641365051,
+                    "z": 0.19660331308841705
                 },
                 "scale": {
                     "x": 1.0,
@@ -184,9 +184,9 @@
                     "z": 1.0
                 },
                 "translation": {
-                    "x": -1.1506166458129883,
-                    "y": 9.140426635742188,
-                    "z": -9.927497863769531
+                    "x": 32.977291107177734,
+                    "y": 5.857119560241699,
+                    "z": 0.4440455436706543
                 }
             },
             "type": "DebugCamera"
@@ -895,6 +895,94 @@
                 "y": 0.0,
                 "z": 0.0
             }
+        },
+        {
+            "cameraDitherEnabled": false,
+            "colliderConfig": {
+                "capsuleHeight": 2.0,
+                "capsuleRadius": 0.5,
+                "isCollisionEnabled": true,
+                "isDraw": true,
+                "isTrigger": false,
+                "layerId": 3,
+                "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius": 1.0,
+                "rotate": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "size": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            },
+            "colliderKind": 1,
+            "guid": "49073882-bfa9-43ab-9136-d5bc016c9d93",
+            "modelConfig": {
+                "blendMode": 5,
+                "materialGuid": "00000000-0000-0000-0000-000000000000",
+                "modelName": "debugCube.obj",
+                "textureGuid": "00000000-0000-0000-0000-000000000000",
+                "uvTransConfig": {
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            "name": "GoalPoint",
+            "objectType": 2,
+            "outlineColor": {
+                "w": 1.0,
+                "x": 0.019999999552965164,
+                "y": 0.019999999552965164,
+                "z": 0.02500000037252903
+            },
+            "outlineEnabled": false,
+            "outlineThickness": 0.03500000014901161,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "physicsBodyConfig": {
+                "bodyType": 1,
+                "enabled": true,
+                "gravityScale": 1.0,
+                "mass": 1.0,
+                "pushbackRatio": 1.0,
+                "useGravity": true
+            },
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 27.8956298828125,
+                    "y": 0.0011658200528472662,
+                    "z": 5.160479545593262
+                }
+            },
+            "type": "GoalPoint",
+            "visualOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         }
     ],
     "sceneName": "TestScene",
@@ -912,13 +1000,17 @@
                 {
                     "id": 2,
                     "name": "Thorn"
+                },
+                {
+                    "id": 3,
+                    "name": "GoalPoint"
                 }
             ],
             "matrixRows": [
                 0,
-                4,
+                12,
                 2,
-                0,
+                2,
                 0,
                 0,
                 0,

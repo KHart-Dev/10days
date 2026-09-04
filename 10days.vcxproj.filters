@@ -1,72 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Game">
-      <UniqueIdentifier>{E9AE7F81-CF6A-450E-88E5-67FF3387CA7E}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Game/Demo/3D/Actor/DemoCamera/DemoCameraPivot.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game/Demo/3D/Actor/DemoPlayer/DemoPlayer.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game/Demo/3D/Actor/DemoPlayer/DemoPlayerMotor.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game/Demo/3D/Actor/DemoPlayer/Weapon/Weapon.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game/Demo/Input/PlayerInput.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game/GameApplication.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game/GameEditorExtension.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game/GameMain.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Player\Player.cpp" />
+    <ClCompile Include="Game/Demo/3D/Actor/DemoCamera/DemoCameraPivot.cpp" />
+    <ClCompile Include="Game/Demo/3D/Actor/DemoPlayer/DemoPlayer.cpp" />
+    <ClCompile Include="Game/Demo/3D/Actor/DemoPlayer/DemoPlayerMotor.cpp" />
+    <ClCompile Include="Game/Demo/3D/Actor/DemoPlayer/Weapon/Weapon.cpp" />
+    <ClCompile Include="Game/Demo/Input/PlayerInput.cpp" />
+    <ClCompile Include="Game/GameApplication.cpp" />
+    <ClCompile Include="Game/GameEditorExtension.cpp" />
+    <ClCompile Include="Game/GameMain.cpp" />
     <ClCompile Include="Game\Floater\BodyNode.cpp" />
     <ClCompile Include="Game\Floater\Floater.cpp" />
     <ClCompile Include="Game\Floater\FloaterManager.cpp" />
-    <ClCompile Include="Game\Actor\Obstacle\Obstacle.cpp" />
-    <ClCompile Include="Game\Player\PlayerTimeUis\NumberUi.cpp" />
-    <ClCompile Include="Game\Player\PlayerTimeUis\PlayerTimeUis.cpp" />
-    <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
     <ClCompile Include="Game\Meteorite\InGame\Meteorite.cpp" />
     <ClCompile Include="Game\Meteorite\InGame\MeteoriteSpawner.cpp" />
-    <ClCompile Include="Game\Meteorite\InResult\MeteoriteWarning.cpp" />
     <ClCompile Include="Game\Meteorite\InResult\FallingMeteorite.cpp" />
     <ClCompile Include="Game\Meteorite\InResult\MeteoriteDirector.cpp" />
+    <ClCompile Include="Game\Meteorite\InResult\MeteoriteWarning.cpp" />
+    <ClCompile Include="Game\Player\PlayerTimeUis\NumberUi.cpp" />
+    <ClCompile Include="Game\Player\PlayerTimeUis\PlayerTimeUis.cpp" />
+    <ClCompile Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.cpp" />
+    <ClCompile Include="Game\Player\Player.cpp" />
+    <ClCompile Include="Game\Actor\Obstacle\Obstacle.cpp" />
+    <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
+    <ClCompile Include="Game\GoalPoint\GoalPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Player\Player.h" />
+    <ClInclude Include="Game\Audio\GameAudio.h" />
+    <ClInclude Include="Game\Collision\CollisionLayerUtil.h" />
+    <ClInclude Include="Game\Floater\BodyNode.h" />
+    <ClInclude Include="Game\Floater\ChainMemberData.h" />
     <ClInclude Include="Game\Floater\Floater.h" />
     <ClInclude Include="Game\Floater\FloaterManager.h" />
-    <ClInclude Include="Game\Floater\BodyNode.h" />
-    <ClInclude Include="Game\Collision\CollisionLayerUtil.h" />
-    <ClInclude Include="Game\Actor\Obstacle\Obstacle.h" />
-    <ClInclude Include="Game\Player\PlayerTimeUis\NumberUi.h" />
-    <ClInclude Include="Game\Player\PlayerTimeUis\PlayerTimeUis.h" />
-    <ClInclude Include="Game\Audio\GameAudio.h" />
-    <ClInclude Include="Game\Actor\Obstacle\Thorn.h" />
     <ClInclude Include="Game\Meteorite\InGame\Meteorite.h" />
     <ClInclude Include="Game\Meteorite\InGame\MeteoriteSpawner.h" />
-    <ClInclude Include="Game\Meteorite\InResult\MeteoriteWarning.h" />
     <ClInclude Include="Game\Meteorite\InResult\FallingMeteorite.h" />
     <ClInclude Include="Game\Meteorite\InResult\MeteoriteDirector.h" />
+    <ClInclude Include="Game\Meteorite\InResult\MeteoriteWarning.h" />
+    <ClInclude Include="Game\Player\PlayerTimeUis\NumberUi.h" />
+    <ClInclude Include="Game\Player\PlayerTimeUis\PlayerTimeUis.h" />
     <ClInclude Include="Game\Result\ResultCarry.h" />
-    <ClInclude Include="Game\Floater\ChainMemberData.h" />
+    <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h" />
+    <ClInclude Include="Game\Player\Player.h" />
+    <ClInclude Include="Game\Actor\Obstacle\Obstacle.h" />
+    <ClInclude Include="Game\Actor\Obstacle\Thorn.h" />
+    <ClInclude Include="Game\GoalPoint\GoalPoint.h" />
   </ItemGroup>
 </Project>

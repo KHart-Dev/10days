@@ -1,8 +1,7 @@
 #include "GoalPoint.h"
 
-#include <Engine/Scene/Utility/SceneUtility.h>
-
 #include "Game/Player/Player.h"
+#include "Game/Scene/SceneFlow.h"
 
 GoalPoint::GoalPoint()
 	: Actor("debugCube.obj", "GoalPoint") {}
@@ -21,7 +20,10 @@ void GoalPoint::Update(float dt) {
 void GoalPoint::OnCollisionEnter(Collider* other) {
 	BaseGameObject* owner = other ? other->GetOwner() : nullptr;
 	if (auto* player = dynamic_cast<Player*>(owner)) {
-		SceneAPI::RequestSceneChange(Calyx::ResolveAssetPath("Scenes/ResultScene.scene"));
+		// ResultSceneへ渡す連結情報を保存
+		player->ExportChain();
+		// ResultSceneへ遷移
+		SceneFlow::GoToResult();
 	}
 }
 

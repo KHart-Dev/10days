@@ -72,18 +72,6 @@ void Player::Initialize() {
 
 	prevSelfPos_ = GetWorldTransform().translation;
 	prevSelfYaw_ = GetWorldTransform().eulerRotation.y;
-
-	// 天気予報を子として生やし、開始時の予報を出す。
-	// リザルトでは要らないので resultMode_ のときは作らない。
-	if (!IsTransient() && !resultMode_) {
-		forecast_ = SceneAPI::Instantiate<MeteoriteForecast>();
-		if (forecast_) {
-			// Instantiate は Initialize を呼ばない
-			forecast_->Initialize();
-			forecast_->SetParent(shared_from_this(), false);
-			forecast_->ShowAtStart();
-		}
-	}
 }
 
 namespace {
@@ -106,6 +94,7 @@ namespace {
 void Player::Update(float dt) {
 	if (resultMode_) {
 		if (!restored_) { restored_ = RestoreChain(); }
+		else { RestoreChainStep(dt); }
 		if (auto manager = floaterManager_.Resolve()) {
 			BreakChain(*manager);
 		}
@@ -113,6 +102,11 @@ void Player::Update(float dt) {
 		Actor::Update(dt);
 		return;
 	}
+
+	// 天気予報はここで生やす。
+	// Initialize では resultMode_ がまだシーンから入っておらず、
+	// リザルトでも作ってしまう。上の早期 return を抜けた時点なら確実にゲーム中。
+	SpawnForecast();
 
 	// 入力更新
 	input_.Update();
@@ -272,6 +266,49 @@ bool Player::RestoreChain() {
 	}
 	ApplyChainTransforms();
 	return true;
+}
+
+void Player::RestoreChainStep(float dt) {
+	// 全員出し終わっている
+	if (resultRestoreIndex_ >= ResultCarry::chain.size()) {
+		return;
+	}
+
+	resultRestoreTimer_ += dt;
+
+	if (resultRestoreTimer_ < resultRestoreInterval_) {
+		return;
+	}
+
+	resultRestoreTimer_ = 0.0f;
+
+	auto manager = floaterManager_.Resolve();
+	if (!manager) {
+		return;
+	}
+
+	const ChainMemberData& data =
+		ResultCarry::chain[resultRestoreIndex_];
+
+	// Floater生成
+	std::shared_ptr<Floater> floater =
+		manager->CreateChained(data.offset);
+
+	if (!floater) {
+		return;
+	}
+
+	// 接続済み状態にする
+	floater->RestoreChained();
+
+	Member member{};
+	static_cast<ChainMemberData&>(member) = data;
+	member.floater = floater;
+
+	chain_.push_back(std::move(member));
+
+	// 次のFloaterへ
+	resultRestoreIndex_++;
 }
 
 void Player::BuildHandAnchors() {
@@ -528,10 +565,31 @@ void Player::AllBreak() {
 	}
 }
 
+void Player::SpawnForecast() {
+
+	if (forecast_ || IsTransient()) {
+		return;
+	}
+
+	forecast_ = SceneAPI::Instantiate<MeteoriteForecast>();
+	if (!forecast_) {
+		return;
+	}
+
+	// Instantiate は Initialize を呼ばない
+	forecast_->Initialize();
+	forecast_->SetParent(shared_from_this(), false);
+	forecast_->ShowAtStart();
+}
+
 bool Player::IsForecastWaiting() const {
 	return forecast_ && forecast_->IsWaitingAtStart();
 }
 
 void Player::ExportChain() const {
 	ResultCarry::chain.assign(chain_.begin(), chain_.end());
+}
+
+void Player::SetupResult() {
+	resultMode_ = true;
 }

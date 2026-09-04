@@ -12,7 +12,7 @@
                 "y": -1.0,
                 "z": -0.44999998807907104
             },
-            "guid": "779b5c86-2092-4247-b3f1-6aad0256b725",
+            "guid": "655c8505-9daa-45e1-8516-4f892a185743",
             "intensity": 0.75,
             "name": "DirectionalLight",
             "objectType": 1,
@@ -41,7 +41,7 @@
             "type": "DirectionalLight"
         },
         {
-            "guid": "8b5b23cd-655b-490c-bdc9-7a954d7b4fa7",
+            "guid": "5e3126c2-8129-4ac0-bf86-f1adce9398c7",
             "name": "MainCamera",
             "objectType": 0,
             "parentGuid": "00000000-0000-0000-0000-000000000000",
@@ -69,61 +69,6 @@
             "type": "Camera3d"
         },
         {
-            "SceneTransitionEvent": {
-                "destinationSceneGuid": "840d377e-c18d-457f-b7a8-32983dd86b20"
-            },
-            "colliderConfig": {
-                "capsuleHeight": 2.0,
-                "capsuleRadius": 0.5,
-                "isCollisionEnabled": true,
-                "isDraw": true,
-                "isTrigger": false,
-                "layerId": 0,
-                "offset": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "radius": 1.0,
-                "rotate": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "size": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            },
-            "guid": "f6b12c26-27e8-4736-ba0b-69bbd7bee450",
-            "name": "Scene Transition",
-            "objectType": 5,
-            "parentGuid": "00000000-0000-0000-0000-000000000000",
-            "transform": {
-                "inheritRotate": true,
-                "inheritScale": true,
-                "inheritTranslate": true,
-                "rotation": {
-                    "w": 1.0,
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "translation": {
-                    "x": 0.19899743795394897,
-                    "y": -0.5620663166046143,
-                    "z": 1.4494614601135254
-                }
-            },
-            "type": "SceneTransitionEvent"
-        },
-        {
             "color": {
                 "w": 1.0,
                 "x": 0.7799999713897705,
@@ -131,7 +76,7 @@
                 "z": 1.0
             },
             "decay": 1.0,
-            "guid": "42ea5bae-cbda-4d9b-af2e-23007a5dbbb5",
+            "guid": "831e4949-a40c-45f2-9a83-74498a110aea",
             "intensity": 0.3499999940395355,
             "name": "PointLight",
             "objectType": 1,
@@ -166,7 +111,7 @@
             "type": "PointLight"
         },
         {
-            "guid": "d1b0bbe2-6797-4a9e-a89c-a1ac7d044065",
+            "guid": "b19eb2f7-f568-4419-ad62-c3b290bcc83c",
             "name": "DebugCamera",
             "objectType": 0,
             "parentGuid": "00000000-0000-0000-0000-000000000000",
@@ -188,7 +133,7 @@
                 "translation": {
                     "x": 6.0,
                     "y": 5.0,
-                    "z": -10.0
+                    "z": -12.550003051757813
                 }
             },
             "type": "DebugCamera"
@@ -220,7 +165,7 @@
                 }
             },
             "colliderKind": 1,
-            "guid": "2a99cdda-0fd0-40c9-aa8a-a911c5691cc7",
+            "guid": "1e1a0a8c-1610-4257-9931-eac8f76a8800",
             "modelConfig": {
                 "blendMode": 5,
                 "materialGuid": "00000000-0000-0000-0000-000000000000",
@@ -282,7 +227,7 @@
             }
         }
     ],
-    "sceneName": "TitleScene",
+    "sceneName": "AnimationScene",
     "settings": {
         "collision": {
             "layers": [

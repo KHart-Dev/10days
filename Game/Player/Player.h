@@ -57,6 +57,10 @@ private:
 
 	bool RestoreChain();
 
+	/// 天気予報を1回だけ生やす。ゲーム中の初回 Update から呼ぶ
+	void SpawnForecast();
+	void RestoreChainStep(float dt);
+
 	PlayerInput input_;
 
 	// 回転慣性（Y軸）
@@ -148,6 +152,12 @@ private:
 	bool resultMode_ = false;
 	bool restored_ = false;
 
+	// ResultSceneでFloaterを順番に出す
+	size_t resultRestoreIndex_ = 1;
+
+	float resultRestoreTimer_ = 0.0f;
+	float resultRestoreInterval_ = 0.2f;
+
 public:
 	// シリアライズ用インターフェース
 	void ApplyConfigFromJson(const nlohmann::json& j) override;
@@ -157,8 +167,9 @@ public:
 	// 接続されている人数を返す（UI や外部管理用）
 	size_t GetConnectedCount() const { return chain_.size(); }
 	void AllBreak();
-
 	void ExportChain() const;
+
+	void SetupResult();
 
 	/// スタート時の天気予報を見せている間か。ゲーム進行を止めたいときに見る
 	bool IsForecastWaiting() const;

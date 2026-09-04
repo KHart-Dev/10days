@@ -16,6 +16,8 @@
 #include <vector>
 #include <memory>
 
+class MeteoriteForecast;
+
 CALYX_OBJECT(Category = GameObject, DisplayName = "Player", Icon = "Textures/player/player.png")
 class Player : public Actor {
 
@@ -126,6 +128,9 @@ private:
 	PlayerParam param_;
 	CalyxEngine::SceneObjectRef<FloaterManager> floaterManager_;
 
+	// 天気予報。自分の子として持ち、毎フレーム カメラの前へ投影される
+	std::shared_ptr<MeteoriteForecast> forecast_;
+
 	std::vector<Member> chain_;
 	std::vector<HandAnchor> handAnchors_;
 	std::vector<float> usedAngles_;
@@ -154,5 +159,8 @@ public:
 	void AllBreak();
 
 	void ExportChain() const;
+
+	/// スタート時の天気予報を見せている間か。ゲーム進行を止めたいときに見る
+	bool IsForecastWaiting() const;
 
 };

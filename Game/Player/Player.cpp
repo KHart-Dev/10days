@@ -7,12 +7,14 @@
 #include <Engine/Foundation/Input/Input.h>
 #include "Engine/System/Command/EditorCommand/GuiCommand/ImGuiHelper/GuiCmd.h"
 #include "UI/Panels/InspectorPanel.h"
+#include <Engine/Scene/Utility/SceneUtility.h>
 
 // game
 #include <Game/Audio/GameAudio.h>
 #include <Game/Floater/BodyNode.h>
 #include <Game/Floater/Floater.h>
 #include <Game/Result/ResultCarry.h>
+#include <Game/Meteorite/InGame/MeteoriteForecast.h>
 
 // std
 #include <algorithm>
@@ -70,6 +72,18 @@ void Player::Initialize() {
 
 	prevSelfPos_ = GetWorldTransform().translation;
 	prevSelfYaw_ = GetWorldTransform().eulerRotation.y;
+
+	// 天気予報を子として生やし、開始時の予報を出す。
+	// リザルトでは要らないので resultMode_ のときは作らない。
+	if (!IsTransient() && !resultMode_) {
+		forecast_ = SceneAPI::Instantiate<MeteoriteForecast>();
+		if (forecast_) {
+			// Instantiate は Initialize を呼ばない
+			forecast_->Initialize();
+			forecast_->SetParent(shared_from_this(), false);
+			forecast_->ShowAtStart();
+		}
+	}
 }
 
 namespace {
@@ -512,6 +526,10 @@ void Player::AllBreak() {
 			chain_[i].floater->MarkBreak();
 		}
 	}
+}
+
+bool Player::IsForecastWaiting() const {
+	return forecast_ && forecast_->IsWaitingAtStart();
 }
 
 void Player::ExportChain() const {

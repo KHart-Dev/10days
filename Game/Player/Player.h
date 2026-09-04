@@ -54,6 +54,7 @@ private:
 	bool BreakChain(FloaterManager& manager);
 
 	bool RestoreChain();
+	void RestoreChainStep(float dt);
 
 	PlayerInput input_;
 
@@ -143,6 +144,12 @@ private:
 	bool resultMode_ = false;
 	bool restored_ = false;
 
+	// ResultSceneでFloaterを順番に出す
+	size_t resultRestoreIndex_ = 1;
+
+	float resultRestoreTimer_ = 0.0f;
+	float resultRestoreInterval_ = 0.2f;
+
 public:
 	// シリアライズ用インターフェース
 	void ApplyConfigFromJson(const nlohmann::json& j) override;
@@ -152,7 +159,8 @@ public:
 	// 接続されている人数を返す（UI や外部管理用）
 	size_t GetConnectedCount() const { return chain_.size(); }
 	void AllBreak();
-
 	void ExportChain() const;
+
+	void SetupResult();
 
 };

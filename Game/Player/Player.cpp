@@ -92,6 +92,7 @@ namespace {
 void Player::Update(float dt) {
 	if (resultMode_) {
 		if (!restored_) { restored_ = RestoreChain(); }
+		else { RestoreChainStep(dt); }
 		if (auto manager = floaterManager_.Resolve()) {
 			BreakChain(*manager);
 		}
@@ -258,6 +259,49 @@ bool Player::RestoreChain() {
 	}
 	ApplyChainTransforms();
 	return true;
+}
+
+void Player::RestoreChainStep(float dt) {
+	// 全員出し終わっている
+	if (resultRestoreIndex_ >= ResultCarry::chain.size()) {
+		return;
+	}
+
+	resultRestoreTimer_ += dt;
+
+	if (resultRestoreTimer_ < resultRestoreInterval_) {
+		return;
+	}
+
+	resultRestoreTimer_ = 0.0f;
+
+	auto manager = floaterManager_.Resolve();
+	if (!manager) {
+		return;
+	}
+
+	const ChainMemberData& data =
+		ResultCarry::chain[resultRestoreIndex_];
+
+	// Floater生成
+	std::shared_ptr<Floater> floater =
+		manager->CreateChained(data.offset);
+
+	if (!floater) {
+		return;
+	}
+
+	// 接続済み状態にする
+	floater->RestoreChained();
+
+	Member member{};
+	static_cast<ChainMemberData&>(member) = data;
+	member.floater = floater;
+
+	chain_.push_back(std::move(member));
+
+	// 次のFloaterへ
+	resultRestoreIndex_++;
 }
 
 void Player::BuildHandAnchors() {
@@ -516,4 +560,8 @@ void Player::AllBreak() {
 
 void Player::ExportChain() const {
 	ResultCarry::chain.assign(chain_.begin(), chain_.end());
+}
+
+void Player::SetupResult() {
+	resultMode_ = true;
 }

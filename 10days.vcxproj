@@ -201,6 +201,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
     <ClCompile Include="Game\Scene\Transitioner\SceneTransitionScene.cpp" />
     <ClCompile Include="Game\GoalPoint\GoalPoint.cpp" />
+    <ClCompile Include="Game\Result\ResultManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Audio\GameAudio.h" />
@@ -223,6 +224,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClInclude Include="Game\Actor\Obstacle\Thorn.h" />
     <ClInclude Include="Game\Scene\Transitioner\SceneTransitionScene.h" />
     <ClInclude Include="Game\GoalPoint\GoalPoint.h" />
+    <ClInclude Include="Game\Result\ResultManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="EnsureCalyxEngineSdk" BeforeTargets="PrepareForBuild" Condition="!Exists('$(CalyxEngineSdkDir)\Include\CalyxEngine\Application.h') or !Exists('$(CalyxEngineSdkDir)\Include\Data\Engine') or !Exists('$(CalyxEngineSdkDir)\Include\externals\nlohmann\json.hpp') or !Exists('$(CalyxReflectionTool)') or !Exists('$(CalyxEngineSdkDir)\Lib\$(Configuration)\CalyxEngine.lib') or !Exists('$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe')">

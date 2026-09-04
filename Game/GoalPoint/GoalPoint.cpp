@@ -21,6 +21,9 @@ void GoalPoint::Update(float dt) {
 void GoalPoint::OnCollisionEnter(Collider* other) {
 	BaseGameObject* owner = other ? other->GetOwner() : nullptr;
 	if (auto* player = dynamic_cast<Player*>(owner)) {
+		// ResultSceneへ渡す連結情報を保存
+		player->ExportChain();
+		// ResultSceneへ遷移
 		SceneAPI::RequestSceneChange(Calyx::ResolveAssetPath("Scenes/ResultScene.scene"));
 	}
 }

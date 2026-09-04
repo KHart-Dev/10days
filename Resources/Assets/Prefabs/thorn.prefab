@@ -32,8 +32,8 @@
         "modelConfig": {
             "blendMode": 5,
             "materialGuid": "00000000-0000-0000-0000-000000000000",
-            "modelName": "cone.obj",
-            "textureGuid": "00000000-0000-0000-0000-000000000000",
+            "modelName": "plane.obj",
+            "textureGuid": "adc4c73e-0453-4ecb-93a9-5d187e9d1be8",
             "uvTransConfig": {
                 "rotation": 0.0,
                 "scale": {
@@ -62,23 +62,23 @@
             "useGravity": true
         },
         "transform": {
-            "inheritRotate": true,
+            "inheritRotate": false,
             "inheritScale": false,
             "inheritTranslate": true,
             "rotation": {
-                "w": 0.7071067690849304,
-                "x": -0.0,
-                "y": -0.0,
-                "z": 0.7071067690849304
-            },
-            "scale": {
-                "x": 0.5,
-                "y": 0.5,
+                "w": -0.5,
+                "x": -0.5,
+                "y": -0.5,
                 "z": 0.5
             },
+            "scale": {
+                "x": 0.4999999701976776,
+                "y": 0.4999999701976776,
+                "z": 0.4999999701976776
+            },
             "translation": {
-                "x": -1.0,
-                "y": 0.0,
+                "x": 1.0,
+                "y": -0.5,
                 "z": 0.0
             }
         },
@@ -93,15 +93,15 @@
             "inheritScale": true,
             "inheritTranslate": true,
             "rotation": {
-                "w": 0.7071067690849304,
-                "x": -0.0,
-                "y": -0.0,
-                "z": 0.7071067690849304
+                "w": -0.5,
+                "x": -0.5,
+                "y": -0.5,
+                "z": 0.5
             },
             "scale": {
-                "x": 0.5,
-                "y": 0.5,
-                "z": 0.5
+                "x": 0.4999999701976776,
+                "y": 0.4999999701976776,
+                "z": 0.4999999701976776
             },
             "translation": {
                 "x": 0.0,

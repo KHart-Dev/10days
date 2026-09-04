@@ -3,7 +3,6 @@
 // engine
 #include <Engine/Foundation/Reflection/CalyxReflection.h>
 #include <Engine/Objects/3D/Actor/Actor.h>
-#include <Engine/Foundation/Serialization/SerializableObject.h>
 
 // std
 #include <memory>
@@ -20,8 +19,12 @@ struct MeteoriteFallSettings {
 	float impactHold = 0.2f;		//< 判定を出しておく秒数
 };
 
-/// <summary>リザルトシーンに直接置く予告円。位置と大きさは Transform で調整する</summary>
-CALYX_PLACEABLE_OBJECT(Category = GameObject, DisplayName = "Meteorite Warning", Icon = "UI/Tool/event.png")
+/// <summary>
+/// 予告円。MeteoriteDirector が子として生やすので、配置一覧には出さない。
+/// 位置と大きさは Transform で、落ちる設定と delay は Director から受け取る
+/// </summary>
+CALYX_PLACEABLE_OBJECT(Category = GameObject, DisplayName = "MeteoriteWarning", Icon = "UI/Tool/event.png"
+	, Placeable = false, PrefabEditable = true, PrefabRoot = true)
 class MeteoriteWarning : public Actor {
 
 public:
@@ -32,9 +35,12 @@ public:
 	void Initialize() override;
 	void Update(float dt) override;
 
-	void Start(const MeteoriteFallSettings& settings);
+	/// <param name="delay">号令から点滅を始めるまでの秒数</param>
+	void Start(const MeteoriteFallSettings& settings, float delay);
 
 	bool IsFinished() const { return phase_ == Phase::Done; }
+
+	std::string_view GetObjectClassName() const override { return "MeteoriteWarning"; }
 
 private:
 
@@ -54,30 +60,16 @@ private:
 
 	void DisableGravity();
 
+	// 落とし方は地点ごとに持たず、号令のたびに Director から受け取る。
+	// 自前のパラメータファイルを持つと Director 側の配列と二重管理になる。
 	MeteoriteFallSettings settings_{};
+	float delay_ = 0.0f;
 
 	Phase phase_ = Phase::Idle;
 	float timer_ = 0.0f;
 	int   blinkedCount_ = 0;
 
 	std::shared_ptr<FallingMeteorite> meteorite_;
-
-	struct MeteoriteWarningParam : CalyxEngine::SerializableObject {
-		MeteoriteWarningParam() {
-			AddField("delay", delay)
-				.Category("Timing")
-				.Tooltip("号令から点滅を始めるまでの秒数");
-		}
-
-		Guid ownerGuid_;
-		CalyxEngine::ParamPath GetParamPath() const override {
-			return { CalyxEngine::ParamDomain::Game, ownerGuid_.ToString(), "Actor/Meteorite/MeteoriteWarning" };
-		}
-
-		float delay = 0.0f;
-	};
-
-	MeteoriteWarningParam param_;
 
 public:
 

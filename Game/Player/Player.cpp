@@ -237,8 +237,6 @@ bool Player::RestoreChain() {
 	if (!manager) return false;
 
 	auto& wt = GetWorldTransform();
-	//wt.translation = ResultCarry::playerPos;
-	//wt.eulerRotation.y = ResultCarry::playerYaw;
 	wt.rotationSource = RotationSource::Euler;
 	wt.Update();
 
@@ -514,6 +512,4 @@ void Player::AllBreak() {
 
 void Player::ExportChain() const {
 	ResultCarry::chain.assign(chain_.begin(), chain_.end());
-	ResultCarry::playerPos = GetWorldTransform().translation;
-	ResultCarry::playerYaw = GetWorldTransform().eulerRotation.y;
 }

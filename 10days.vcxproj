@@ -57,7 +57,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Label="CalyxEngineSdk">
-    <CalyxEngineVersion>v1.3.4</CalyxEngineVersion>
+    <CalyxEngineVersion>v1.3.5</CalyxEngineVersion>
     <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'=='' and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\CalyxEngine\Application.h') and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\Data\Engine') and Exists('$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK\Include\externals\nlohmann\json.hpp')">$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK</CalyxEngineSdkDir>
     <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'=='' and '$(CALYX_ENGINE_SDK_DIR)'!='' and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\CalyxEngine\Application.h') and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\Data\Engine') and Exists('$(CALYX_ENGINE_SDK_DIR)\Include\externals\nlohmann\json.hpp')">$(CALYX_ENGINE_SDK_DIR)</CalyxEngineSdkDir>
     <CalyxEngineSdkDir Condition="'$(CalyxEngineSdkDir)'==''">$(LOCALAPPDATA)\CalyxEngine\Engines\$(CalyxEngineVersion)\SDK</CalyxEngineSdkDir>
@@ -199,6 +199,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Game\Player\Player.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Obstacle.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
+    <ClCompile Include="Game\Scene\Transitioner\SceneTransitionScene.cpp" />
     <ClCompile Include="Game\GoalPoint\GoalPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +221,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClInclude Include="Game\Player\Player.h" />
     <ClInclude Include="Game\Actor\Obstacle\Obstacle.h" />
     <ClInclude Include="Game\Actor\Obstacle\Thorn.h" />
+    <ClInclude Include="Game\Scene\Transitioner\SceneTransitionScene.h" />
     <ClInclude Include="Game\GoalPoint\GoalPoint.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
@@ -239,6 +241,10 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
   <Target Name="GenerateCalyxGameReflection" BeforeTargets="ClCompile" DependsOnTargets="ValidateCalyxEngineSdkDir">
     <Message Importance="high" Text="Generating Calyx game object registry from 10days.calyxproj..." />
     <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(CalyxReflectionTool)&quot; -ProjectFile &quot;$(ProjectDir)10days.calyxproj&quot; -OutputName CalyxGameObjectRegistry.generated -FunctionName RegisterGeneratedGameSceneObjects" />
+  </Target>
+  <Target Name="CopyCalyxGameHost" AfterTargets="Build" DependsOnTargets="ValidateCalyxEngineSdkDir">
+    <Message Importance="high" Text="Copying the Calyx game host to $(TargetDir)$(ProjectName).exe..." />
+    <Copy SourceFiles="$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe" DestinationFiles="$(TargetDir)$(ProjectName).exe" SkipUnchangedFiles="true" />
   </Target>
   <ImportGroup Label="ExtensionTargets" />
 </Project>

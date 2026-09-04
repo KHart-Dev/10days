@@ -16,7 +16,8 @@ public:
 	void Initialize() override;
 	void Update(float dt) override;
 
-	void Launch(const CalyxEngine::Vector3& velocity, float colliderRadius);
+	/// <param name="spinSpeed">y 軸まわりに回る角速度 (rad/s)。符号で向きが変わる</param>
+	void Launch(const CalyxEngine::Vector3& velocity, float colliderRadius, float spinSpeed);
 
 	/// この円から出たら自分で Destroy する
 	void SetBounds(const CalyxEngine::Vector3& center, float radius);
@@ -30,6 +31,7 @@ private:
 	bool IsOutOfBounds() const;
 
 	CalyxEngine::Vector3 velocity_{};
+	float spinSpeed_ = 0.0f;
 
 	CalyxEngine::Vector3 boundsCenter_{};
 	float boundsRadius_ = 60.0f;

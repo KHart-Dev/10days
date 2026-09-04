@@ -86,6 +86,14 @@ private:
 				.Category("Move")
 				.Tooltip("flowAngle からのばらつき (deg)。0 で全部が平行に流れる");
 
+			AddField("spinSpeedMin", spinSpeedMin)
+				.Category("Move")
+				.Tooltip("その場で回る速さの最小 (deg/s)。0 で回らない");
+
+			AddField("spinSpeedMax", spinSpeedMax)
+				.Category("Move")
+				.Tooltip("その場で回る速さの最大 (deg/s)。向きは1体ごとに半々で振り分ける");
+
 			AddField("colliderRadius", colliderRadius)
 				.Category("Collision")
 				.Tooltip("当たり判定の半径");
@@ -109,6 +117,9 @@ private:
 		float speedMin = 6.0f;
 		float speedMax = 12.0f;
 		float directionSpread = 25.0f;
+
+		float spinSpeedMin = 40.0f;
+		float spinSpeedMax = 80.0f;
 
 		float colliderRadius = 1.0f;
 	};

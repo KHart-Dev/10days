@@ -42,6 +42,9 @@ void Meteorite::Update(float dt) {
 
 	auto& wt = GetWorldTransform();
 	wt.translation = wt.translation + velocity_ * dt;
+
+	wt.eulerRotation.y += spinSpeed_ * dt;
+	wt.rotationSource = RotationSource::Euler;
 	wt.Update();
 
 	if (IsOutOfBounds()) {
@@ -53,8 +56,9 @@ void Meteorite::Update(float dt) {
 	Actor::Update(dt);
 }
 
-void Meteorite::Launch(const CalyxEngine::Vector3& velocity, float colliderRadius) {
+void Meteorite::Launch(const CalyxEngine::Vector3& velocity, float colliderRadius, float spinSpeed) {
 	velocity_ = velocity;
+	spinSpeed_ = spinSpeed;
 	SetupCollider(colliderRadius);
 }
 

@@ -81,6 +81,10 @@ void FallingMeteorite::SetupCollider(float radius) {
 		config.isCollisionEnabled = false;
 		collider->ApplyConfig(config);
 	}
+
+	if (collider_) {
+		collider_->SetOwner(this);
+	}
 }
 
 void FallingMeteorite::EnableCollider(bool enable) {

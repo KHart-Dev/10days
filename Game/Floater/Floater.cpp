@@ -15,6 +15,8 @@
 #include <Game/Actor/Obstacle/Thorn.h>
 #include <Game/Collision/CollisionLayerUtil.h>
 #include <Game/Demo/3D/Actor/DemoCamera/DemoCameraPivot.h>
+#include <Game/Meteorite/InGame/Meteorite.h>
+#include <Game/Meteorite/InResult/FallingMeteorite.h>
 
 // std
 #include <algorithm>
@@ -81,7 +83,7 @@ void Floater::Update(float dt) {
 
 void Floater::OnCollisionEnter(Collider* other) {
 	BaseGameObject* owner = other ? other->GetOwner() : nullptr;
-	if(chained_ && dynamic_cast<Thorn*>(owner)) {
+	if (chained_ && (dynamic_cast<Thorn*>(owner) || dynamic_cast<Meteorite*>(owner) || dynamic_cast<FallingMeteorite*>(owner))) {
 		MarkBreak();
 		RequestBreakCameraShake();
 	}

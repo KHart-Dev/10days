@@ -2,6 +2,8 @@
 
 // engine
 #include <Engine/Objects/Collider/SphereCollider.h>
+#include <Engine/Scene/Context/SceneContext.h>
+#include <Engine/Scene/Utility/SceneUtility.h>
 
 // game
 #include <Game/Collision/CollisionLayerUtil.h>
@@ -23,6 +25,11 @@ Meteorite::Meteorite()
 	worldTransform_.rotationSource = RotationSource::Euler;
 }
 
+Meteorite::~Meteorite() {
+
+	StopEffect();
+}
+
 void Meteorite::Initialize() {
 	Actor::Initialize();
 
@@ -30,6 +37,8 @@ void Meteorite::Initialize() {
 	auto& wt = GetWorldTransform();
 	wt.eulerRotation.x = kPitch;
 	wt.rotationSource = RotationSource::Euler;
+
+	moveEffect_.Load("Meteorite");
 
 	DisableGravity();
 }
@@ -47,8 +56,21 @@ void Meteorite::Update(float dt) {
 	wt.rotationSource = RotationSource::Euler;
 	wt.Update();
 
+	if (moveHandle_.IsValid()) {
+		CalyxEngine::Vector3 pos = GetWorldPosition();
+		pos.y -= 0.25f;
+		EffectAPI::Player()->SetTransform(
+			moveHandle_,
+			pos,
+			CalyxEngine::Quaternion::MakeIdentity(),
+			{ 1.0f, 1.0f, 1.0f });
+	}
+
 	if (IsOutOfBounds()) {
 		dead_ = true;
+
+		// 本体が消えても尾だけ残らないよう、Destroy より先に止める
+		StopEffect();
 		Destroy();
 		return;
 	}
@@ -60,11 +82,25 @@ void Meteorite::Launch(const CalyxEngine::Vector3& velocity, float colliderRadiu
 	velocity_ = velocity;
 	spinSpeed_ = spinSpeed;
 	SetupCollider(colliderRadius);
+	moveHandle_ = EffectAPI::Play(moveEffect_, GetWorldPosition());
 }
 
 void Meteorite::SetBounds(const CalyxEngine::Vector3& center, float radius) {
 	boundsCenter_ = center;
 	boundsRadius_ = radius;
+}
+
+void Meteorite::StopEffect() {
+
+	if (!moveHandle_.IsValid()) {
+		return;
+	}
+
+	if (SceneContext::Current()) {
+		EffectAPI::Stop(moveHandle_);
+	}
+
+	moveHandle_ = {};
 }
 
 bool Meteorite::IsOutOfBounds() const {
@@ -98,6 +134,7 @@ void Meteorite::SetupCollider(float radius) {
 
 	if (collider_) {
 		collider_->SetOwner(this);
+		collider_->SetIsDrawCollider(false);
 	}
 }
 

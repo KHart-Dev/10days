@@ -3,6 +3,8 @@
 // engine
 #include <Engine/Objects/3D/Actor/Actor.h>
 #include <Engine/Foundation/Math/Vector3.h>
+#include <Engine/Application/Effects/EffectAsset.h>
+#include <Engine/Application/Effects/EffectPlayer.h>
 
 /// <summary>ゲーム中に xz 面を流れる隕石（流れ星）</summary>
 CALYX_OBJECT(Category = GameObject, DisplayName = "Meteorite", Icon = "UI/Tool/cube.dds")
@@ -11,7 +13,8 @@ class Meteorite : public Actor {
 public:
 
 	Meteorite();
-	~Meteorite() override = default;
+	// 消えるときに必ずエフェクトを止めたいので、既定にせず自前で持つ
+	~Meteorite() override;
 
 	void Initialize() override;
 	void Update(float dt) override;
@@ -21,6 +24,9 @@ public:
 
 	/// この円から出たら自分で Destroy する
 	void SetBounds(const CalyxEngine::Vector3& center, float radius);
+
+	/// 尾のエフェクトを止める。二重に呼んでも安全
+	void StopEffect();
 
 	bool IsDead() const { return dead_; }
 
@@ -37,5 +43,8 @@ private:
 	float boundsRadius_ = 60.0f;
 
 	bool dead_ = false;
+
+	CalyxEngine::EffectAsset moveEffect_;
+	CalyxEngine::EffectHandle moveHandle_{};
 
 };

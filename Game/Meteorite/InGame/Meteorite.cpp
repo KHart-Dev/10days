@@ -6,11 +6,30 @@
 // game
 #include <Game/Collision/CollisionLayerUtil.h>
 
+// std
+#include <numbers>
+
+namespace {
+	// plane.obj は XY 平面に立っている。真上のカメラから見えるよう寝かせる
+	constexpr float kPitch = std::numbers::pi_v<float> * 0.5f;
+}
+
 Meteorite::Meteorite()
-	: Actor("debugCube.obj", "Meteorite") {}
+	: Actor("plane.obj", "Meteorite") {
+
+	// 生成直後から寝ているようにする。
+	// プレハブに保存された回転があれば、そちらが後から勝つ
+	worldTransform_.eulerRotation.x = kPitch;
+	worldTransform_.rotationSource = RotationSource::Euler;
+}
 
 void Meteorite::Initialize() {
 	Actor::Initialize();
+
+	// プレハブの transform がコンストラクタの既定値を上書きするので入れ直す
+	auto& wt = GetWorldTransform();
+	wt.eulerRotation.x = kPitch;
+	wt.rotationSource = RotationSource::Euler;
 
 	DisableGravity();
 }

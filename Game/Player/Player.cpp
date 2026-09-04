@@ -25,7 +25,7 @@
 // ResultCarry::stageIndexには次ステージに移行前(ResultCarry::Clear()後)にステージのIndexを渡す
 
 Player::Player()
-	: Actor("character.obj", "Player") {
+	: Actor("plane.obj", "Player") {
 	// パラメータをロード（パラメータデータベースから既定値を読み込む）
 	param_.LoadParams();
 }
@@ -148,6 +148,7 @@ void Player::Update(float dt) {
 	if (std::abs(yawVelocity_) > 1e-6f) {
 		auto& wt = GetWorldTransform();
 		// eulerRotation は {pitch, yaw, roll} の順で保持されている想定
+		wt.eulerRotation.x = std::numbers::pi_v<float> / 2.0f;
 		wt.eulerRotation.y += yawVelocity_ * dt;
 		wt.rotationSource = RotationSource::Euler;
 		wt.Update();

@@ -61,9 +61,9 @@
                     "z": 1.0
                 },
                 "translation": {
-                    "x": -2.8404932022094727,
-                    "y": 20.100000381469727,
-                    "z": 2.8225138187408447
+                    "x": -1.401298464324817e-45,
+                    "y": 20.5,
+                    "z": 1.401298464324817e-45
                 }
             },
             "type": "Camera3d"
@@ -184,10 +184,10 @@
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.9520323872566223,
-                    "x": 0.29491350054740906,
-                    "y": -0.07795635610818863,
-                    "z": 0.024148738011717796
+                    "w": 0.7467383146286011,
+                    "x": 0.6199570298194885,
+                    "y": 0.18535175919532776,
+                    "z": -0.1538827270269394
                 },
                 "scale": {
                     "x": 1.0,
@@ -195,9 +195,9 @@
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 0.3856319785118103,
-                    "y": 8.397903442382813,
-                    "z": -3.997786045074463
+                    "x": -3.1541028022766113,
+                    "y": 12.745094299316406,
+                    "z": -0.9955480098724365
                 }
             },
             "type": "DebugCamera"
@@ -206,7 +206,7 @@
             "Player": {
                 "FloaterManagerPtr": "d0906e04-1f2c-4d1d-b98f-9ec57e496b6e",
                 "moveSpeed": 5.0,
-                "resultMode": false,
+                "resultMode": true,
                 "rotSpeedDeg": 250.0,
                 "yawAcceleration": 5.0
             },
@@ -274,9 +274,9 @@
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 1.0,
+                    "w": 0.0007962742820382118,
                     "x": 0.0,
-                    "y": 0.0,
+                    "y": 0.9999997019767761,
                     "z": 0.0
                 },
                 "scale": {
@@ -285,9 +285,9 @@
                     "z": 1.0
                 },
                 "translation": {
-                    "x": -2.8404934406280518,
-                    "y": 0.10000000149011612,
-                    "z": 2.822514057159424
+                    "x": 0.0,
+                    "y": 0.5,
+                    "z": 0.0
                 }
             },
             "type": "Player",
@@ -339,9 +339,9 @@
                     "z": 1.0
                 },
                 "translation": {
-                    "x": -2.8404932022094727,
-                    "y": 0.09999999403953552,
-                    "z": 2.8225138187408447
+                    "x": -1.401298464324817e-45,
+                    "y": 0.4999999701976776,
+                    "z": 1.401298464324817e-45
                 }
             },
             "type": "DemoCameraPivot"
@@ -622,6 +622,94 @@
                 }
             },
             "type": "ResultManager",
+            "visualOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "cameraDitherEnabled": false,
+            "colliderConfig": {
+                "capsuleHeight": 2.0,
+                "capsuleRadius": 0.5,
+                "isCollisionEnabled": true,
+                "isDraw": true,
+                "isTrigger": false,
+                "layerId": 0,
+                "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius": 1.0,
+                "rotate": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "size": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            },
+            "colliderKind": 0,
+            "guid": "0b46cd0a-8736-4cd3-b5bc-f2fddf9e32d2",
+            "modelConfig": {
+                "blendMode": 5,
+                "materialGuid": "00000000-0000-0000-0000-000000000000",
+                "modelName": "cone.obj",
+                "textureGuid": "00000000-0000-0000-0000-000000000000",
+                "uvTransConfig": {
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            "name": "Meteorite Director",
+            "objectType": 2,
+            "outlineColor": {
+                "w": 1.0,
+                "x": 0.019999999552965164,
+                "y": 0.019999999552965164,
+                "z": 0.02500000037252903
+            },
+            "outlineEnabled": false,
+            "outlineThickness": 0.03500000014901161,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "physicsBodyConfig": {
+                "bodyType": 1,
+                "enabled": true,
+                "gravityScale": 1.0,
+                "mass": 1.0,
+                "pushbackRatio": 1.0,
+                "useGravity": true
+            },
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": -3.2217724323272705,
+                    "y": 0.003279829164966941,
+                    "z": 1.6501877307891846
+                }
+            },
+            "type": "MeteoriteDirector",
             "visualOffset": {
                 "x": 0.0,
                 "y": 0.0,

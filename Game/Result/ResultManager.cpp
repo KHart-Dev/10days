@@ -59,6 +59,7 @@ void ResultManager::InitializeActor() {
     }
 
     player_->Initialize();
+	player_->SetupResult();
 
     // ResultManagerの位置にPlayerを置く
     auto& playerWt = player_->GetWorldTransform();
@@ -67,7 +68,6 @@ void ResultManager::InitializeActor() {
         GetWorldTransform().translation;
     playerWt.translation.y = 0.5f;
     playerWt.rotationSource = RotationSource::Euler;
-    playerWt.eulerRotation = { std::numbers::pi_v<float>, 0.0f, 0.0f };
 
     playerWt.Update();
 

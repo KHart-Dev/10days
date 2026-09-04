@@ -20,6 +20,10 @@
 #include <numbers>
 #include <nlohmann/json.hpp>
 
+// ExportChain()をクリアシーンに移る際に呼ぶ
+// ResultCarry::Clear()は次ステージのシーンリクエスト前に呼び出し(保存した連結のリセット)
+// ResultCarry::stageIndexには次ステージに移行前(ResultCarry::Clear()後)にステージのIndexを渡す
+
 Player::Player()
 	: Actor("character.obj", "Player") {
 	// パラメータをロード（パラメータデータベースから既定値を読み込む）

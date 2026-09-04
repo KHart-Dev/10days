@@ -1,6 +1,10 @@
 #include "GameApplication.h"
 
-void GameApplication::OnInitialize() {}
+#include <Game/Result/ResultCarry.h>
+
+void GameApplication::OnInitialize() {
+	ResultCarry::Clear();
+}
 
 void GameApplication::OnUpdate() {}
 

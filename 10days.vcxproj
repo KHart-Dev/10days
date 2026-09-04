@@ -200,6 +200,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Game\Actor\Obstacle\Obstacle.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
     <ClCompile Include="Game\Scene\Transitioner\SceneTransitionScene.cpp" />
+    <ClCompile Include="Game\Scene\SceneFlow.cpp" />
     <ClCompile Include="Game\GoalPoint\GoalPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +223,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClInclude Include="Game\Actor\Obstacle\Obstacle.h" />
     <ClInclude Include="Game\Actor\Obstacle\Thorn.h" />
     <ClInclude Include="Game\Scene\Transitioner\SceneTransitionScene.h" />
+    <ClInclude Include="Game\Scene\SceneFlow.h" />
     <ClInclude Include="Game\GoalPoint\GoalPoint.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

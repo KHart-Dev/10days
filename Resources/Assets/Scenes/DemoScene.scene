@@ -987,7 +987,7 @@
             }
         }
     ],
-    "sceneName": "TestScene",
+    "sceneName": "GameScene",
     "settings": {
         "collision": {
             "layers": [

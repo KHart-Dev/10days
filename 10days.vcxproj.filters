@@ -27,6 +27,7 @@
     <ClCompile Include="Game\Actor\Obstacle\Thorn.cpp" />
     <ClCompile Include="Game\GoalPoint\GoalPoint.cpp" />
     <ClCompile Include="Game\Result\ResultManager.cpp" />
+    <ClCompile Include="Game\Meteorite\InGame\MeteoriteForecast.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Audio\GameAudio.h" />
@@ -52,5 +53,6 @@
     <ClInclude Include="Game\Scene\Transitioner\SceneTransitionScene.h" />
     <ClInclude Include="Game\Scene\SceneFlow.h" />
     <ClInclude Include="Game\Result\ResultManager.h" />
+    <ClInclude Include="Game\Meteorite\InGame\MeteoriteForecast.h" />
   </ItemGroup>
 </Project>

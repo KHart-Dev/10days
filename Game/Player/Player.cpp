@@ -7,12 +7,14 @@
 #include <Engine/Foundation/Input/Input.h>
 #include "Engine/System/Command/EditorCommand/GuiCommand/ImGuiHelper/GuiCmd.h"
 #include "UI/Panels/InspectorPanel.h"
+#include <Engine/Scene/Utility/SceneUtility.h>
 
 // game
 #include <Game/Audio/GameAudio.h>
 #include <Game/Floater/BodyNode.h>
 #include <Game/Floater/Floater.h>
 #include <Game/Result/ResultCarry.h>
+#include <Game/Meteorite/InGame/MeteoriteForecast.h>
 
 // std
 #include <algorithm>
@@ -100,6 +102,11 @@ void Player::Update(float dt) {
 		Actor::Update(dt);
 		return;
 	}
+
+	// 天気予報はここで生やす。
+	// Initialize では resultMode_ がまだシーンから入っておらず、
+	// リザルトでも作ってしまう。上の早期 return を抜けた時点なら確実にゲーム中。
+	SpawnForecast();
 
 	// 入力更新
 	input_.Update();
@@ -557,6 +564,27 @@ void Player::AllBreak() {
 			chain_[i].floater->MarkBreak();
 		}
 	}
+}
+
+void Player::SpawnForecast() {
+
+	if (forecast_ || IsTransient()) {
+		return;
+	}
+
+	forecast_ = SceneAPI::Instantiate<MeteoriteForecast>();
+	if (!forecast_) {
+		return;
+	}
+
+	// Instantiate は Initialize を呼ばない
+	forecast_->Initialize();
+	forecast_->SetParent(shared_from_this(), false);
+	forecast_->ShowAtStart();
+}
+
+bool Player::IsForecastWaiting() const {
+	return forecast_ && forecast_->IsWaitingAtStart();
 }
 
 void Player::ExportChain() const {

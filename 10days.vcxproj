@@ -189,6 +189,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Game\Floater\Floater.cpp" />
     <ClCompile Include="Game\Floater\FloaterManager.cpp" />
     <ClCompile Include="Game\Meteorite\InGame\Meteorite.cpp" />
+    <ClCompile Include="Game\Meteorite\InGame\MeteoriteForecast.cpp" />
     <ClCompile Include="Game\Meteorite\InGame\MeteoriteSpawner.cpp" />
     <ClCompile Include="Game\Meteorite\InResult\FallingMeteorite.cpp" />
     <ClCompile Include="Game\Meteorite\InResult\MeteoriteDirector.cpp" />
@@ -212,6 +213,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClInclude Include="Game\Floater\Floater.h" />
     <ClInclude Include="Game\Floater\FloaterManager.h" />
     <ClInclude Include="Game\Meteorite\InGame\Meteorite.h" />
+    <ClInclude Include="Game\Meteorite\InGame\MeteoriteForecast.h" />
     <ClInclude Include="Game\Meteorite\InGame\MeteoriteSpawner.h" />
     <ClInclude Include="Game\Meteorite\InResult\FallingMeteorite.h" />
     <ClInclude Include="Game\Meteorite\InResult\MeteoriteDirector.h" />

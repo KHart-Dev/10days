@@ -72,6 +72,10 @@ void Meteorite::SetupCollider(float radius) {
 		config.isTrigger = true;
 		collider->ApplyConfig(config);
 	}
+
+	if (collider_) {
+		collider_->SetOwner(this);
+	}
 }
 
 void Meteorite::DisableGravity() {

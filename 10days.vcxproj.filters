@@ -17,6 +17,7 @@
     <ClCompile Include="Game\Meteorite\InResult\FallingMeteorite.cpp" />
     <ClCompile Include="Game\Meteorite\InResult\MeteoriteDirector.cpp" />
     <ClCompile Include="Game\Scene\Transitioner\SceneTransitionScene.cpp" />
+    <ClCompile Include="Game\Scene\SceneFlow.cpp" />
     <ClCompile Include="Game\Meteorite\InResult\MeteoriteWarning.cpp" />
     <ClCompile Include="Game\Player\PlayerTimeUis\NumberUi.cpp" />
     <ClCompile Include="Game\Player\PlayerTimeUis\PlayerTimeUis.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="Game\GoalPoint\GoalPoint.h" />
     <ClInclude Include="Game\Floater\ChainMemberData.h" />
     <ClInclude Include="Game\Scene\Transitioner\SceneTransitionScene.h" />
+    <ClInclude Include="Game\Scene\SceneFlow.h" />
     <ClInclude Include="Game\Result\ResultManager.h" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,7 @@
 #include "GoalPoint.h"
 
-#include <Engine/Scene/Utility/SceneUtility.h>
-
 #include "Game/Player/Player.h"
+#include "Game/Scene/SceneFlow.h"
 
 GoalPoint::GoalPoint()
 	: Actor("debugCube.obj", "GoalPoint") {}
@@ -24,7 +23,7 @@ void GoalPoint::OnCollisionEnter(Collider* other) {
 		// ResultSceneへ渡す連結情報を保存
 		player->ExportChain();
 		// ResultSceneへ遷移
-		SceneAPI::RequestSceneChange(Calyx::ResolveAssetPath("Scenes/ResultScene.scene"));
+		SceneFlow::GoToResult();
 	}
 }
 

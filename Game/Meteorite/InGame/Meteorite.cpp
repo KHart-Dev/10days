@@ -39,6 +39,7 @@ void Meteorite::Initialize() {
 	wt.rotationSource = RotationSource::Euler;
 
 	moveEffect_.Load("Meteorite");
+	breakEffect_.Load("MeteoriteBreak");
 
 	DisableGravity();
 }
@@ -99,6 +100,7 @@ void Meteorite::StopEffect() {
 		EffectAPI::Stop(moveHandle_);
 	}
 
+	EffectAPI::Play(breakEffect_, GetWorldPosition());
 	moveHandle_ = {};
 }
 

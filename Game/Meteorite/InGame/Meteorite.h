@@ -47,5 +47,6 @@ private:
 
 	CalyxEngine::EffectAsset moveEffect_;
 	CalyxEngine::EffectHandle moveHandle_{};
+	CalyxEngine::EffectAsset breakEffect_;
 
 };

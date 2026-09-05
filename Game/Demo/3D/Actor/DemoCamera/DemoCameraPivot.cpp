@@ -160,17 +160,17 @@ const BaseTransform* DemoCameraPivot::ResolveTargetTransform() {
 
 	// メインプレイヤー (Player) が存在する場合は、それをターゲットとする。
 	// Player 用のデフォルト設定として見下ろし視点に使えるようピッチとオフセットを調整する。
-	if(auto player = lib->FindByName("Player")) {
-		// プレイヤーの真上に配置して見下ろす設定
-		pitch_ = std::numbers::pi_v<float> / 2.0f;
-		return &player->GetWorldTransform();
-	}
+	//if(auto player = lib->FindByName("Player")) {
+	//	// プレイヤーの真上に配置して見下ろす設定
+	//	pitch_ = std::numbers::pi_v<float> / 2.0f;
+	//	return &player->GetWorldTransform();
+	//}
 
-	auto mainPlayers = lib->FindByClassName("Player");
-	if(!mainPlayers.empty()) {
-		pitch_ = -std::numbers::pi_v<float> / 2.0f;
-		return &mainPlayers.front()->GetWorldTransform();
-	}
+	//auto mainPlayers = lib->FindByClassName("Player");
+	//if(!mainPlayers.empty()) {
+	//	pitch_ = -std::numbers::pi_v<float> / 2.0f;
+	//	return &mainPlayers.front()->GetWorldTransform();
+	//}
 
 	return nullptr;
 }

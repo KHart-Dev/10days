@@ -204,6 +204,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Game\Scene\SceneFlow.cpp" />
     <ClCompile Include="Game\GoalPoint\GoalPoint.cpp" />
     <ClCompile Include="Game\Result\ResultManager.cpp" />
+    <ClCompile Include="Game\Option\OptionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Audio\GameAudio.h" />
@@ -221,6 +222,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClInclude Include="Game\Player\PlayerTimeUis\NumberUi.h" />
     <ClInclude Include="Game\Player\PlayerTimeUis\PlayerTimeUis.h" />
     <ClInclude Include="Game\Result\ResultCarry.h" />
+    <ClInclude Include="Game\Ui\UiSprite.h" />
     <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h" />
     <ClInclude Include="Game\Player\Player.h" />
     <ClInclude Include="Game\Actor\Obstacle\Obstacle.h" />
@@ -229,6 +231,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClInclude Include="Game\Scene\SceneFlow.h" />
     <ClInclude Include="Game\GoalPoint\GoalPoint.h" />
     <ClInclude Include="Game\Result\ResultManager.h" />
+    <ClInclude Include="Game\Option\OptionManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="EnsureCalyxEngineSdk" BeforeTargets="PrepareForBuild" Condition="!Exists('$(CalyxEngineSdkDir)\Include\CalyxEngine\Application.h') or !Exists('$(CalyxEngineSdkDir)\Include\Data\Engine') or !Exists('$(CalyxEngineSdkDir)\Include\externals\nlohmann\json.hpp') or !Exists('$(CalyxReflectionTool)') or !Exists('$(CalyxEngineSdkDir)\Lib\$(Configuration)\CalyxEngine.lib') or !Exists('$(CalyxEngineSdkDir)\Bin\$(Configuration)\CalyxGame.exe')">

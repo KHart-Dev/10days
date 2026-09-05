@@ -2,8 +2,8 @@
     "fields": {
         "colliderRadius": 1.0,
         "despawnRadius": 60.0,
-        "directionSpread": 25.0,
-        "flowAngle": 215.0,
+        "directionSpread": 15.0,
+        "flowAngle": 260.0,
         "intervalMax": 3.0,
         "intervalMin": 1.0,
         "maxAlive": 8,
@@ -11,6 +11,8 @@
         "spawnHeight": 0.5,
         "spawnSpread": 10.0,
         "speedMax": 12.0,
-        "speedMin": 6.0
+        "speedMin": 6.0,
+        "spinSpeedMax": 80.0,
+        "spinSpeedMin": 40.0
     }
 }

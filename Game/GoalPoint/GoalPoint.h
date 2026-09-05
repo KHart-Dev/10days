@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Engine/Scene/Utility/SceneUtility.h>
 #include <Engine/Objects/3D/Actor/Actor.h>
 
 #include <memory>
@@ -21,6 +22,10 @@ public:
 private:
 
 	void DisableGravity();
+
+
+	CalyxEngine::EffectAsset goalEffect_;
+	CalyxEngine::EffectHandle goalHandle_{};
 
 };
 

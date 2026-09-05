@@ -2,6 +2,7 @@
 
 // engine
 #include <Engine/Objects/3D/Actor/Actor.h>
+#include <Engine/Scene/Utility/SceneUtility.h>
 #include <Engine/Objects/ConfigurableObject/IConfigurable.h>
 #include <Engine/Scene/Reference/SceneObjectReference.h>
 #include <Engine/Foundation/Serialization/SerializableObject.h>
@@ -157,6 +158,9 @@ private:
 
 	float resultRestoreTimer_ = 0.0f;
 	float resultRestoreInterval_ = 0.2f;
+
+	CalyxEngine::EffectAsset HandConnectEffect_;
+	CalyxEngine::EffectHandle HandConnectHandle_{};
 
 public:
 	// シリアライズ用インターフェース

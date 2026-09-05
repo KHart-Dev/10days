@@ -2,6 +2,7 @@
     "fields": {
         "alignToChain": 0.0,
         "armSeparation": 60.0,
+        "fieldMargin": 0.5,
         "grabRadius": 1.2000000476837158,
         "heaviness": 0.10000000149011612,
         "moveSpeed": 5.0,

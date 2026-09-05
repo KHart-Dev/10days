@@ -46,6 +46,8 @@ private:
 		int hand = 0;
 	};
 
+	void ClampToField();
+
 	// 塊の手を全部ワールドへ出す
 	void BuildHandAnchors();
 	void CheckConnect(FloaterManager& manager, float dt);
@@ -113,6 +115,10 @@ private:
 			AddField("reachSpread", reachSpread)
 				.Category("Reach")
 				.Tooltip("差し出す向きの個人差");
+
+			AddField("fieldMargin", fieldMargin)
+				.Category("Movement")
+				.Tooltip("フィールドの縁からどれだけ内側で止まるか");
 		}
 
 		CalyxEngine::ParamPath GetParamPath() const override {
@@ -132,6 +138,7 @@ private:
 		float reachSpeed = 0.5f;
 		float reachSpread = 40.0f;
 
+		float fieldMargin = 1.0f;
 	};
 
 	PlayerParam param_;

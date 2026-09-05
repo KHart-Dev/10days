@@ -214,12 +214,25 @@ void Floater::BounceOnEdge() {
 	const float x = wt.translation.x - boundsCenter_.x;
 	const float z = wt.translation.z - boundsCenter_.z;
 
-	if ((x < -boundsHalf_.x && driftDir_.x < 0.0f) || (x > boundsHalf_.x && driftDir_.x > 0.0f)) {
-		driftDir_.x = -driftDir_.x;
+	const float distSq = x * x + z * z;
+	if (distSq <= boundsRadius_ * boundsRadius_ || distSq <= 0.0f) {
+		return;
 	}
-	if ((z < -boundsHalf_.z && driftDir_.z < 0.0f) || (z > boundsHalf_.z && driftDir_.z > 0.0f)) {
-		driftDir_.z = -driftDir_.z;
+
+	const float dist = std::sqrtf(distSq);
+	const float nx = x / dist;
+	const float nz = z / dist;
+
+	const float dot = driftDir_.x * nx + driftDir_.z * nz;
+	if (dot <= 0.0f) {
+		return;
 	}
+
+	driftDir_.x -= 2.0f * dot * nx;
+	driftDir_.z -= 2.0f * dot * nz;
+
+	wt.translation.x = boundsCenter_.x + nx * boundsRadius_;
+	wt.translation.z = boundsCenter_.z + nz * boundsRadius_;
 }
 
 void Floater::ApplyChainedLook() {

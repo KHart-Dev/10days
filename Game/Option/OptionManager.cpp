@@ -570,6 +570,10 @@ void OptionManager::PauseGameTime() {
         return;
     }
 
+    // 天気予報など、既に時間を止めている側がいるかもしれないので現在値を控える。
+    // 1.0f 決め打ちで戻すと、予報が出たままゲームだけ動き出す。
+    scaleBeforePause_ = ClockManager::GetInstance()->GetTimeScale();
+
     ClockManager::GetInstance()->SetTimeScale(0.0f);
     gameTimePaused_ = true;
 }
@@ -580,8 +584,8 @@ void OptionManager::ResumeGameTime() {
         return;
     }
 
-    // 通常ゲーム速度へ戻す。
-    ClockManager::GetInstance()->SetTimeScale(1.0f);
+    // Option を開く前の速度へ戻す。
+    ClockManager::GetInstance()->SetTimeScale(scaleBeforePause_);
     gameTimePaused_ = false;
 }
 

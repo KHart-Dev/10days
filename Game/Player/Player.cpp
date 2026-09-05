@@ -2,6 +2,7 @@
 
 // engine
 #include <Engine/Graphics/Camera/Manager/CameraManager.h>
+#include <Engine/Foundation/Clock/ClockManager.h>
 #include <Engine/Foundation/Math/Quaternion.h>
 #include <Engine/Foundation/Math/MathUtil.h>
 #include <Engine/Foundation/Input/Input.h>
@@ -34,6 +35,12 @@ Player::Player()
 
 Player::~Player() {
 	GameAudio::StopSe();
+
+	// 予報を出したままシーンが切り替わっても、次のシーンが止まったままにならないように
+	if (forecastPaused_) {
+		ClockManager::GetInstance()->SetTimeScale(1.0f);
+		forecastPaused_ = false;
+	}
 }
 
 void Player::DerivativeGui() {
@@ -107,6 +114,13 @@ void Player::Update(float dt) {
 	// Initialize では resultMode_ がまだシーンから入っておらず、
 	// リザルトでも作ってしまう。上の早期 return を抜けた時点なら確実にゲーム中。
 	SpawnForecast();
+	UpdateForecastPause();
+
+	// 予報を見せている間は自機も止める。閉じる入力は予報側が自分で見ている
+	if (IsForecastWaiting()) {
+		Actor::Update(dt);
+		return;
+	}
 
 	// 入力更新
 	input_.Update();
@@ -581,6 +595,19 @@ void Player::SpawnForecast() {
 	forecast_->Initialize();
 	forecast_->SetParent(shared_from_this(), false);
 	forecast_->ShowAtStart();
+}
+
+void Player::UpdateForecastPause() {
+
+	const bool waiting = IsForecastWaiting();
+	if (waiting == forecastPaused_) {
+		return;
+	}
+
+	// Floater も Meteorite も Spawner も dt だけで動くので、
+	// ここを 0 にすれば個別に手を入れなくても全部止まる
+	ClockManager::GetInstance()->SetTimeScale(waiting ? 0.0f : 1.0f);
+	forecastPaused_ = waiting;
 }
 
 bool Player::IsForecastWaiting() const {

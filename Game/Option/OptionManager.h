@@ -277,6 +277,9 @@ private:
     bool stickReady_ = true;
     bool gameTimePaused_ = false;
 
+    // Open した時点の TimeScale。Close で必ずここへ戻す
+    float scaleBeforePause_ = 1.0f;
+
     std::chrono::steady_clock::time_point lastUiUpdateTime_{};
     bool uiClockInitialized_ = false;
 

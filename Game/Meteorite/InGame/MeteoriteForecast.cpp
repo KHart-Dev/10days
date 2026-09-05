@@ -2,6 +2,7 @@
 
 // engine
 #include <Engine/Graphics/Camera/Manager/CameraManager.h>
+#include <Engine/Foundation/Clock/ClockManager.h>
 #include <Engine/Foundation/Input/Input.h>
 #include <Engine/Foundation/Math/Quaternion.h>
 #include <Engine/Foundation/Math/Matrix4x4.h>
@@ -83,10 +84,14 @@ void MeteoriteForecast::Initialize() {
 
 void MeteoriteForecast::Update(float dt) {
 
-	UpdatePhase(dt);
+	// 開始時の予報はゲーム時間を止めた状態で見せる
+	// 展開アニメは TimeScale の影響を受けない dt で回す
+	const float rawDt = ClockManager::GetInstance()->GetRawDeltaTime();
+
+	UpdatePhase(rawDt);
 
 	if (phase_ != Phase::Hidden) {
-		UpdateVisual(dt);
+		UpdateVisual(rawDt);
 		FollowCamera();
 	}
 

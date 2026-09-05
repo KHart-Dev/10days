@@ -9,7 +9,13 @@ GoalPoint::GoalPoint()
 void GoalPoint::Initialize() {
 
 	Actor::Initialize();
+	Actor::SetDrawEnable(false);
 	DisableGravity();
+
+	goalEffect_.Load("GoalPointParticle");
+	worldTransform_.Update();
+	goalHandle_ = EffectAPI::Play(goalEffect_, worldTransform_.GetWorldPosition() + CalyxEngine::Vector3(0.0f, 0.1f, 0.0f));
+
 }
 
 void GoalPoint::Update(float dt) {

@@ -79,6 +79,8 @@ void Player::Initialize() {
 
 	prevSelfPos_ = GetWorldTransform().translation;
 	prevSelfYaw_ = GetWorldTransform().eulerRotation.y;
+
+	HandConnectEffect_.Load("HandConnectParticle");
 }
 
 namespace {
@@ -532,6 +534,8 @@ void Player::Attach(const std::shared_ptr<Floater>& floater, const HandAnchor& a
 		selfYaw + member.localAngle);
 
 	chain_.push_back(member);
+
+	HandConnectHandle_ = EffectAPI::Play(HandConnectEffect_, anchor.pos);
 }
 
 void Player::ApplyConfigFromJson(const nlohmann::json& j) {

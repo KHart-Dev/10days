@@ -2,7 +2,7 @@
 
 // engine
 #include <Engine/Objects/3D/Actor/Actor.h>
-
+#include <Engine/Scene/Utility/SceneUtility.h>
 
 CALYX_OBJECT(Category = GameObject, DisplayName = "Floater", Icon = "UI/Tool/cube.dds")
 class Floater : public Actor {
@@ -32,7 +32,7 @@ public:
 	bool CanConnect() const;
 
 	bool IsChained() const { return chained_; }
-	void MarkChained();
+	void MarkChained(int hand);
 	void RestoreChained();
 
 	bool IsBreakMarked() const { return breakMark_; }
@@ -66,8 +66,12 @@ private:
 	bool chained_ = false;
 	bool breakMark_ = false;
 	float breakedCooltime_ = 0.0f; // 壊れた後、すぐに繋がらないように
+	int connectedHand_ = -1;
 
 	CalyxEngine::Vector3 boundsCenter_{};
 	CalyxEngine::Vector3 boundsHalf_{ 30.0f, 0.0f, 30.0f };
+
+	CalyxEngine::EffectAsset explosionEffect_;
+	CalyxEngine::EffectHandle explosionHandle_{};
 
 };

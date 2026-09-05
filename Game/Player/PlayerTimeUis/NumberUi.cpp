@@ -7,6 +7,7 @@ NumberUi::NumberUi()
 void NumberUi::Initialize() {
 	Actor::Initialize();
 	DisableGravity();
+	SetTexture("Textures/numbers/number.png");
 
 	// 回転: X軸に90度 (板を寝かせる)
 	auto& wt = GetWorldTransform();

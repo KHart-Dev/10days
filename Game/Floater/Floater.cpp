@@ -64,6 +64,8 @@ void Floater::Initialize() {
 	driftDir_ = driftDir_.Normalize();
 	spinRate_ = Random::Generate(-1.0f, 1.0f);
 	reachBias_ = Random::Generate(-1.0f, 1.0f);
+
+	explosionEffect_.Load("ExplosionParticle");
 }
 
 void Floater::Update(float dt) {
@@ -100,6 +102,15 @@ void Floater::OnCollisionEnter(Collider* other) {
 	RequestBreakCameraShake();
 
 	if (meteorite) {
+		const CalyxEngine::Vector3 effectPosition =
+			GetHandWorld(connectedHand_);
+
+		explosionHandle_ =
+			EffectAPI::Play(
+				explosionEffect_,
+				effectPosition +
+				CalyxEngine::Vector3(0.0f, 0.1f, 0.0f)
+			); 
 		meteorite->MarkDead();
 	}
 }
@@ -140,7 +151,8 @@ void Floater::SetChainedTransform(const CalyxEngine::Vector3& pos, float worldYa
 	wt.Update();
 }
 
-void Floater::MarkChained() {
+void Floater::MarkChained(int hand) {
+	connectedHand_ = hand;
 	ApplyChainedLook();
 	GameAudio::PlaySe(GameAudio::kSeConnect);
 }

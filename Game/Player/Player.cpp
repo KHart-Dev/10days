@@ -60,8 +60,17 @@ void Player::DerivativeGui() {
 	}
 }
 
+void Player::DisableGravity() {
+	auto& movement = GetCharacterMovement();
+	movement.SetGravity(0.0f);
+	movement.SetMaxFallSpeed(0.0f);
+	movement.SetFloorProbeDistance(0.0f);
+	movement.SetFloorSnapDistance(0.0f);
+}
+
 void Player::Initialize() {
 	Actor::Initialize();
+	DisableGravity();
 
 	chain_.clear();
 	Member self{};
@@ -511,7 +520,7 @@ void Player::Attach(const std::shared_ptr<Floater>& floater, const HandAnchor& a
 	member.parentHand = anchor.hand;
 	member.joinHand = ownHand;
 
-	floater->MarkChained();
+	floater->MarkChained(ownHand);
 
 	// 親子付けは使わず、この場でワールド姿勢を確定させる。
 	// 以降は ApplyChainTransforms が毎フレーム同じ式で組み直す

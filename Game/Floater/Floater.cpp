@@ -28,6 +28,9 @@ namespace {
 	constexpr float kPitch = std::numbers::pi_v<float> * 0.5f;
 	constexpr float kBreakShakeDuration = 0.5f;
 	constexpr float kBreakShakeIntensity = 15.0f;
+	constexpr float kBreakCooltime = 2.0f;
+	constexpr float kBreakSpeedScale = 4.0f;
+	constexpr float kBreakBlinkCycle = 0.12f;
 
 	void RequestBreakCameraShake() {
 		auto* context = SceneContext::Current();
@@ -77,6 +80,16 @@ void Floater::Update(float dt) {
 
 		if (breakedCooltime_ > 0.0f) {
 			breakedCooltime_ -= dt;
+
+			if (breakedCooltime_ <= 0.0f) {
+				breakedCooltime_ = 0.0f;
+				SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
+			} else {
+				const bool lit = std::fmodf(breakedCooltime_, kBreakBlinkCycle * 2.0f) < kBreakBlinkCycle;
+				SetColor(lit
+					? CalyxEngine::Vector4{ 1.0f, 1.0f, 1.0f, 1.0f }
+				: CalyxEngine::Vector4{ 1.0f, 0.4f, 0.4f, 1.0f });
+			}
 		}
 	}
 	Actor::Update(dt);
@@ -168,7 +181,7 @@ void Floater::MarkBreak() {
 void Floater::Unchain() {
 	chained_ = false;
 	breakMark_ = false;
-	breakedCooltime_ = 3.0f;
+	breakedCooltime_ = kBreakCooltime;
 	driftDir_ = { Random::Generate(-1.0f, 1.0f), 0.0f, Random::Generate(-1.0f, 1.0f) }; // とりあえず今はランダム方向に壊れる
 	driftDir_ = driftDir_.Normalize();
 	spinRate_ = Random::Generate(-1.0f, 1.0f);
@@ -211,7 +224,12 @@ void Floater::DisableGravity() {
 void Floater::Drift(float dt) {
 	auto& wt = GetWorldTransform();
 
-	wt.translation = wt.translation + driftDir_ * (driftSpeed_ * dt);
+	float dSpeed = driftSpeed_;
+	if (breakedCooltime_ > 0.0f) {
+		const float t = std::clamp(breakedCooltime_ / kBreakCooltime, 0.0f, 1.0f);
+		dSpeed *= 1.0f + (kBreakSpeedScale - 1.0f) * t;
+	}
+	wt.translation = wt.translation + driftDir_ * (dSpeed * dt);
 	wt.translation.y = 0.5f;
 	wt.eulerRotation.y += spinRate_ * spinSpeed_ * dt;
 

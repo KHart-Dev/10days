@@ -39,6 +39,7 @@ void Meteorite::Initialize() {
 	wt.rotationSource = RotationSource::Euler;
 
 	moveEffect_.Load("Meteorite");
+	hitEffect_.Load("MeteoriteParticle");
 
 	DisableGravity();
 }
@@ -97,9 +98,11 @@ void Meteorite::StopEffect() {
 
 	if (SceneContext::Current()) {
 		EffectAPI::Stop(moveHandle_);
+		hitHandle_ = EffectAPI::Play(hitEffect_, GetWorldPosition());
 	}
 
 	moveHandle_ = {};
+	hitHandle_ = {};
 }
 
 bool Meteorite::IsOutOfBounds() const {

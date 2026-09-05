@@ -46,6 +46,8 @@ private:
 	bool dead_ = false;
 
 	CalyxEngine::EffectAsset moveEffect_;
+	CalyxEngine::EffectAsset hitEffect_;
 	CalyxEngine::EffectHandle moveHandle_{};
+	CalyxEngine::EffectHandle hitHandle_{};
 
 };

@@ -29,6 +29,7 @@ public:
 	void StopEffect();
 
 	bool IsDead() const { return dead_; }
+	void MarkDead() { dead_ = true; }
 
 private:
 

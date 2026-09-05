@@ -83,13 +83,25 @@ void Floater::Update(float dt) {
 
 void Floater::OnCollisionEnter(Collider* other) {
 	BaseGameObject* owner = other ? other->GetOwner() : nullptr;
-	if (chained_ && (dynamic_cast<Thorn*>(owner) || dynamic_cast<Meteorite*>(owner) || dynamic_cast<FallingMeteorite*>(owner))) {
-		MarkBreak();
-		RequestBreakCameraShake();
+	if (!chained_ || !owner) {
+		return;
 	}
-	// 障害物に当たったらこの関数呼んでフラグ立てておく
-	//if (!IsChained()) return;
-	//MarkBreak();
+
+	auto* meteorite = dynamic_cast<Meteorite*>(owner);
+	const bool hitObstacle = meteorite
+		|| dynamic_cast<Thorn*>(owner)
+		|| dynamic_cast<FallingMeteorite*>(owner);
+
+	if (!hitObstacle) {
+		return;
+	}
+
+	MarkBreak();
+	RequestBreakCameraShake();
+
+	if (meteorite) {
+		meteorite->MarkDead();
+	}
 }
 
 float Floater::GetYaw() const {
@@ -172,6 +184,7 @@ void Floater::SetupCollider() {
 			config.layerId = *layerId;
 		}
 		collider->ApplyConfig(config);
+		collider_->SetOwner(this);
 	}
 }
 

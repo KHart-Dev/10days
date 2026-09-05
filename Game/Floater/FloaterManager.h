@@ -23,6 +23,7 @@ public:
 	void Update(float dt) override;
 
 	const std::vector<std::shared_ptr<Floater>>& GetFloaters() const { return floaters_; }
+	float GetFieldHalfSize() const { return param_.spawnRadius; }
 
 	/// <summary>1体を漂う側の管理から外して受け取る</summary>
 	std::shared_ptr<Floater> Detach(const Floater* floater);

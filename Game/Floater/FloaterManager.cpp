@@ -4,6 +4,7 @@
 #include <Engine/Scene/Utility/SceneUtility.h>
 #include <Engine/Foundation/Utility/Random/Random.h>
 #include "Engine/System/Command/EditorCommand/GuiCommand/ImGuiHelper/GuiCmd.h"
+#include <Engine/Foundation/Math/MathUtil.h>
 
 // game
 #include "Floater.h"
@@ -11,6 +12,7 @@
 
 // std
 #include <algorithm>
+#include <cmath>
 
 FloaterManager::FloaterManager()
 	:Actor("cone.obj", "FloaterManager") {}
@@ -52,7 +54,7 @@ std::shared_ptr<Floater> FloaterManager::CreateChained(const CalyxEngine::Vector
 	floater->SetDriftSpeed(param_.driftSpeed);
 	floater->SetSpinSpeed(param_.spinSpeed);
 	const CalyxEngine::Vector3 center = GetWorldTransform().translation;
-	floater->SetBounds(center, { param_.spawnRadius, 0.0f, param_.spawnRadius });
+	floater->SetBounds(center, param_.spawnRadius);
 
 	auto& wt = floater->GetWorldTransform();
 	wt.Update();
@@ -76,13 +78,15 @@ void FloaterManager::Spawn(int count) {
 
 		floater->SetDriftSpeed(param_.driftSpeed);
 		floater->SetSpinSpeed(param_.spinSpeed);
-		floater->SetBounds(center, { param_.spawnRadius, 0.0f, param_.spawnRadius });
+		floater->SetBounds(center, param_.spawnRadius);
 
 		auto& wt = floater->GetWorldTransform();
+		const float angle = Random::Generate(0.0f, CalyxEngine::kTwoPi);
+		const float radius = param_.spawnRadius * std::sqrtf(Random::Generate(0.0f, 1.0f));
 		wt.translation = {
-				center.x + Random::Generate(-param_.spawnRadius, param_.spawnRadius),
-				center.y,
-				center.z + Random::Generate(-param_.spawnRadius, param_.spawnRadius)
+			center.x + std::sinf(angle) * radius,
+			center.y,
+			center.z + std::cosf(angle) * radius
 		};
 		wt.Update();
 

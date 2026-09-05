@@ -20,9 +20,9 @@ public:
 	void SetDriftSpeed(float speed) { driftSpeed_ = speed; }
 	void SetSpinSpeed(float speed) { spinSpeed_ = speed; }
 	//　漂う範囲
-	void SetBounds(const CalyxEngine::Vector3& center, const CalyxEngine::Vector3& half) {
+	void SetBounds(const CalyxEngine::Vector3& center, float radius) {
 		boundsCenter_ = center;
-		boundsHalf_ = half;
+		boundsRadius_ = radius;
 	}
 
 	float GetYaw() const;
@@ -69,7 +69,7 @@ private:
 	int connectedHand_ = -1;
 
 	CalyxEngine::Vector3 boundsCenter_{};
-	CalyxEngine::Vector3 boundsHalf_{ 30.0f, 0.0f, 30.0f };
+	float boundsRadius_ = 30.0f;
 
 	CalyxEngine::EffectAsset explosionEffect_;
 	CalyxEngine::EffectHandle explosionHandle_{};

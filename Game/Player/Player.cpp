@@ -151,6 +151,8 @@ void Player::Update(float dt) {
 		wt.Update();
 	}
 
+	ClampToField();
+
 	// 繋いだ人数ぶん遅くなる
 	const float rotSpeed = CurrentTurnSpeed();
 
@@ -335,6 +337,33 @@ void Player::RestoreChainStep(float dt) {
 
 	// 次のFloaterへ
 	resultRestoreIndex_++;
+}
+
+void Player::ClampToField() {
+	std::shared_ptr<FloaterManager> manager = floaterManager_.Resolve();
+	if (!manager) {
+		return;
+	}
+
+	const CalyxEngine::Vector3 center = { 0.0f,0.0f,0.0f };
+	const float limit = manager->GetFieldHalfSize() - param_.fieldMargin;
+	if (limit <= 0.0f) {
+		return;
+	}
+
+	auto& wt = GetWorldTransform();
+	const float x = wt.translation.x - center.x;
+	const float z = wt.translation.z - center.z;
+	const float distSq = x * x + z * z;
+
+	if (distSq <= limit * limit) {
+		return;
+	}
+
+	const float dist = std::sqrtf(distSq);
+	wt.translation.x = center.x + x / dist * limit;
+	wt.translation.z = center.z + z / dist * limit;
+	wt.Update();
 }
 
 void Player::BuildHandAnchors() {

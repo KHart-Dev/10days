@@ -60,6 +60,10 @@ private:
 
 	/// 天気予報を1回だけ生やす。ゲーム中の初回 Update から呼ぶ
 	void SpawnForecast();
+
+	/// 予報の表示状態に合わせてゲーム時間を止める / 戻す
+	void UpdateForecastPause();
+
 	void RestoreChainStep(float dt);
 
 	PlayerInput input_;
@@ -135,6 +139,9 @@ private:
 
 	// 天気予報。自分の子として持ち、毎フレーム カメラの前へ投影される
 	std::shared_ptr<MeteoriteForecast> forecast_;
+
+	// 予報のために TimeScale を 0 にしているか
+	bool forecastPaused_ = false;
 
 	std::vector<Member> chain_;
 	std::vector<HandAnchor> handAnchors_;

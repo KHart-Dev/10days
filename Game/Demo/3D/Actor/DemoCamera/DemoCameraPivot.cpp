@@ -163,16 +163,12 @@ const BaseTransform* DemoCameraPivot::ResolveTargetTransform() {
 	if(auto player = lib->FindByName("Player")) {
 		// プレイヤーの真上に配置して見下ろす設定
 		pitch_ = std::numbers::pi_v<float> / 2.0f;
-		cameraLocalOffset_ = { 0.0f,0.0f, -20.0f };
-		pivotLocalOffset_ = {0.0f, 0.0f, 0.0f};
 		return &player->GetWorldTransform();
 	}
 
 	auto mainPlayers = lib->FindByClassName("Player");
 	if(!mainPlayers.empty()) {
 		pitch_ = -std::numbers::pi_v<float> / 2.0f;
-		cameraLocalOffset_ = {0.0f, 10.0f, 0.0f};
-		pivotLocalOffset_ = {0.0f, 0.0f, 0.0f};
 		return &mainPlayers.front()->GetWorldTransform();
 	}
 

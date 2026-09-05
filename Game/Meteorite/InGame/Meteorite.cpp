@@ -46,6 +46,8 @@ void Meteorite::Initialize() {
 void Meteorite::Update(float dt) {
 
 	if (dead_) {
+		StopEffect();
+		Destroy();
 		return;
 	}
 
@@ -69,9 +71,6 @@ void Meteorite::Update(float dt) {
 	if (IsOutOfBounds()) {
 		dead_ = true;
 
-		// 本体が消えても尾だけ残らないよう、Destroy より先に止める
-		StopEffect();
-		Destroy();
 		return;
 	}
 

@@ -1,0 +1,27 @@
+{
+    "fields": {
+        "arrowHeight": 48.0,
+        "arrowOffsetX": 180.0,
+        "arrowOffsetY": 0.0,
+        "arrowPressedBrightness": 0.5799999833106995,
+        "arrowPressedDuration": 0.11999999731779099,
+        "arrowWidth": 48.0,
+        "backOvershoot": 1.7015800476074219,
+        "closeDuration": 0.2199999988079071,
+        "cornerHeight": 240.0,
+        "cornerInsetX": 95.0,
+        "cornerInsetY": 90.0,
+        "cornerRotationDeg": 45.0,
+        "cornerStartOutsideX": 220.0,
+        "cornerStartOutsideY": 170.0,
+        "cornerWidth": 300.0,
+        "openDuration": 0.2800000011920929,
+        "panelCenterX": 640.0,
+        "panelCenterY": 360.0,
+        "panelHeight": 700.0,
+        "panelStartScale": 0.8600000143051147,
+        "panelWidth": 486.0,
+        "stickReleaseThreshold": 0.25,
+        "stickThreshold": 0.550000011920929
+    }
+}

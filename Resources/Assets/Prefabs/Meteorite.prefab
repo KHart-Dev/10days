@@ -28,12 +28,12 @@
         },
         "colliderKind": 1,
         "drawEnable": true,
-        "guid": "e37bd225-99a8-4bd0-8eb9-1bcc9c85f8ba",
+        "guid": "59cba131-85c9-482e-a258-d814bee85032",
         "modelConfig": {
             "blendMode": 5,
             "materialGuid": "00000000-0000-0000-0000-000000000000",
-            "modelName": "debugCube.obj",
-            "textureGuid": "00000000-0000-0000-0000-000000000000",
+            "modelName": "plane.obj",
+            "textureGuid": "e22616a5-9119-4c4c-8dc6-e2bd2de56918",
             "uvTransConfig": {
                 "rotation": 0.0,
                 "scale": {
@@ -77,8 +77,8 @@
                 "z": 1.0
             },
             "translation": {
-                "x": 0.0,
-                "y": 0.0,
+                "x": 2.0,
+                "y": -2.0,
                 "z": 0.0
             }
         },

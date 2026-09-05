@@ -2,15 +2,43 @@
 
 // engine
 #include <Engine/Objects/Collider/SphereCollider.h>
+#include <Engine/Scene/Context/SceneContext.h>
+#include <Engine/Scene/Utility/SceneUtility.h>
 
 // game
 #include <Game/Collision/CollisionLayerUtil.h>
 
+// std
+#include <numbers>
+
+namespace {
+	// plane.obj は XY 平面に立っている。真上のカメラから見えるよう寝かせる
+	constexpr float kPitch = std::numbers::pi_v<float> * 0.5f;
+}
+
 Meteorite::Meteorite()
-	: Actor("debugCube.obj", "Meteorite") {}
+	: Actor("plane.obj", "Meteorite") {
+
+	// 生成直後から寝ているようにする。
+	// プレハブに保存された回転があれば、そちらが後から勝つ
+	worldTransform_.eulerRotation.x = kPitch;
+	worldTransform_.rotationSource = RotationSource::Euler;
+}
+
+Meteorite::~Meteorite() {
+
+	StopEffect();
+}
 
 void Meteorite::Initialize() {
 	Actor::Initialize();
+
+	// プレハブの transform がコンストラクタの既定値を上書きするので入れ直す
+	auto& wt = GetWorldTransform();
+	wt.eulerRotation.x = kPitch;
+	wt.rotationSource = RotationSource::Euler;
+
+	moveEffect_.Load("Meteorite");
 
 	DisableGravity();
 }
@@ -23,10 +51,26 @@ void Meteorite::Update(float dt) {
 
 	auto& wt = GetWorldTransform();
 	wt.translation = wt.translation + velocity_ * dt;
+
+	wt.eulerRotation.y += spinSpeed_ * dt;
+	wt.rotationSource = RotationSource::Euler;
 	wt.Update();
+
+	if (moveHandle_.IsValid()) {
+		CalyxEngine::Vector3 pos = GetWorldPosition();
+		pos.y -= 0.25f;
+		EffectAPI::Player()->SetTransform(
+			moveHandle_,
+			pos,
+			CalyxEngine::Quaternion::MakeIdentity(),
+			{ 1.0f, 1.0f, 1.0f });
+	}
 
 	if (IsOutOfBounds()) {
 		dead_ = true;
+
+		// 本体が消えても尾だけ残らないよう、Destroy より先に止める
+		StopEffect();
 		Destroy();
 		return;
 	}
@@ -34,14 +78,29 @@ void Meteorite::Update(float dt) {
 	Actor::Update(dt);
 }
 
-void Meteorite::Launch(const CalyxEngine::Vector3& velocity, float colliderRadius) {
+void Meteorite::Launch(const CalyxEngine::Vector3& velocity, float colliderRadius, float spinSpeed) {
 	velocity_ = velocity;
+	spinSpeed_ = spinSpeed;
 	SetupCollider(colliderRadius);
+	moveHandle_ = EffectAPI::Play(moveEffect_, GetWorldPosition());
 }
 
 void Meteorite::SetBounds(const CalyxEngine::Vector3& center, float radius) {
 	boundsCenter_ = center;
 	boundsRadius_ = radius;
+}
+
+void Meteorite::StopEffect() {
+
+	if (!moveHandle_.IsValid()) {
+		return;
+	}
+
+	if (SceneContext::Current()) {
+		EffectAPI::Stop(moveHandle_);
+	}
+
+	moveHandle_ = {};
 }
 
 bool Meteorite::IsOutOfBounds() const {
@@ -75,6 +134,7 @@ void Meteorite::SetupCollider(float radius) {
 
 	if (collider_) {
 		collider_->SetOwner(this);
+		collider_->SetIsDrawCollider(false);
 	}
 }
 

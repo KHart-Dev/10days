@@ -88,8 +88,17 @@ void MeteoriteSpawner::Spawn() {
 	wt.translation = pos;
 	wt.Update();
 
+	// 回る速さは deg/s で持つ。向きは1体ごとに半々で振り分ける
+	const float spinLow = (param_.spinSpeedMin < param_.spinSpeedMax) ? param_.spinSpeedMin : param_.spinSpeedMax;
+	const float spinHigh = (param_.spinSpeedMin < param_.spinSpeedMax) ? param_.spinSpeedMax : param_.spinSpeedMin;
+
+	float spin = CalyxEngine::ToRadians(Random::Generate(spinLow, spinHigh));
+	if (Random::Generate(0.0f, 1.0f) < 0.5f) {
+		spin = -spin;
+	}
+
 	meteorite->SetBounds(center, param_.despawnRadius);
-	meteorite->Launch(direction * speed, param_.colliderRadius);
+	meteorite->Launch(direction * speed, param_.colliderRadius, spin);
 
 	meteorites_.push_back(std::move(meteorite));
 }

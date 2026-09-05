@@ -28,12 +28,12 @@
         },
         "colliderKind": 1,
         "drawEnable": true,
-        "guid": "fb252b02-51c3-4c4f-9c95-5fad3281904c",
+        "guid": "dbebda9a-628f-481f-a465-d14bcd75edfc",
         "modelConfig": {
             "blendMode": 5,
             "materialGuid": "00000000-0000-0000-0000-000000000000",
-            "modelName": "debugCube.obj",
-            "textureGuid": "00000000-0000-0000-0000-000000000000",
+            "modelName": "plane.obj",
+            "textureGuid": "e22616a5-9119-4c4c-8dc6-e2bd2de56918",
             "uvTransConfig": {
                 "rotation": 0.0,
                 "scale": {
@@ -77,9 +77,9 @@
                 "z": 1.0
             },
             "translation": {
-                "x": 0.0,
-                "y": 0.003686202224344015,
-                "z": 1.8003430568569456e-06
+                "x": -2.0,
+                "y": -3.0,
+                "z": 1.0
             }
         },
         "type": "FallingMeteorite",

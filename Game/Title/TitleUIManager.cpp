@@ -19,7 +19,8 @@
 #include <nlohmann/json.hpp>
 
 namespace {
-
+	constexpr const char* kTitleTexture =
+		"Textures/Title/Title.png";
 	constexpr const char* kTitleBridgeTexture =
 		"Textures/Title/titleBridge.png";
 
@@ -97,6 +98,7 @@ void TitleUIManager::UpdateInput() {
 /////////////////////////////////////////////////////////////////////////////////
 void TitleUIManager::InitializeSprites() {
 
+	titleLogo_ = SceneAPI::Instantiate<UiSprite>(kTitleTexture);
 	titleBridge_ = SceneAPI::Instantiate<UiSprite>(kTitleBridgeTexture);
 	titleA_ = SceneAPI::Instantiate<UiSprite>(kTitleATexture);
 	titleB_ = SceneAPI::Instantiate<UiSprite>(kTitleBTexture);
@@ -107,7 +109,7 @@ void TitleUIManager::InitializeSprites() {
 	// 中心基準にしておくと、上下に積むときも画面端に半分だけ出すときも
 	// 計算がサイズの半分ぶんで済む。
 	for (const std::shared_ptr<UiSprite>& sprite :
-		{ titleBridge_, titleA_, titleB_, planetLeft_, planetRight_ }) {
+		{ titleLogo_, titleBridge_, titleA_, titleB_, planetLeft_, planetRight_ }) {
 		if (!sprite) {
 			continue;
 		}
@@ -132,6 +134,19 @@ void TitleUIManager::ApplyTitleLayout() {
 
 	if (!spritesReady_) {
 		return;
+	}
+
+	// Titleロゴ。Bridgeの上端から上へ積むので、中心Yはここで逆算する。
+	const float bridgeTop =
+		param_.titleBridgeCenterY - param_.titleBridgeHeight * 0.5f;
+
+	const float titleLogoBottom = bridgeTop - param_.titleGapFromLogo;
+	const float titleLogoCenterY = titleLogoBottom - param_.titleLogoHeight * 0.5f;
+
+	if (titleLogo_) {
+		titleLogo_->SetSizePx(param_.titleLogoWidth, param_.titleLogoHeight);
+		titleLogo_->SetPositionPx(param_.titleLogoCenterX, titleLogoCenterY);
+		titleLogo_->SetOrderInLayer(param_.titleOrderInLayer);
 	}
 
 	// TitleBridge。ここが基準になる。

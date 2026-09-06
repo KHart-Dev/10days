@@ -30,6 +30,7 @@
     <ClCompile Include="Game\Meteorite\InGame\MeteoriteForecast.cpp" />
     <ClCompile Include="Game\Option\OptionManager.cpp" />
     <ClCompile Include="Game\Result\Planet\Planet.cpp" />
+    <ClCompile Include="Game\Title\TitleUIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Audio\GameAudio.h" />
@@ -59,5 +60,6 @@
     <ClInclude Include="Game\Option\OptionManager.h" />
     <ClInclude Include="Game\Ui\UiSprite.h" />
     <ClInclude Include="Game\Result\Planet\Planet.h" />
+    <ClInclude Include="Game\Title\TitleUIManager.h" />
   </ItemGroup>
 </Project>

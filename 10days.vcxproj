@@ -196,6 +196,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClCompile Include="Game\Meteorite\InResult\MeteoriteWarning.cpp" />
     <ClCompile Include="Game\Player\PlayerTimeUis\NumberUi.cpp" />
     <ClCompile Include="Game\Player\PlayerTimeUis\PlayerTimeUis.cpp" />
+    <ClCompile Include="Game\Title\TitleUIManager.cpp" />
     <ClCompile Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.cpp" />
     <ClCompile Include="Game\Player\Player.cpp" />
     <ClCompile Include="Game\Actor\Obstacle\Obstacle.cpp" />
@@ -223,6 +224,7 @@ if exist "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" copy "$(Win
     <ClInclude Include="Game\Player\PlayerTimeUis\NumberUi.h" />
     <ClInclude Include="Game\Player\PlayerTimeUis\PlayerTimeUis.h" />
     <ClInclude Include="Game\Result\ResultCarry.h" />
+    <ClInclude Include="Game\Title\TitleUIManager.h" />
     <ClInclude Include="Game\Ui\UiSprite.h" />
     <ClInclude Include="Generated\Foundation\Reflection\CalyxGameObjectRegistry.generated.h" />
     <ClInclude Include="Game\Player\Player.h" />

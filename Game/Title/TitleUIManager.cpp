@@ -89,7 +89,8 @@ void TitleUIManager::UpdateInput() {
 		CalyxFoundation::Input::TriggerKey(DIK_SPACE)) {
 
 		transitionRequested_ = true;
-		SceneFlow::GoToAnimation();
+		//SceneFlow::GoToAnimation();
+		SceneFlow::StartStage(0);
 	}
 }
 

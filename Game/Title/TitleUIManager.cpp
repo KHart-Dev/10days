@@ -82,9 +82,10 @@ void TitleUIManager::UpdateInput() {
 		return;
 	}
 
-	// A : AnimationSceneへ
+	// A / Space : AnimationSceneへ
 	if (CalyxFoundation::Input::TriggerGamepadButton(
-		CalyxFoundation::PadButton::A)) {
+		CalyxFoundation::PadButton::A) ||
+		CalyxFoundation::Input::TriggerKey(DIK_SPACE)) {
 
 		transitionRequested_ = true;
 		SceneFlow::GoToAnimation();

@@ -21,7 +21,7 @@ void DemoCameraPivot::ApplyConfigFromJson(const nlohmann::json& j) {
 	ApplyConfig(j.get<SceneObjectConfig>());
 
 	const std::string typeKey(GetTypeName());
-	if(j.contains(typeKey)) {
+	if (j.contains(typeKey)) {
 		ApplyCameraPivotConfig(j.at(typeKey));
 	}
 }
@@ -31,7 +31,7 @@ void DemoCameraPivot::ExtractConfigToJson(nlohmann::json& j) const {
 
 	nlohmann::json derived;
 	ExtractCameraPivotConfig(derived);
-	if(!derived.empty()) {
+	if (!derived.empty()) {
 		j[std::string(GetTypeName())] = std::move(derived);
 	}
 }
@@ -56,9 +56,9 @@ SceneObjectConfig DemoCameraPivot::ExtractConfig() const {
 
 void DemoCameraPivot::ApplyCameraPivotConfig(const nlohmann::json& j) {
 	// TransformRefには所有元GUIDだけを復元し、WorldTransformの解決は利用時まで遅延する。
-	if(j.contains("targetTransform")) {
+	if (j.contains("targetTransform")) {
 		targetTransform_ = j.at("targetTransform").get<CalyxEngine::TransformRef>();
-	} else if(j.contains("targetPlayer")) {
+	} else if (j.contains("targetPlayer")) {
 		// 旧データのtargetPlayerも同じ所有元GUIDなので、後方互換として読み込める。
 		targetTransform_.SetGuid(j.at("targetPlayer").get<Guid>());
 	}
@@ -72,6 +72,11 @@ void DemoCameraPivot::ApplyCameraPivotConfig(const nlohmann::json& j) {
 	keyRotateSpeed_ = j.value("keyRotateSpeed", keyRotateSpeed_);
 	minPitch_ = j.value("minPitch", minPitch_);
 	maxPitch_ = j.value("maxPitch", maxPitch_);
+	shakeDurationScale_ = j.value("shakeDurationScale", shakeDurationScale_);
+	shakeIntensityScale_ = j.value("shakeIntensityScale", shakeIntensityScale_);
+	shakeFrequency_ = j.value("shakeFrequency", shakeFrequency_);
+	shakeDecayPower_ = j.value("shakeDecayPower", shakeDecayPower_);
+	shakeAxisScale_ = j.value("shakeAxisScale", shakeAxisScale_);
 }
 
 void DemoCameraPivot::ExtractCameraPivotConfig(nlohmann::json& j) const {
@@ -87,25 +92,32 @@ void DemoCameraPivot::ExtractCameraPivotConfig(nlohmann::json& j) const {
 	j["keyRotateSpeed"] = keyRotateSpeed_;
 	j["minPitch"] = minPitch_;
 	j["maxPitch"] = maxPitch_;
+	j["shakeDurationScale"] = shakeDurationScale_;
+	j["shakeIntensityScale"] = shakeIntensityScale_;
+	j["shakeFrequency"] = shakeFrequency_;
+	j["shakeDecayPower"] = shakeDecayPower_;
+	j["shakeAxisScale"] = shakeAxisScale_;
 }
 
 void DemoCameraPivot::AlwaysUpdate(float dt) {
-	if(shakeElapsed_ < shakeDuration_) {
+	if (shakeElapsed_ < shakeDuration_) {
 		shakeElapsed_ = (std::min)(shakeElapsed_ + (std::max)(dt, 0.0f), shakeDuration_);
 		const float remaining = 1.0f - shakeElapsed_ / shakeDuration_;
-		const float phase = shakeElapsed_ * 55.0f;
+		const float decay = std::pow((std::max)(remaining, 0.0f), (std::max)(shakeDecayPower_, 0.0f));
+		const float phase = shakeElapsed_ * shakeFrequency_;
 		shakeOffset_ = {
-			std::sin(phase) * shakeIntensity_ * remaining,
-			0.0f,
-			std::sin(phase * 1.37f + 1.2f) * shakeIntensity_ * remaining
+			std::sin(phase) * shakeIntensity_ * shakeAxisScale_.x * decay,
+			std::sin(phase * 1.73f + 0.6f) * shakeIntensity_ * shakeAxisScale_.y * decay,
+			std::sin(phase * 1.37f + 1.2f) * shakeIntensity_ * shakeAxisScale_.z * decay
 		};
 	} else {
 		shakeOffset_ = {};
+		isShaking_ = false;
 	}
 
 	// 参照先は削除され得るため、Transformポインタをフレームを越えて信用せず毎フレーム解決する。
 	target_ = ResolveTargetTransform();
-	if(target_) {
+	if (target_) {
 		ApplyPivotTransform(dt);
 	} else {
 		worldTransform_.Update();
@@ -116,45 +128,53 @@ void DemoCameraPivot::AlwaysUpdate(float dt) {
 }
 
 void DemoCameraPivot::RequestShake(float duration, float intensity) {
-	duration = (std::max)(duration, 0.0f);
-	intensity = (std::max)(intensity, 0.0f);
-	if(duration <= 0.0f || intensity <= 0.0f) {
+	duration = (std::max)(duration, 0.0f) * (std::max)(shakeDurationScale_, 0.0f);
+	intensity = (std::max)(intensity, 0.0f) * (std::max)(shakeIntensityScale_, 0.0f);
+	if (duration <= 0.0f || intensity <= 0.0f) {
 		return;
 	}
 	shakeDuration_ = duration;
 	shakeElapsed_ = 0.0f;
 	shakeIntensity_ = intensity;
+	isShaking_ = true;
+}
+
+void DemoCameraPivot::Shake() {
+	shakeDuration_ = shakeDurationScale_;
+	shakeElapsed_ = 0.0f;
+	shakeIntensity_ = shakeIntensityScale_;
+	isShaking_ = true;
 }
 
 const BaseTransform* DemoCameraPivot::ResolveTargetTransform() {
 	// 明示参照がある場合、利用側にはSceneObjectを公開せず読み取り専用Transformだけを返す。
-	if(targetTransform_.IsAssigned()) {
+	if (targetTransform_.IsAssigned()) {
 		// 未設定、別シーン、または削除済みならResolveはnullptrを返す。
 		// 壊れた明示参照を別オブジェクトへ勝手に置き換えないことで設定ミスを可視化する。
 		return targetTransform_.Resolve();
 	}
 
-	if(auto parent = GetParent()) {
+	if (auto parent = GetParent()) {
 		return &parent->GetWorldTransform();
 	}
 
-	if(!autoFindTarget_) {
+	if (!autoFindTarget_) {
 		return nullptr;
 	}
 
 	auto* ctx = SceneContext::Current();
 	auto* lib = ctx ? ctx->GetObjectLibrary() : nullptr;
-	if(!lib) {
+	if (!lib) {
 		return nullptr;
 	}
 
 	// 旧デモ用の DemoPlayer を優先して探す。
-	if(auto player = lib->FindByName("DemoPlayer")) {
+	if (auto player = lib->FindByName("DemoPlayer")) {
 		return &player->GetWorldTransform();
 	}
 
 	auto players = lib->FindByClassName("DemoPlayer");
-	if(!players.empty()) {
+	if (!players.empty()) {
 		return &players.front()->GetWorldTransform();
 	}
 
@@ -185,18 +205,18 @@ void DemoCameraPivot::RemapSceneObjectReferences(const std::unordered_map<Guid, 
 
 void DemoCameraPivot::UpdateRotationInput(float dt) {
 	const CalyxEngine::Vector2 stickInput = CalyxFoundation::Input::GetRightStick();
-	CalyxEngine::Vector2 keyInput{0.0f, 0.0f};
+	CalyxEngine::Vector2 keyInput{ 0.0f, 0.0f };
 
-	if(CalyxFoundation::Input::PushKey(DIK_RIGHT)) {
+	if (CalyxFoundation::Input::PushKey(DIK_RIGHT)) {
 		keyInput.x += 1.0f;
 	}
-	if(CalyxFoundation::Input::PushKey(DIK_LEFT)) {
+	if (CalyxFoundation::Input::PushKey(DIK_LEFT)) {
 		keyInput.x -= 1.0f;
 	}
-	if(CalyxFoundation::Input::PushKey(DIK_UP)) {
+	if (CalyxFoundation::Input::PushKey(DIK_UP)) {
 		keyInput.y += 1.0f;
 	}
-	if(CalyxFoundation::Input::PushKey(DIK_DOWN)) {
+	if (CalyxFoundation::Input::PushKey(DIK_DOWN)) {
 		keyInput.y -= 1.0f;
 	}
 
@@ -206,23 +226,23 @@ void DemoCameraPivot::UpdateRotationInput(float dt) {
 
 std::shared_ptr<SceneObject> DemoCameraPivot::ResolveMainCamera() {
 	auto camera = std::dynamic_pointer_cast<SceneObject>(CameraManager::GetMain3dShared());
-	if(camera && camera->GetParent().get() == this) {
+	if (camera && camera->GetParent().get() == this) {
 		camera->SetParent(nullptr);
 	}
 	return camera;
 }
 
 void DemoCameraPivot::ApplyPivotTransform(float dt) {
-	if(GetParent()) {
+	if (GetParent()) {
 		worldTransform_.translation = pivotLocalOffset_;
 		worldTransform_.rotation = CalyxEngine::Quaternion::MakeIdentity();
-		worldTransform_.eulerRotation = {0.0f, 0.0f, 0.0f};
+		worldTransform_.eulerRotation = { 0.0f, 0.0f, 0.0f };
 		worldTransform_.rotationSource = RotationSource::Quaternion;
 		worldTransform_.Update();
 		return;
 	}
 
-	if(!target_) {
+	if (!target_) {
 		worldTransform_.Update();
 		return;
 	}
@@ -235,18 +255,18 @@ void DemoCameraPivot::ApplyPivotTransform(float dt) {
 
 	// 常にピボットは位置追従のみを行い、ターゲットの回転を引き継がないように回転をリセットする。
 	worldTransform_.rotation = CalyxEngine::Quaternion::MakeIdentity();
-	worldTransform_.eulerRotation = {0.0f, 0.0f, 0.0f};
+	worldTransform_.eulerRotation = { 0.0f, 0.0f, 0.0f };
 	worldTransform_.rotationSource = RotationSource::Quaternion;
 	worldTransform_.Update();
 }
 
 void DemoCameraPivot::ApplyCameraTransform() {
 	auto camera = mainCamera_.lock();
-	if(!camera) {
+	if (!camera) {
 		return;
 	}
 
-	const CalyxEngine::Quaternion cameraRotation = CalyxEngine::Quaternion::EulerToQuaternion({pitch_, yaw_, 0.0f});
+	const CalyxEngine::Quaternion cameraRotation = CalyxEngine::Quaternion::EulerToQuaternion({ pitch_, yaw_, 0.0f });
 	const CalyxEngine::Vector3 pivotPosition = worldTransform_.GetWorldPosition() + shakeOffset_;
 	const CalyxEngine::Vector3 cameraPosition =
 		pivotPosition + CalyxEngine::Quaternion::RotateVector(cameraLocalOffset_, cameraRotation);
@@ -254,14 +274,14 @@ void DemoCameraPivot::ApplyCameraTransform() {
 	auto& cameraTransform = camera->GetWorldTransform();
 	cameraTransform.parent = nullptr;
 	cameraTransform.translation = cameraPosition;
-	cameraTransform.eulerRotation = {pitch_, yaw_, 0.0f};
+	cameraTransform.eulerRotation = { pitch_, yaw_, 0.0f };
 	cameraTransform.rotationSource = RotationSource::Euler;
 	cameraTransform.Update();
 }
 
 void DemoCameraPivot::ShowGui() {
 	// --- トランスフォーム ---
-	if(GuiCmd::BeginSection(CalyxEngine::ParamFilterSection::Object)) {
+	if (GuiCmd::BeginSection(CalyxEngine::ParamFilterSection::Object)) {
 		worldTransform_.ShowImGui("world");
 		// Hierarchyから任意のSceneObjectを割り当てるが、利用側へ公開されるのはTransformだけである。
 		GuiCmd::SceneObjectReferenceField("Target Transform", targetTransform_);
@@ -273,6 +293,13 @@ void DemoCameraPivot::ShowGui() {
 		GuiCmd::DragFloat("Stick Rotate Speed", stickRotateSpeed_, 0.01f, 0.0f, 20.0f);
 		GuiCmd::DragFloat("Key Rotate Speed", keyRotateSpeed_, 0.01f, 0.0f, 20.0f);
 		GuiCmd::DragFloat("Follow Sharpness", followSharpness_, 0.1f, 0.0f, 100.0f);
+
+		// --- Camera Shake ---
+		GuiCmd::DragFloat("Shake Duration Scale", shakeDurationScale_, 0.01f, 0.0f, 10.0f);
+		GuiCmd::DragFloat("Shake Intensity Scale", shakeIntensityScale_, 0.01f, 0.0f, 10.0f);
+		GuiCmd::DragFloat("Shake Frequency", shakeFrequency_, 0.1f, 0.0f, 200.0f);
+		GuiCmd::DragFloat("Shake Decay Power", shakeDecayPower_, 0.01f, 0.0f, 8.0f);
+		GuiCmd::DragFloat3("Shake Axis Scale", shakeAxisScale_, 0.01f, 0.0f, 5.0f);
 		GuiCmd::EndSection();
 	}
 }

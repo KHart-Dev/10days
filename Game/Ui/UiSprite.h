@@ -1,7 +1,9 @@
 #pragma once
 
 #include <Engine/Objects/2D/Object2d/SpriteSceneObject2d.h>
+#include <Engine/Foundation/Math/Vector2.h>
 
+#include <algorithm>
 #include <numbers>
 #include <string>
 
@@ -42,6 +44,40 @@ public:
         color_ = { r, g, b, a };
     }
 
+    /// 数字アトラス等で使用するUVスケール
+    void SetUvScale(const CalyxEngine::Vector2& scale) {
+        uvScale_ = scale;
+        if (sprite_) {
+            sprite_->SetUvScale(uvScale_);
+        }
+    }
+
+    /// 数字アトラス等で使用するUVオフセット
+    void SetUvOffset(const CalyxEngine::Vector2& offset) {
+        uvOffset_ = offset;
+        if (sprite_) {
+            sprite_->SetUvOffset(uvOffset_);
+        }
+    }
+
+    /// 横一列のアトラスから指定フレームを表示
+    void SetHorizontalAtlasFrame(int frame, int frameCount) {
+        if (frameCount <= 0) {
+            return;
+        }
+
+        frame = std::clamp(frame, 0, frameCount - 1);
+
+        const float frameWidth =
+            1.0f / static_cast<float>(frameCount);
+
+        SetUvScale({ frameWidth, 1.0f });
+        SetUvOffset({
+            static_cast<float>(frame) * frameWidth,
+            0.0f
+            });
+    }
+
     void SetVisible(bool visible) {
         SetDrawEnable(visible);
     }
@@ -66,7 +102,14 @@ public:
         SetFillAmount(fillAmount_);
     }
 
+	void SetTexture(const std::string& texturePath) {
+		sprite_->SetTexture(texturePath);
+	}
+
 private:
+    CalyxEngine::Vector2 uvScale_{ 1.0f, 1.0f };
+    CalyxEngine::Vector2 uvOffset_{ 0.0f, 0.0f };
+
     int fillMethod_ = 0;
     float fillOriginX_ = 0.0f;
     float fillOriginY_ = 0.0f;

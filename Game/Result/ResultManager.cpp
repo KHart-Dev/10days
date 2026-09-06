@@ -9,7 +9,9 @@
 #include <Game/Floater/BodyNode.h>
 #include <Game/UI/UiSprite.h>
 
+#include <algorithm>
 #include <cmath>
+#include <numbers>
 
 ResultManager::ResultManager()
     : Actor("debugCube.obj", "ResultManager") {}
@@ -23,6 +25,7 @@ void ResultManager::Initialize() {
 
     InitializeActor();
     InitializeResultUi();
+    InitializeDistanceUi();
 }
 
 void ResultManager::Update(float dt) {
@@ -31,8 +34,6 @@ void ResultManager::Update(float dt) {
         return;
     }
 
-    // Floaterは今まで通り順番に生成する。
-    // 全員生成済みでも、下のクリア判定は毎フレーム続ける。
     if (nextFloaterIndex_ < ResultCarry::chain.size()) {
 
         spawnTimer_ += dt;
@@ -45,16 +46,15 @@ void ResultManager::Update(float dt) {
 
     CheckStageClear();
     UpdateResultUi();
+    UpdateDistanceUi();
 }
 
 void ResultManager::InitializeActor() {
 
-    // ResultCarryにデータがない
     if (ResultCarry::chain.empty()) {
         return;
     }
 
-    // プレイヤーを取得
     auto* ctx = SceneContext::Current();
     if (ctx) {
         player_ = ctx->FindFirst<Player>();
@@ -67,14 +67,10 @@ void ResultManager::InitializeActor() {
     player_->Initialize();
     player_->SetupResult();
 
-    // ResultManagerの位置にPlayerを置く
     auto& playerWt = player_->GetWorldTransform();
-
-    playerWt.translation =
-        GetWorldTransform().translation;
+    playerWt.translation = GetWorldTransform().translation;
     playerWt.translation.y = 0.5f;
     playerWt.rotationSource = RotationSource::Euler;
-
     playerWt.Update();
 
     nextFloaterIndex_ = 1;
@@ -84,13 +80,10 @@ void ResultManager::InitializeActor() {
     planetTouched_ = { false, false };
     isClear_ = false;
 
-    // ResultCarry::stageClearDirectionを使って、
-    // Playerの左右に2つのPlanetを生成する。
     SpawnPlanets();
 
     initialized_ = true;
 }
-
 
 void ResultManager::InitializeResultUi() {
 
@@ -102,16 +95,9 @@ void ResultManager::InitializeResultUi() {
     }
 
     resultColorSprite_->SetAnchor({ 0.5f, 0.5f });
-
-    // ひとまず画面上部中央に結果確認用の四角として表示。
-    // 必要なら位置・サイズはここを調整してください。
-    resultColorSprite_->SetPositionPx(640.0f, 90.0f);
-    resultColorSprite_->SetSizePx(120.0f, 60.0f);
-
-    // UIの手前側へ
+    resultColorSprite_->SetPositionPx(640.0f, 250.0f);
+    resultColorSprite_->SetSizePx(180.0f, 90.0f);
     resultColorSprite_->SetOrderInLayer(1000);
-
-    // Floaterが全員出るまではまだ結果を出さない。
     resultColorSprite_->SetVisible(false);
 }
 
@@ -121,7 +107,6 @@ void ResultManager::UpdateResultUi() {
         return;
     }
 
-    // 全Floaterの生成が終わるまでは判定結果を見せない。
     const bool spawnFinished =
         nextFloaterIndex_ >= ResultCarry::chain.size();
 
@@ -132,22 +117,228 @@ void ResultManager::UpdateResultUi() {
     }
 
     if (isClear_) {
-        // CLEAR = 緑
-        resultColorSprite_->SetColorRGBA(
-            0.0f,
-            1.0f,
-            0.0f,
-            1.0f
-        );
+        resultColorSprite_->SetTexture("Textures/Result/clear.png");
     } else {
-        // FAILED = 赤
-        resultColorSprite_->SetColorRGBA(
-            1.0f,
-            0.0f,
-            0.0f,
-            1.0f
+        resultColorSprite_->SetTexture("Textures/Result/gameover.png");
+    }
+}
+
+void ResultManager::InitializeDistanceUi() {
+
+    // 上段は目標距離用の赤系数字
+    CreateDistanceSpriteGroup(
+        targetDistanceSprites_,
+        "Textures/Numbers/number.png"
+    );
+
+    // 下段は人間橋距離用の青系数字
+    CreateDistanceSpriteGroup(
+        bridgeDistanceSprites_,
+        "Textures/Numbers/numberBlue.png"
+    );
+
+    LayoutDistanceSpriteGroup(
+        targetDistanceSprites_,
+        targetDistanceOnesX_,
+        targetDistanceCenterY_
+    );
+
+    LayoutDistanceSpriteGroup(
+        bridgeDistanceSprites_,
+        bridgeDistanceOnesX_,
+        bridgeDistanceCenterY_
+    );
+
+    SetDistanceSpriteValue(
+        targetDistanceSprites_,
+        static_cast<int>(
+            std::roundf(
+                std::fabs(ResultCarry::stageClearDirection)
+            )
+            )
+    );
+
+    SetDistanceSpriteValue(
+        bridgeDistanceSprites_,
+        0
+    );
+}
+
+void ResultManager::CreateDistanceSpriteGroup(
+    std::array<std::shared_ptr<UiSprite>, 2>& sprites,
+    const char* texturePath) {
+
+    for (std::shared_ptr<UiSprite>& sprite : sprites) {
+
+        sprite =
+            SceneAPI::Instantiate<UiSprite>(texturePath);
+
+        if (!sprite) {
+            continue;
+        }
+
+        sprite->SetAnchor({ 0.5f, 0.5f });
+        sprite->SetSizePx(
+            distanceDigitWidth_,
+            distanceDigitHeight_
+        );
+        sprite->SetOrderInLayer(
+            distanceUiOrderInLayer_
+        );
+
+        // number.png / numberBlue.png は
+        // 0～9が横一列に並んだ10分割アトラス。
+        // Distance表示自体は10の位・1の位の2Spriteだけ使う。
+        sprite->SetHorizontalAtlasFrame(0, 10);
+    }
+}
+
+void ResultManager::LayoutDistanceSpriteGroup(
+    const std::array<std::shared_ptr<UiSprite>, 2>& sprites,
+    float onesX,
+    float centerY) {
+
+    // [0] = 10の位
+    // [1] =  1の位
+    //
+    // 1の位を必ず onesX に固定する。
+    // 10の位はその左へ distanceDigitSpacing_ 分だけずらす。
+    const std::array<float, 2> xPositions = {
+        onesX - distanceDigitSpacing_,
+        onesX
+    };
+
+    for (size_t i = 0; i < sprites.size(); ++i) {
+
+        if (!sprites[i]) {
+            continue;
+        }
+
+        sprites[i]->SetPositionPx(
+            xPositions[i],
+            centerY
+        );
+
+        sprites[i]->SetSizePx(
+            distanceDigitWidth_,
+            distanceDigitHeight_
         );
     }
+}
+
+void ResultManager::SetDistanceSpriteValue(
+    const std::array<std::shared_ptr<UiSprite>, 2>& sprites,
+    int value) {
+
+    // Distance UIは2桁だけなので0～99へ制限する。
+    value = std::clamp(value, 0, 99);
+
+    const int tens = (value / 10) % 10;
+    const int ones = value % 10;
+
+    // 10の位
+    if (sprites[0]) {
+        const bool showTens = value >= 10;
+        sprites[0]->SetVisible(showTens);
+
+        if (showTens) {
+            sprites[0]->SetHorizontalAtlasFrame(
+                tens,
+                10
+            );
+        }
+    }
+
+    // 1の位は常に表示し、X座標はLayout側で640に固定。
+    if (sprites[1]) {
+        sprites[1]->SetVisible(true);
+        sprites[1]->SetHorizontalAtlasFrame(
+            ones,
+            10
+        );
+    }
+}
+
+int ResultManager::ComputeBridgeDistanceInt() const {
+
+    if (!player_ || resultFloaters_.empty()) {
+        return 0;
+    }
+
+    const auto& playerWt = player_->GetWorldTransform();
+
+    // ResultSceneでの左右方向に沿った見かけの橋の長さを出す。
+    // PlayerのY回転に追従するローカルX軸へ各手を射影し、max-min を距離とする。
+    const CalyxEngine::Vector3 axis =
+        BodyNode::RotateY(
+            CalyxEngine::Vector3{ 1.0f, 0.0f, 0.0f },
+            playerWt.eulerRotation.y
+        );
+
+    bool hasAnyHand = false;
+    float minProj = 0.0f;
+    float maxProj = 0.0f;
+
+    for (const std::shared_ptr<Floater>& floater : resultFloaters_) {
+        if (!floater) {
+            continue;
+        }
+
+        for (int hand = 0; hand < BodyNode::kHandCount; ++hand) {
+            const CalyxEngine::Vector3 p = floater->GetHandWorld(hand) - playerWt.translation;
+            const float projection =
+                p.x * axis.x +
+                p.y * axis.y +
+                p.z * axis.z;
+
+            if (!hasAnyHand) {
+                minProj = projection;
+                maxProj = projection;
+                hasAnyHand = true;
+            } else {
+                minProj = std::min(minProj, projection);
+                maxProj = std::fmax(maxProj, projection);
+            }
+        }
+    }
+
+    if (!hasAnyHand) {
+        return 0;
+    }
+
+    return static_cast<int>(std::roundf(maxProj - minProj));
+}
+
+void ResultManager::UpdateDistanceUi() {
+
+    // Inspector等で位置調整値を変えた場合にも毎フレーム反映。
+    LayoutDistanceSpriteGroup(
+        targetDistanceSprites_,
+        targetDistanceOnesX_,
+        targetDistanceCenterY_
+    );
+
+    LayoutDistanceSpriteGroup(
+        bridgeDistanceSprites_,
+        bridgeDistanceOnesX_,
+        bridgeDistanceCenterY_
+    );
+
+    // 上段: ステージの目標距離
+    SetDistanceSpriteValue(
+        targetDistanceSprites_,
+        static_cast<int>(
+            std::roundf(
+                std::fabs(ResultCarry::stageClearDirection)
+            )
+            )
+    );
+
+    // 下段: 現在のFloaterの手の広がり
+    SetDistanceSpriteValue(
+        bridgeDistanceSprites_,
+        ComputeBridgeDistanceInt()
+    );
 }
 
 void ResultManager::DisableGravity() {
@@ -166,19 +357,12 @@ void ResultManager::SpawnPlanets() {
 
     const auto& playerWt = player_->GetWorldTransform();
 
-    // stageClearDirection は「左右Planetの内側どうしのクリア距離」として扱う。
-    // Player中心からPlanet中心までの距離は
-    //
-    //     Planet半径 + クリア距離の半分
-    //
-    // とする。
     const float clearDistance =
         std::fabs(ResultCarry::stageClearDirection);
 
     const float planetCenterDistance =
         planetRadius_ + clearDistance * 0.5f;
 
-    // ResultManager/PlayerのY回転に追従して左右軸を作る。
     const CalyxEngine::Vector3 leftOffset =
         BodyNode::RotateY(
             CalyxEngine::Vector3{ -planetCenterDistance, 0.0f, 0.0f },
@@ -204,13 +388,12 @@ void ResultManager::SpawnPlanets() {
             continue;
         }
 
-        // SceneAPI::InstantiateはInitializeを自動では呼ばないため明示的に呼ぶ。
         planets_[i]->Initialize();
 
         auto& planetWt = planets_[i]->GetWorldTransform();
         planetWt.translation = positions[i];
         planetWt.rotationSource = RotationSource::Euler;
-        planetWt.eulerRotation.x = std::numbers::pi_v<float> * 0.5f;
+        planetWt.eulerRotation.x = std::numbers::pi_v<float> *0.5f;
         planetWt.Update();
 
         planets_[i]->SetRadius(planetRadius_);
@@ -251,16 +434,13 @@ void ResultManager::SpawnNextFloater() {
     }
 
     floater->Initialize();
-
     floater->RestoreChained();
-
     floater->SetChainedTransform(
         worldPos,
         playerWt.eulerRotation.y + data.localAngle
     );
 
     resultFloaters_.push_back(floater);
-
     nextFloaterIndex_++;
 }
 
@@ -268,7 +448,6 @@ void ResultManager::CheckStageClear() {
 
     planetTouched_ = { false, false };
 
-    // resultFloaters_の両手を調べる。
     for (const std::shared_ptr<Floater>& floater : resultFloaters_) {
 
         if (!floater) {
@@ -295,12 +474,10 @@ void ResultManager::CheckStageClear() {
         }
     }
 
-    // 左右両方のPlanetにFloaterの手が入っていればステージクリア。
     const bool clearNow =
         planetTouched_[0] &&
         planetTouched_[1];
 
-    // 一度クリアしたら確定。手がPlanetから離れてもクリア状態は保持する。
     if (clearNow && !isClear_) {
         isClear_ = true;
         ResultCarry::stageClearCount++;

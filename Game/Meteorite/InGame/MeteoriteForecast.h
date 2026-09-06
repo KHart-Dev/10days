@@ -93,7 +93,7 @@ private:
 		float openTime = 0.35f;						//< 展開にかける秒数
 		float closeTime = 0.18f;					//< 畳むのにかける秒数
 
-		CalyxEngine::Vector4 color{ 0.45f, 0.85f, 1.0f, 1.0f };
+		CalyxEngine::Vector4 color{ 1.0f, 1.0f, 1.0f, 1.0f };
 		float flickerAmp = 0.12f;					//< 明滅の強さ
 		float flickerSpeed = 22.0f;					//< 明滅の速さ
 		float bobRate = 0.004f;						//< 上下の揺れ幅。板の高さに対する割合

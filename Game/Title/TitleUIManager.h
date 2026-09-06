@@ -50,6 +50,22 @@ private:
 	// OptionParam と同じ形式で調整値を保存する
 	struct TitleUIParam : CalyxEngine::SerializableObject {
 		TitleUIParam() {
+			AddField("titleLogoCenterX", titleLogoCenterX)
+				.Category("TitleLogo")
+				.Tooltip("Titleロゴの中心X座標(px)");
+
+			AddField("titleLogoWidth", titleLogoWidth)
+				.Category("TitleLogo")
+				.Tooltip("Titleロゴの横サイズ(px)");
+
+			AddField("titleLogoHeight", titleLogoHeight)
+				.Category("TitleLogo")
+				.Tooltip("Titleロゴの縦サイズ(px)");
+
+			AddField("titleGapFromLogo", titleGapFromLogo)
+				.Category("TitleLogo")
+				.Tooltip("Titleロゴの下端からTitleBridgeの上端までの間隔(px)");
+
 			AddField("titleBridgeCenterX", titleBridgeCenterX)
 				.Category("TitleBridge")
 				.Tooltip("TitleBridgeの中心X座標(px)");
@@ -202,9 +218,18 @@ private:
 			};
 		}
 
+		// TitleLogo
+		// Bridgeの上端から上へ積むので、中心Yは持たずBridgeから逆算する。
+		// Title.pngは1000x400なので5:2で拡縮する。
+		float titleLogoCenterX = 640.0f;
+		float titleLogoWidth = 400.0f;
+		float titleLogoHeight = 160.0f;
+		float titleGapFromLogo = 16.0f;
+
 		// TitleBridge
+		// ロゴを上に載せたぶん、Bridge以下はまとめて下へずらしてある。
 		float titleBridgeCenterX = 640.0f;
-		float titleBridgeCenterY = 250.0f;
+		float titleBridgeCenterY = 300.0f;
 		float titleBridgeWidth = 800.0f;
 		float titleBridgeHeight = 200.0f;
 
@@ -273,6 +298,7 @@ private:
 
 	TitleUIParam param_;
 
+	std::shared_ptr<UiSprite> titleLogo_;
 	std::shared_ptr<UiSprite> titleBridge_;
 	std::shared_ptr<UiSprite> titleA_;
 	std::shared_ptr<UiSprite> titleB_;

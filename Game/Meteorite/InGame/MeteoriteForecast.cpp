@@ -66,9 +66,6 @@ void MeteoriteForecast::Initialize() {
 	stageIndex_ = ResultCarry::stageIndex;
 	ApplyStageTexture();
 
-	// ちょっと空中投影っぽい感じになるように
-	SetBlendMode(BlendMode::ADD);
-	SetLightingMode(LightingMode::NoLighting);
 	SetColor(param_.color);
 
 	auto& wt = GetWorldTransform();
@@ -194,7 +191,7 @@ void MeteoriteForecast::UpdateVisual(float dt) {
 
 	Vector4 color = param_.color;
 	color.w = param_.color.w * Saturate(openRate_ * (1.0f - flicker));
-	SetColor(color);
+	//SetColor(color);
 }
 
 void MeteoriteForecast::FollowCamera() {

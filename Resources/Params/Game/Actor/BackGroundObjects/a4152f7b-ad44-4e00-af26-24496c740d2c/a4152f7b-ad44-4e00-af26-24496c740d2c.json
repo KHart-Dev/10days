@@ -1,0 +1,23 @@
+{
+    "fields": {
+        "alpha": 1.0,
+        "brightness": 1.0,
+        "depthRandom": 0.6000000238418579,
+        "flowAngleRandomDeg": 8.0,
+        "flowDirection": [
+            -1.0,
+            0.0,
+            -1.0
+        ],
+        "objectCount": 10,
+        "sizeMax": 1.0,
+        "sizeMin": 0.5,
+        "speed01": 1.0,
+        "speed02": 10.0,
+        "speed03": 5.0,
+        "speedJitter": 0.20000000298023224,
+        "spreadHalfWidth": 6.0,
+        "travelHalfLength": 17.5,
+        "useXYPlane": true
+    }
+}

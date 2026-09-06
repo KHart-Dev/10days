@@ -17,6 +17,7 @@
 #include <Game/Demo/3D/Actor/DemoCamera/DemoCameraPivot.h>
 #include <Game/Meteorite/InGame/Meteorite.h>
 #include <Game/Meteorite/InResult/FallingMeteorite.h>
+#include <Game/Demo/3D/Actor/DemoCamera/DemoCameraPivot.h>
 
 // std
 #include <algorithm>
@@ -112,6 +113,13 @@ void Floater::OnCollisionEnter(Collider* other) {
 				CalyxEngine::Vector3(0.0f, 0.1f, 0.0f)
 			); 
 		meteorite->MarkDead();
+
+		// カメラを取得
+		auto* ctx = SceneContext::Current();
+		if (ctx) {
+			auto camera = ctx->FindFirst<DemoCameraPivot>();
+			camera->Shake();
+		}
 	}
 }
 

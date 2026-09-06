@@ -31,6 +31,8 @@ public:
 	void ExtractConfigToJson(nlohmann::json& j) const override;
 	void RemapSceneObjectReferences(const std::unordered_map<Guid, Guid>& guidMap) override;
 	void RequestShake(float duration, float intensity);
+	void Shake();
+	bool IsShaking() const { return isShaking_; }
 
 private:
 	//==================================================================*//
@@ -53,9 +55,10 @@ private:
 	std::weak_ptr<SceneObject> mainCamera_;         //< 操作対象メインカメラ
 	const BaseTransform* target_ = nullptr;         //< 追従対象Transform
 
+	bool isShaking_ = false;
 	bool autoFindTarget_ = true;
-	CalyxEngine::Vector3 pivotLocalOffset_ = {0.0f, 1.45f, 0.0f};
-	CalyxEngine::Vector3 cameraLocalOffset_ = {0.0f, 1.2f, -6.0f};
+	CalyxEngine::Vector3 pivotLocalOffset_ = { 0.0f, 1.45f, 0.0f };
+	CalyxEngine::Vector3 cameraLocalOffset_ = { 0.0f, 1.2f, -6.0f };
 	float followSharpness_ = 18.0f;
 	float yaw_ = 0.0f;
 	float pitch_ = CalyxEngine::ToRadians(8.0f);
@@ -66,5 +69,12 @@ private:
 	float shakeDuration_ = 0.0f;
 	float shakeElapsed_ = 0.0f;
 	float shakeIntensity_ = 0.0f;
+
+	// Shake adjustment parameters
+	float shakeDurationScale_ = 1.0f;
+	float shakeIntensityScale_ = 1.0f;
+	float shakeFrequency_ = 55.0f;
+	float shakeDecayPower_ = 1.0f;
+	CalyxEngine::Vector3 shakeAxisScale_ = { 1.0f, 0.0f, 1.0f };
 	CalyxEngine::Vector3 shakeOffset_{};
 };

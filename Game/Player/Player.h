@@ -187,7 +187,6 @@ public:
 	size_t GetConnectedCount() const { return chain_.size(); }
 	void AllBreak();
 	void ExportChain() const;
-
 	void SetupResult();
 
 	/// スタート時の天気予報を見せている間か。ゲーム進行を止めたいときに見る

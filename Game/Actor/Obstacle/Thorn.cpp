@@ -4,6 +4,7 @@
 
 #include <Game/Player/Player.h>
 #include <Game/Floater/Floater.h>
+#include <Game/Demo/3D/Actor/DemoCamera/DemoCameraPivot.h>
 
 Thorn::Thorn() :Actor("plane.obj", "thorn") {
 	//初期化時にスケールを小さくしておく
@@ -38,6 +39,12 @@ void Thorn::OnCollisionEnter(Collider* other){
 	BaseGameObject* owner = other ? other->GetOwner() : nullptr;
 	if (auto* floater = dynamic_cast<Floater*>(owner)) {
 		if (floater->IsChained()) {
+			// カメラを取得
+			auto* ctx = SceneContext::Current();
+			if (ctx) {
+				auto camera = ctx->FindFirst<DemoCameraPivot>();
+				camera->Shake();
+			}
 			SetTexture("Textures/Obstacle/needleBlood.png");
 			bloodHandle_ = EffectAPI::Play(bloodEffect_, worldTransform_.GetWorldPosition() + CalyxEngine::Vector3(0.0f, 0.1f, 0.0f));
 		}

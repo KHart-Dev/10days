@@ -10,7 +10,6 @@ void GameApplication::OnInitialize() {
 	ResultCarry::Clear();
 
 	Calyx::SetWindowTitle("4004_かけろ！にんげんブリッジ");
-
 }
 
 void GameApplication::OnUpdate() {}

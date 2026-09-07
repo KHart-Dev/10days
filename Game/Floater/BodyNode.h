@@ -15,6 +15,8 @@ namespace BodyNode {
 		{  1.0f, 0.0f, 0.0f },
 	};
 
+	inline CalyxEngine::Vector3 Hand(int hand, float scale) { return kHand[hand] * scale; }
+
 	/// <summary>体のローカルで、その手が生えている向き</summary>
 	float HandAngle(int hand);
 

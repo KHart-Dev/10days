@@ -24,6 +24,7 @@ FloaterManager::~FloaterManager() {
 void FloaterManager::Initialize() {
 	param_.ownerGuid_ = GetGuid();
 	param_.LoadParams();
+	SetDrawEnable(false);
 }
 
 void FloaterManager::Update([[maybe_unused]] float dt) {

@@ -45,8 +45,8 @@ void ResultManager::InitializeActor() {
     auto* ctx = SceneContext::Current();
     if (ctx) {
         player_ = ctx->FindFirst<Player>();
-		floaterManager_ = ctx->FindFirst<FloaterManager>();
-		director_ = ctx->FindFirst<MeteoriteDirector>();
+        floaterManager_ = ctx->FindFirst<FloaterManager>();
+        director_ = ctx->FindFirst<MeteoriteDirector>();
     }
 
     if (auto player = player_.lock()) {
@@ -66,6 +66,7 @@ void ResultManager::InitializeActor() {
     }
 
     planetTouched_ = { false, false };
+    resultFixed_ = false;
     isClear_ = false;
 
     SpawnPlanets();
@@ -95,15 +96,10 @@ void ResultManager::UpdateResultUi() {
         return;
     }
 
-    // 塊が並び終わって、隕石も落ち終わってから結果を出す。
-    // Director がシーンに居ないときは待たない
-    const bool restored = player_.lock() && player_.lock()->IsResultChain();
-    const bool meteoriteFinished = !director_.lock() || director_.lock()->IsFinished();
-    const bool resultFixed = restored && meteoriteFinished;
+    // 結果が確定してからCLEAR / GAMEOVERを表示する。
+    resultColorSprite_->SetVisible(resultFixed_);
 
-    resultColorSprite_->SetVisible(resultFixed);
-
-    if (!resultFixed) {
+    if (!resultFixed_) {
         return;
     }
 
@@ -279,7 +275,29 @@ void ResultManager::UpdateDistanceUi() {
 void ResultManager::UpdatePlanetTouchState() {
 
     std::shared_ptr<Player> player = player_.lock();
+
     if (!player) {
+        planetTouched_ = { false, false };
+        resultFixed_ = false;
+        isClear_ = false;
+        return;
+    }
+
+    const std::shared_ptr<MeteoriteDirector> director =
+        director_.lock();
+
+    const bool restored =
+        player->IsResultChain();
+
+    const bool meteoriteFinished =
+        !director || director->IsFinished();
+
+    resultFixed_ =
+        restored &&
+        meteoriteFinished;
+
+    // 結果が確定するまではPlanet判定を確定させない。
+    if (!resultFixed_) {
         planetTouched_ = { false, false };
         isClear_ = false;
         return;
@@ -302,15 +320,20 @@ void ResultManager::UpdatePlanetTouchState() {
             );
     }
 
-    const std::shared_ptr<MeteoriteDirector> director = director_.lock();
-    const bool meteoriteFinished = !director || director->IsFinished();
-
+    // 左右両方のPlanetにFloaterの手が入っていた時だけCLEAR。
     isClear_ =
-        player->IsResultChain() &&
-        meteoriteFinished &&
         planetTouched_[0] &&
         planetTouched_[1];
+
+    // 現在の最上位Stageを初クリアした時だけ、次のStageを解放する。
+    // 一度++されると stageIndex != stageClearCount になるので連続加算されない。
+    if (isClear_ &&
+        ResultCarry::stageIndex == ResultCarry::stageClearCount) {
+
+        ++ResultCarry::stageClearCount;
+    }
 }
+
 
 void ResultManager::DisableGravity() {
     auto& movement = GetCharacterMovement();
@@ -325,15 +348,15 @@ void ResultManager::SpawnPlanets() {
     for (size_t i = 0; i < planets_.size(); ++i) {
 
         planets_[i] = SceneAPI::Instantiate<Planet>();
-		if (!planets_[i]) {
-			continue;
-		}
-		planets_[i]->Initialize();
-		auto& wt = planets_[i]->GetWorldTransform();
+        if (!planets_[i]) {
+            continue;
+        }
+        planets_[i]->Initialize();
+        auto& wt = planets_[i]->GetWorldTransform();
         float posX = static_cast<float>(i * 2);
         wt.translation = { (posX - 1.0f) * 29.0f, 0.0f, 0.0f };
-		wt.rotationSource = RotationSource::Euler;
-		wt.eulerRotation.x = std::numbers::pi_v<float> * 0.5f;
-		wt.scale = { 15.0f, 15.0f, 15.0f };
+        wt.rotationSource = RotationSource::Euler;
+        wt.eulerRotation.x = std::numbers::pi_v<float> *0.5f;
+        wt.scale = { 15.0f, 15.0f, 15.0f };
     }
 }

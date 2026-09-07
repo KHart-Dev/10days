@@ -30,6 +30,8 @@ public:
     void Update(float dt) override;
 
     bool IsClear() const { return isClear_; }
+    bool IsResultFixed() const { return resultFixed_; }
+
     bool IsPlanetTouched(size_t index) const {
         return index < planetTouched_.size() ? planetTouched_[index] : false;
     }
@@ -95,5 +97,9 @@ private:
     float planetRadius_ = 15.0f;
 
     bool initialized_ = false;
+
+    // Playerの復元と隕石落下が完了し、結果を確定できる状態
+    bool resultFixed_ = false;
+
     bool isClear_ = false;
 };

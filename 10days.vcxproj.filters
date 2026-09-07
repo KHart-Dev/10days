@@ -32,6 +32,7 @@
     <ClCompile Include="Game\Result\Planet\Planet.cpp" />
     <ClCompile Include="Game\Title\TitleUIManager.cpp" />
     <ClCompile Include="Game\Meteorite\BackGround\BackGroundObjects.cpp" />
+    <ClCompile Include="Game\Result\ResultTransitionController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Audio\GameAudio.h" />
@@ -63,5 +64,6 @@
     <ClInclude Include="Game\Result\Planet\Planet.h" />
     <ClInclude Include="Game\Title\TitleUIManager.h" />
     <ClInclude Include="Game\Meteorite\BackGround\BackGroundObjects.h" />
+    <ClInclude Include="Game\Result\ResultTransitionController.h" />
   </ItemGroup>
 </Project>

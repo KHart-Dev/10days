@@ -127,7 +127,7 @@ namespace {
 
 void Player::Update(float dt) {
 	if (resultMode_) {
-		if (!restored_) { restored_ = RestoreChain(); }
+		if (!restored_) { restored_ = BeginRestoreChain(); }
 		else { RestoreChainStep(dt); }
 		if (auto manager = floaterManager_.Resolve()) {
 			BreakChain(*manager);

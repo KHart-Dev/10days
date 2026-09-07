@@ -4,6 +4,7 @@
 #include <Engine/Objects/3D/Actor/Actor.h>
 #include <Engine/Objects/ConfigurableObject/IConfigurable.h>
 #include <Engine/Foundation/Serialization/SerializableObject.h>
+#include <Engine/Objects/2D/Object2d/ISpriteRenderable.h>
 
 // std
 #include <array>
@@ -12,13 +13,19 @@
 #include <memory>
 
 class UiSprite;
+class SpriteRenderer;
+class PipelineService;
+class LightLibrary;
+class ModelRenderer;
+class Camera3d;
+class WorldTransform;
 
 CALYX_OBJECT(
     Category = GameObject,
     DisplayName = "OptionManager",
     Icon = "Textures/white1x1.png"
 )
-class OptionManager : public Actor {
+class OptionManager : public Actor, public CalyxEngine::ISpriteRenderable {
 
 public:
 
@@ -27,6 +34,9 @@ public:
 
     void Initialize() override;
     void Update(float dt) override;
+    void SubmitSprites(SpriteRenderer& renderer) const override;
+    void DrawOverlay3D(ID3D12GraphicsCommandList* cmd, PipelineService* pso,
+        LightLibrary* lightLibrary) override;
 
     void Open();
     void Close();
@@ -266,6 +276,13 @@ private:
     std::shared_ptr<UiSprite> leftArrow_;
     std::shared_ptr<UiSprite> rightArrow_;
     std::array<SpriteMotion, static_cast<size_t>(CornerIndex::Count)> corners_{};
+
+    std::unique_ptr<ModelRenderer> previewRenderer_;
+    std::unique_ptr<Camera3d> previewCamera_;
+    std::unique_ptr<WorldTransform> previewTransform_;
+    bool previewVisible_ = false;
+    float previewScale_ = 0.0f;
+    float previewRotationY_ = 0.0f;
 
     AnimationState animationState_ = AnimationState::Closed;
 

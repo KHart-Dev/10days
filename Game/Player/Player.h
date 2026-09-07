@@ -16,8 +16,10 @@
 // std
 #include <vector>
 #include <memory>
+#include <cstdint>
 
 class MeteoriteForecast;
+class UiSprite;
 
 CALYX_OBJECT(Category = GameObject, DisplayName = "Player", Icon = "Textures/player/player.png")
 class Player : public Actor {
@@ -68,6 +70,17 @@ private:
 	void UpdateForecastPause();
 
 	void RestoreChainStep(float dt);
+
+	/// 操作説明UIの2枚
+	void InitializeControlUi();
+
+	/// 最後に触った入力デバイスを見て、どちらを出すか決める
+	void UpdateControlDevice();
+
+	void ApplyControlUiLayout();
+
+	/// 操作説明UIの配置と表示切り替え
+	void ApplyControlUiSprite(const std::shared_ptr<UiSprite>& sprite, bool visible);
 
 	PlayerInput input_;
 
@@ -123,6 +136,26 @@ private:
 			AddField("fieldYLimit", fieldZLimit)
 				.Category("Movement")
 				.Tooltip("フィールドのZの上限");
+
+			AddField("controlUiCenterX", controlUiCenterX)
+				.Category("ControlUI")
+				.Tooltip("操作説明UIの中心X座標(px)。1280x720基準で左端が0");
+
+			AddField("controlUiCenterY", controlUiCenterY)
+				.Category("ControlUI")
+				.Tooltip("操作説明UIの中心Y座標(px)。1280x720基準で上端が0");
+
+			AddField("controlUiWidth", controlUiWidth)
+				.Category("ControlUI")
+				.Tooltip("操作説明UIの横サイズ(px)");
+
+			AddField("controlUiHeight", controlUiHeight)
+				.Category("ControlUI")
+				.Tooltip("操作説明UIの縦サイズ(px)");
+
+			AddField("controlUiOrderInLayer", controlUiOrderInLayer)
+				.Category("ControlUI")
+				.Tooltip("操作説明UIのOrderInLayer。大きいほど手前に出る");
 		}
 
 		CalyxEngine::ParamPath GetParamPath() const override {
@@ -144,6 +177,13 @@ private:
 
 		float fieldMargin = 1.0f;
 		float fieldZLimit = 18.0f;
+
+		// 操作説明UI。1280x720基準の画面座標で、アンカーは中心
+		float controlUiCenterX = 1090.0f;
+		float controlUiCenterY = 600.0f;
+		float controlUiWidth = 320.0f;
+		float controlUiHeight = 180.0f;
+		int32_t controlUiOrderInLayer = 100;
 	};
 
 	PlayerParam param_;
@@ -185,6 +225,18 @@ private:
 	// ステージごとのPlayerとFloaterの基準サイズ（ステージごとにスケールを変えるので持つ。FloaterManagerにも渡してFloaterのサイズも変える）
 	float stageScale_ = 1.0f;
 	float stageClearLength_ = 5.0f;
+
+	/// 操作説明UIをどちらのデバイス向けに出すか
+	enum class ControlDevice {
+		Keyboard,
+		Gamepad,
+	};
+
+	std::shared_ptr<UiSprite> controlUIKeyboard_;
+	std::shared_ptr<UiSprite> controlUIPad_;
+
+	// 最初はキーボード。パッドを触った時点で入れ替わる
+	ControlDevice controlDevice_ = ControlDevice::Keyboard;
 
 public:
 	// シリアライズ用インターフェース

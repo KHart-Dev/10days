@@ -2,6 +2,11 @@
     "fields": {
         "alignToChain": 0.0,
         "armSeparation": 60.0,
+        "controlUiCenterX": 1145.0,
+        "controlUiCenterY": 550.0,
+        "controlUiHeight": 140.0,
+        "controlUiOrderInLayer": 100,
+        "controlUiWidth": 280.0,
         "fieldMargin": 0.5,
         "fieldYLimit": 16.0,
         "grabRadius": 1.2000000476837158,

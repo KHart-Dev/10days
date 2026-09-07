@@ -17,12 +17,72 @@
 #include <Game/Floater/Floater.h>
 #include <Game/Result/ResultCarry.h>
 #include <Game/Meteorite/InGame/MeteoriteForecast.h>
+#include <Game/UI/UiSprite.h>
 
 // std
 #include <algorithm>
 #include <cmath>
 #include <numbers>
 #include <nlohmann/json.hpp>
+
+namespace {
+	constexpr const char* kKeyboardTexture =
+		"Textures/GameUI/operationKey.png";
+	constexpr const char* kPadTexture =
+		"Textures/GameUI/operationPad.png";
+
+	// 入力デバイスの判定用。スティックとトリガーは遊びを越えたときだけ触ったと見る
+	constexpr float kDeviceStickThresholdSq = 0.3f * 0.3f;
+	constexpr float kDeviceTriggerThreshold = 0.2f;
+
+	constexpr CalyxFoundation::PadButton kAllPadButtons[] = {
+		CalyxFoundation::PadButton::A,
+		CalyxFoundation::PadButton::B,
+		CalyxFoundation::PadButton::X,
+		CalyxFoundation::PadButton::Y,
+		CalyxFoundation::PadButton::LB,
+		CalyxFoundation::PadButton::RB,
+		CalyxFoundation::PadButton::BACK,
+		CalyxFoundation::PadButton::START,
+		CalyxFoundation::PadButton::L_STICK,
+		CalyxFoundation::PadButton::R_STICK,
+		CalyxFoundation::PadButton::DPAD_UP,
+		CalyxFoundation::PadButton::DPAD_DOWN,
+		CalyxFoundation::PadButton::DPAD_LEFT,
+		CalyxFoundation::PadButton::DPAD_RIGHT,
+	};
+
+	/// このフレームにパッドを触っているか
+	bool IsGamepadTouched() {
+
+		for (const CalyxFoundation::PadButton button : kAllPadButtons) {
+			if (CalyxFoundation::Input::PushGamepadButton(button)) {
+				return true;
+			}
+		}
+
+		// スティックはデッドゾーン処理済みの値が返る
+		if (CalyxFoundation::Input::GetLeftStick().LengthSquared() > kDeviceStickThresholdSq ||
+			CalyxFoundation::Input::GetRightStick().LengthSquared() > kDeviceStickThresholdSq) {
+			return true;
+		}
+
+		// 回転入力がトリガーなので、ここを見ないと回している間だけキーボード表示に戻る
+		return CalyxFoundation::Input::GetLeftTrigger() > kDeviceTriggerThreshold ||
+			CalyxFoundation::Input::GetRightTrigger() > kDeviceTriggerThreshold;
+	}
+
+	/// このフレームにキーボードを触っているか。
+	bool IsKeyboardTouched() {
+
+		for (uint32_t key = 0; key < 256; key++) {
+			if (CalyxFoundation::Input::PushKey(key)) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
 
 // ExportChain()をクリアシーンに移る際に呼ぶ
 // ResultCarry::Clear()は次ステージのシーンリクエスト前に呼び出し(保存した連結のリセット)
@@ -85,6 +145,8 @@ void Player::Initialize() {
 
 	if (resultMode_) {
 		stageScale_ = ResultCarry::stageScale;
+	} else {
+		InitializeControlUi();
 	}
 	auto& wt = GetWorldTransform();
 	wt.scale = CalyxEngine::Vector3::One() * stageScale_;
@@ -149,6 +211,11 @@ void Player::Update(float dt) {
 	// リザルトでも作ってしまう。上の早期 return を抜けた時点なら確実にゲーム中。
 	SpawnForecast();
 	UpdateForecastPause();
+
+	// 予報を出す前に判定しておくと、生えるまでの1フレームだけ操作説明が映る。
+	// デバイスの判定は予報中も回し続け、表示だけ ApplyControlUiLayout で引っ込める
+	UpdateControlDevice();
+	ApplyControlUiLayout();
 
 	// 予報を見せている間は自機も止める。閉じる入力は予報側が自分で見ている
 	if (IsForecastWaiting()) {
@@ -736,6 +803,71 @@ void Player::AllBreak() {
 			chain_[i].floater->MarkBreak();
 		}
 	}
+}
+
+void Player::InitializeControlUi() {
+
+	// プレハブ用の一時コピーからSpriteを撒かない
+	if (IsTransient() || controlUIKeyboard_) {
+		return;
+	}
+
+	controlUIKeyboard_ = SceneAPI::Instantiate<UiSprite>(kKeyboardTexture);
+	controlUIPad_ = SceneAPI::Instantiate<UiSprite>(kPadTexture);
+
+	// 中心基準にしておくと、画面の右下から余白ぶん戻すだけで置ける
+	for (const std::shared_ptr<UiSprite>& sprite :
+		{ controlUIKeyboard_, controlUIPad_ }) {
+		if (!sprite) {
+			continue;
+		}
+		sprite->SetAnchor({ 0.5f, 0.5f });
+		sprite->SetRotationDeg(0.0f);
+		sprite->SetColorRGBA(1.0f, 1.0f, 1.0f, 1.0f);
+	}
+
+	// パッドに触るまではキーボードを出しておく
+	controlDevice_ = ControlDevice::Keyboard;
+	ApplyControlUiLayout();
+}
+
+void Player::UpdateControlDevice() {
+
+	const bool gamepadTouched = IsGamepadTouched();
+	const bool keyboardTouched = IsKeyboardTouched();
+
+	// 両方触っている / どちらも触っていないフレームは、今出している側を保つ
+	if (gamepadTouched == keyboardTouched) {
+		return;
+	}
+
+	controlDevice_ =
+		gamepadTouched ? ControlDevice::Gamepad : ControlDevice::Keyboard;
+}
+
+void Player::ApplyControlUiLayout() {
+
+	// 予報の板が映っている間は操作説明を引っ込める。
+	// スタート時の待ちも覗き見も IsVisible() でまとめて拾える
+	const bool hideAll = forecast_ && forecast_->IsVisible();
+
+	// 2枚を同じ場所に重ねて置き、表示だけ入れ替える
+	const bool useGamepad = controlDevice_ == ControlDevice::Gamepad;
+	ApplyControlUiSprite(controlUIKeyboard_, !hideAll && !useGamepad);
+	ApplyControlUiSprite(controlUIPad_, !hideAll && useGamepad);
+}
+
+void Player::ApplyControlUiSprite(
+	const std::shared_ptr<UiSprite>& sprite, bool visible) {
+
+	if (!sprite) {
+		return;
+	}
+
+	sprite->SetSizePx(param_.controlUiWidth, param_.controlUiHeight);
+	sprite->SetPositionPx(param_.controlUiCenterX, param_.controlUiCenterY);
+	sprite->SetOrderInLayer(param_.controlUiOrderInLayer);
+	sprite->SetVisible(visible);
 }
 
 void Player::SpawnForecast() {

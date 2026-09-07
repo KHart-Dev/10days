@@ -31,6 +31,7 @@ private:
 
 	void InitializeActor();
 	void DisableGravity();
+	void AlarmTimer(float dt);
 
 	std::shared_ptr<Player> player_;
 	std::array<std::shared_ptr<NumberUi>, 2> numberUis_;
@@ -42,6 +43,8 @@ private:
 	// カウントの時間
 	float countTime_ = 0.0f;
 	bool Initialize_ = false;
+
+	float countAlarmTime_ = 0.0f;
 
 	// 調整可能なパラメータ
 	struct TimeParam : CalyxEngine::SerializableObject {

@@ -35,6 +35,7 @@ void ResultManager::Update(float dt) {
     if (!initialized_) {
         return;
     }
+    UpdatePlanetTouchState();
     UpdateResultUi();
     UpdateDistanceUi();
 }
@@ -48,12 +49,10 @@ void ResultManager::InitializeActor() {
 		director_ = ctx->FindFirst<MeteoriteDirector>();
     }
 
-    if (player_) {
+    if (auto player = player_.lock()) {
 
-        player_->SetupResult();
-        player_->Initialize();
-
-        auto& playerWt = player_->GetWorldTransform();
+        player->SetupResult();
+        auto& playerWt = player->GetWorldTransform();
         playerWt.translation = GetWorldTransform().translation;
         playerWt.translation.y = 0.5f;
         playerWt.rotationSource = RotationSource::Euler;
@@ -62,8 +61,8 @@ void ResultManager::InitializeActor() {
 
     // FloaterManager の resultMode_ はシリアライズされないのでシーンからは入らない。
     // 呼ばないとリザルトでゲームBGMが鳴り、Floater が撒かれる
-    if (floaterManager_) {
-        floaterManager_->SetupResult();
+    if (auto floaterManager = floaterManager_.lock()) {
+        floaterManager->SetupResult();
     }
 
     planetTouched_ = { false, false };
@@ -98,8 +97,8 @@ void ResultManager::UpdateResultUi() {
 
     // 塊が並び終わって、隕石も落ち終わってから結果を出す。
     // Director がシーンに居ないときは待たない
-    const bool restored = player_ && player_->IsResultChain();
-    const bool meteoriteFinished = !director_ || director_->IsFinished();
+    const bool restored = player_.lock() && player_.lock()->IsResultChain();
+    const bool meteoriteFinished = !director_.lock() || director_.lock()->IsFinished();
     const bool resultFixed = restored && meteoriteFinished;
 
     resultColorSprite_->SetVisible(resultFixed);
@@ -277,6 +276,42 @@ void ResultManager::UpdateDistanceUi() {
     );
 }
 
+void ResultManager::UpdatePlanetTouchState() {
+
+    std::shared_ptr<Player> player = player_.lock();
+    if (!player) {
+        planetTouched_ = { false, false };
+        isClear_ = false;
+        return;
+    }
+
+    for (size_t i = 0; i < planets_.size(); ++i) {
+
+        if (!planets_[i]) {
+            planetTouched_[i] = false;
+            continue;
+        }
+
+        const CalyxEngine::Vector3 planetCenter =
+            planets_[i]->GetWorldTransform().GetWorldPosition();
+
+        planetTouched_[i] =
+            player->IsConnectedFloaterHandInsideRadius(
+                planetCenter,
+                planetRadius_
+            );
+    }
+
+    const std::shared_ptr<MeteoriteDirector> director = director_.lock();
+    const bool meteoriteFinished = !director || director->IsFinished();
+
+    isClear_ =
+        player->IsResultChain() &&
+        meteoriteFinished &&
+        planetTouched_[0] &&
+        planetTouched_[1];
+}
+
 void ResultManager::DisableGravity() {
     auto& movement = GetCharacterMovement();
     movement.SetGravity(0.0f);
@@ -290,6 +325,9 @@ void ResultManager::SpawnPlanets() {
     for (size_t i = 0; i < planets_.size(); ++i) {
 
         planets_[i] = SceneAPI::Instantiate<Planet>();
+		if (!planets_[i]) {
+			continue;
+		}
 		planets_[i]->Initialize();
 		auto& wt = planets_[i]->GetWorldTransform();
         float posX = static_cast<float>(i * 2);

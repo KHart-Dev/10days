@@ -33,7 +33,7 @@ private:
 	void DisableGravity();
 	void AlarmTimer(float dt);
 
-	std::shared_ptr<Player> player_;
+	std::weak_ptr<Player> player_;
 	std::array<std::shared_ptr<NumberUi>, 2> numberUis_;
 
 

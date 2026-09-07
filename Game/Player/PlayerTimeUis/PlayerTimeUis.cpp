@@ -20,53 +20,55 @@ void PlayerTimeUis::Initialize() {
 void PlayerTimeUis::Update(float dt) {
 
 	// カウントが上がっていたら（接続時に追加する時間は param_.addTimePerConnect、上限は param_.maxTime）
-	if (currentCount_ < player_->GetConnectedCount()) {
-		if (!isCounting_) {
-			isCounting_ = true;
+	if (auto player = player_.lock()) {
+		if (currentCount_ < player->GetConnectedCount()) {
+			if (!isCounting_) {
+				isCounting_ = true;
+			}
+			countTime_ += param_.addTimePerConnect;
+			if (countTime_ > param_.maxTime) {
+				countTime_ = param_.maxTime;
+			}
 		}
-		countTime_ += param_.addTimePerConnect;
-		if (countTime_ > param_.maxTime) {
-			countTime_ = param_.maxTime;
+
+		if (isCounting_) {
+			countTime_ -= dt;
+
+			if (countTime_ <= 4.0f) {
+				AlarmTimer(dt);
+			}
+			if (countTime_ <= 0.0f) {
+				countTime_ = 0.0f;
+				player->AllBreak();
+			}
 		}
+
+		// カウントを更新
+		currentCount_ = player->GetConnectedCount();
+
+		// 表示用に整数へ変換
+		int time = static_cast<int>(countTime_);
+
+		// 数字の表示を更新
+		for (size_t i = 0; i < numberUis_.size(); i++) {
+
+			int number = 0;
+
+			if (i == 0) {
+				// 2桁目
+				number = (time / 10) % 10;
+			} else if (i == 1) {
+				// 1桁目
+				number = time % 10;
+			}
+
+			if (numberUis_[i]) {
+				numberUis_[i]->SetNumber(number);
+			}
+		}
+
+		Actor::Update(dt);
 	}
-
-	if (isCounting_) {
-		countTime_ -= dt;
-
-		if (countTime_ <= 4.0f) {
-			AlarmTimer(dt);
-		}
-		if (countTime_ <= 0.0f) {
-			countTime_ = 0.0f;
-			player_->AllBreak();
-		}
-	}
-
-	// カウントを更新
-	currentCount_ = player_->GetConnectedCount();
-
-	// 表示用に整数へ変換
-	int time = static_cast<int>(countTime_);
-
-	// 数字の表示を更新
-	for (size_t i = 0; i < numberUis_.size(); i++) {
-
-		int number = 0;
-
-		if (i == 0) {
-			// 2桁目
-			number = (time / 10) % 10;
-		} else if (i == 1) {
-			// 1桁目
-			number = time % 10;
-		}
-
-		if (numberUis_[i]) {
-			numberUis_[i]->SetNumber(number);
-		}
-	}
-
-	Actor::Update(dt);
 }
 
 void PlayerTimeUis::ApplyConfigFromJson(const nlohmann::json& j) {
@@ -109,7 +111,7 @@ void PlayerTimeUis::InitializeActor() {
 	for (size_t i = 0; i < numberUis_.size(); i++) {
 		numberUis_[i] = SceneAPI::Instantiate<NumberUi>();
 		if (numberUis_[i]) {
-			numberUis_[i]->SetParent(player_);
+			numberUis_[i]->SetParent(player_.lock());
 			numberUis_[i]->Initialize();
 			float posX = static_cast<float>(i) - 0.5f;
 			numberUis_[i]->SetPosition(CalyxEngine::Vector3(posX, 0.5f, 2.5f));

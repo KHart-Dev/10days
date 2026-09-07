@@ -43,6 +43,7 @@ private:
     void UpdateResultUi();
     void InitializeDistanceUi();
     void UpdateDistanceUi();
+    void UpdatePlanetTouchState();
 
     void CreateDistanceSpriteGroup(
         std::array<std::shared_ptr<UiSprite>, 2>& sprites,
@@ -61,12 +62,12 @@ private:
 
 private:
 
-    std::shared_ptr<Player> player_;
+    std::weak_ptr<Player> player_;
 
-    std::shared_ptr<FloaterManager> floaterManager_;
+    std::weak_ptr<FloaterManager> floaterManager_;
 
     // 隕石が落ち終わるまで結果を出さないので、終了の合図を見る相手
-    std::shared_ptr<MeteoriteDirector> director_;
+    std::weak_ptr<MeteoriteDirector> director_;
 
     std::array<std::shared_ptr<Planet>, 2> planets_{};
     std::array<bool, 2> planetTouched_{ false, false };
@@ -91,7 +92,7 @@ private:
     float distanceDigitSpacing_ = 58.0f;
     int distanceUiOrderInLayer_ = 1100;
 
-    float planetRadius_ = 30.0f;
+    float planetRadius_ = 15.0f;
 
     bool initialized_ = false;
     bool isClear_ = false;

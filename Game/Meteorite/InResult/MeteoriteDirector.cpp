@@ -81,6 +81,9 @@ void MeteoriteDirector::RebuildWarnings(int count) {
 		std::shared_ptr<MeteoriteWarning> warning =
 			SceneAPI::Instantiate<MeteoriteWarning>();
 
+		if (!warning) {
+			continue;
+		}
 		warning->Initialize();
 
 		// 親の拡大率まで継承すると円が伸びるため、inheritScale は false。

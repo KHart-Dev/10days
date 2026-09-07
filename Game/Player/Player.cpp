@@ -261,37 +261,96 @@ float Player::CurrentTurnSpeed() const {
 }
 
 bool Player::BreakChain(FloaterManager& manager) {
-	breakMarks_.assign(chain_.size(), false);
+
+	breakMarks_.assign(
+		chain_.size(),
+		false
+	);
+
 	bool noneBroken = true;
-	for (size_t i = 1; i < chain_.size(); i++) {
+
+	for (size_t i = 1; i < chain_.size(); ++i) {
+
 		const Member& member = chain_[i];
-		const bool selfHit = member.floater && member.floater->IsBreakMarked();
-		if (selfHit || breakMarks_[member.parent]) {
+
+		if (member.parent < 0 ||
+			static_cast<size_t>(member.parent)
+			>= chain_.size()) {
+
+			continue;
+		}
+
+		const bool selfHit =
+			member.floater &&
+			member.floater->IsBreakMarked();
+
+		if (selfHit ||
+			breakMarks_[member.parent]) {
+
 			breakMarks_[i] = true;
 			noneBroken = false;
 		}
 	}
-	if (noneBroken) return false;
+
+	if (noneBroken) {
+		return false;
+	}
 
 	int writeIndex = 0;
-	remap_.assign(chain_.size(), -1);
-	for (size_t i = 0; i < chain_.size(); i++) {
+
+	remap_.assign(
+		chain_.size(),
+		-1
+	);
+
+	for (size_t i = 0;
+		i < chain_.size();
+		++i) {
+
 		if (breakMarks_[i]) {
-			manager.Reclaim(std::move(chain_[i].floater));
+
+			manager.Reclaim(
+				std::move(
+					chain_[i].floater
+				)
+			);
+
 			continue;
 		}
 
 		remap_[i] = writeIndex;
+
 		if (i != 0) {
-			chain_[i].parent = remap_[chain_[i].parent];
+
+			const int oldParent =
+				chain_[i].parent;
+
+			if (oldParent < 0 ||
+				static_cast<size_t>(oldParent)
+				>= remap_.size()) {
+
+				continue;
+			}
+
+			chain_[i].parent =
+				remap_[oldParent];
 		}
-		if (i != static_cast<size_t>(writeIndex)) {
-			chain_[writeIndex] = std::move(chain_[i]);
+
+		if (i != static_cast<size_t>(
+			writeIndex)) {
+
+			chain_[writeIndex] =
+				std::move(chain_[i]);
 		}
-		writeIndex++;
+
+		++writeIndex;
 	}
 
-	chain_.erase(chain_.begin() + writeIndex, chain_.end());
+	chain_.erase(
+		chain_.begin() + writeIndex,
+		chain_.end()
+	);
+
 	return true;
 }
 

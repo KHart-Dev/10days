@@ -2,6 +2,7 @@
 
 #include "Game/Player/Player.h"
 #include "Game/Scene/SceneFlow.h"
+#include <Game/Audio/GameAudio.h>
 
 GoalPoint::GoalPoint()
 	: Actor("debugCube.obj", "GoalPoint") {}
@@ -29,6 +30,7 @@ void GoalPoint::OnCollisionEnter(Collider* other) {
 		// ResultSceneへ渡す連結情報を保存
 		player->ExportChain();
 		// ResultSceneへ遷移
+		GameAudio::PlaySe(GameAudio::kSeGoal);
 		SceneFlow::GoToResult();
 	}
 }

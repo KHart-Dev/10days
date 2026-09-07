@@ -10,6 +10,7 @@
 
 // game
 #include <Game/Result/ResultCarry.h>
+#include <Game/Audio/GameAudio.h>
 
 // std
 #include <cmath>
@@ -241,6 +242,7 @@ void MeteoriteForecast::Open(Mode mode) {
 
 void MeteoriteForecast::Close() {
 	phase_ = Phase::Closing;
+	GameAudio::PlaySe(GameAudio::kSeDangerClose);
 }
 
 bool MeteoriteForecast::IsClosePressed() {

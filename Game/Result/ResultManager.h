@@ -11,6 +11,7 @@ class Player;
 class FloaterManager;
 class Floater;
 class Planet;
+class MeteoriteDirector;
 class UiSprite;
 
 CALYX_OBJECT(
@@ -64,6 +65,9 @@ private:
 
     std::shared_ptr<FloaterManager> floaterManager_;
 
+    // 隕石が落ち終わるまで結果を出さないので、終了の合図を見る相手
+    std::shared_ptr<MeteoriteDirector> director_;
+
     std::array<std::shared_ptr<Planet>, 2> planets_{};
     std::array<bool, 2> planetTouched_{ false, false };
 
@@ -86,11 +90,6 @@ private:
     float distanceDigitHeight_ = 108.0f;
     float distanceDigitSpacing_ = 58.0f;
     int distanceUiOrderInLayer_ = 1100;
-
-    size_t nextFloaterIndex_ = 1;
-
-    float spawnTimer_ = 0.0f;
-    float spawnInterval_ = 0.2f;
 
     float planetRadius_ = 30.0f;
 

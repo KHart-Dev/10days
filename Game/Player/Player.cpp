@@ -322,6 +322,14 @@ bool Player::RestoreChain() {
 }
 
 bool Player::BeginRestoreChain() {
+
+	// ResultScene を直接再生したときは運んできた塊が無い。
+	// 復元するものが無いだけなので、Initialize が入れた自機ぶんをそのまま使って先へ進める
+	if (ResultCarry::chain.empty()) {
+		isResultChain_ = true;
+		return true;
+	}
+
 	auto& wt = GetWorldTransform();
 	wt.rotationSource = RotationSource::Euler;
 	wt.Update();

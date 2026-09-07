@@ -7,6 +7,7 @@
 #include <Game/Floater/Floater.h>
 #include <Game/Result/ResultCarry.h>
 #include <Game/Result/Planet/Planet.h>
+#include <Game/Meteorite/InResult/MeteoriteDirector.h>
 #include <Game/Floater/BodyNode.h>
 #include <Game/UI/UiSprite.h>
 
@@ -40,33 +41,30 @@ void ResultManager::Update(float dt) {
 
 void ResultManager::InitializeActor() {
 
-    if (ResultCarry::chain.empty()) {
-        return;
-    }
-
     auto* ctx = SceneContext::Current();
     if (ctx) {
         player_ = ctx->FindFirst<Player>();
 		floaterManager_ = ctx->FindFirst<FloaterManager>();
+		director_ = ctx->FindFirst<MeteoriteDirector>();
     }
 
     if (player_) {
-        player_->Initialize();
+
         player_->SetupResult();
+        player_->Initialize();
+
+        auto& playerWt = player_->GetWorldTransform();
+        playerWt.translation = GetWorldTransform().translation;
+        playerWt.translation.y = 0.5f;
+        playerWt.rotationSource = RotationSource::Euler;
+        playerWt.Update();
     }
+
+    // FloaterManager の resultMode_ はシリアライズされないのでシーンからは入らない。
+    // 呼ばないとリザルトでゲームBGMが鳴り、Floater が撒かれる
     if (floaterManager_) {
-        floaterManager_->Initialize();
         floaterManager_->SetupResult();
     }
-
-    auto& playerWt = player_->GetWorldTransform();
-    playerWt.translation = GetWorldTransform().translation;
-    playerWt.translation.y = 0.5f;
-    playerWt.rotationSource = RotationSource::Euler;
-    playerWt.Update();
-
-    nextFloaterIndex_ = 1;
-    spawnTimer_ = 0.0f;
 
     planetTouched_ = { false, false };
     isClear_ = false;
@@ -98,12 +96,15 @@ void ResultManager::UpdateResultUi() {
         return;
     }
 
-    const bool spawnFinished =
-        nextFloaterIndex_ >= ResultCarry::chain.size();
+    // 塊が並び終わって、隕石も落ち終わってから結果を出す。
+    // Director がシーンに居ないときは待たない
+    const bool restored = player_ && player_->IsResultChain();
+    const bool meteoriteFinished = !director_ || director_->IsFinished();
+    const bool resultFixed = restored && meteoriteFinished;
 
-    resultColorSprite_->SetVisible(spawnFinished);
+    resultColorSprite_->SetVisible(resultFixed);
 
-    if (!spawnFinished) {
+    if (!resultFixed) {
         return;
     }
 

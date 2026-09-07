@@ -4,9 +4,11 @@
 #include <Engine/Foundation/Reflection/CalyxReflection.h>
 #include <Engine/Objects/3D/Actor/Actor.h>
 #include <Engine/Foundation/Serialization/SerializableObject.h>
+#include <Engine/Scene/Reference/SceneObjectReference.h>
 
 // game
 #include <Game/Meteorite/InResult/MeteoriteWarning.h>
+#include <Game/Player/Player.h>
 
 // std
 #include <memory>
@@ -28,6 +30,9 @@ public:
 	/// 最終人数を出す合図用
 	bool IsFinished() const;
 
+	void ApplyConfigFromJson(const nlohmann::json& j) override;
+	void ExtractConfigToJson(nlohmann::json& j) const override;
+
 private:
 
 	/// 落下地点の上限。パラメータは配列を持てないので固定スロットで持つ
@@ -45,9 +50,15 @@ private:
 	/// ステージを切り替えてパラメータを読み直し、予告円を生やし直す
 	void LoadStage(int stageIndex);
 
+	/// 塊の復元が終わったか。合図は Player が出す
+	bool IsChainRestored() const;
+
 	void DisableGravity();
 
 	std::vector<std::shared_ptr<MeteoriteWarning>> warnings_;
+
+	// 塊が並び終わったかを見る相手。インスペクターで ResultScene の Player を刺す
+	CalyxEngine::SceneObjectRef<Player> player_;
 
 	float timer_ = 0.0f;
 	bool started_ = false;

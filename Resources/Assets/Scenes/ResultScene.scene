@@ -405,6 +405,9 @@
                 }
             },
             "colliderKind": 0,
+            "MeteoriteDirector": {
+                "PlayerPtr": "5c266559-75ca-454f-b2db-e271a42dc93e"
+            },
             "guid": "0b46cd0a-8736-4cd3-b5bc-f2fddf9e32d2",
             "modelConfig": {
                 "blendMode": 5,

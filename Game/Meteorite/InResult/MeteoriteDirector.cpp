@@ -38,7 +38,8 @@ void MeteoriteDirector::Initialize() {
 
 void MeteoriteDirector::Update(float dt) {
 
-	if (!started_) {
+	// 塊が並び終わってから数え始める。startDelay は「並び終わってから号令まで」の秒数
+	if (!started_ && IsChainRestored()) {
 		timer_ += dt;
 		if (timer_ >= param_.startDelay) {
 			StartAll();
@@ -130,6 +131,18 @@ void MeteoriteDirector::LoadStage(int stageIndex) {
 	RebuildWarnings(0);
 }
 
+bool MeteoriteDirector::IsChainRestored() const {
+
+	// 参照を刺し忘れると false のままになり、隕石は一生落ちてこない。
+	// 落ちないときはインスペクターの Player 欄を先に見ること
+	std::shared_ptr<Player> player = player_.Resolve();
+	if (!player) {
+		return false;
+	}
+
+	return player->IsResultChain();
+}
+
 bool MeteoriteDirector::IsFinished() const {
 
 	if (!started_) {
@@ -140,6 +153,30 @@ bool MeteoriteDirector::IsFinished() const {
 		[](const std::shared_ptr<MeteoriteWarning>& warning) {
 			return !warning || warning->IsFinished();
 		});
+}
+
+void MeteoriteDirector::ApplyConfigFromJson(const nlohmann::json& j) {
+
+	Actor::ApplyConfigFromJson(j);
+
+	// シーン保存時はオブジェクト固有のキーでネストされるため、その中を見る
+	const std::string typeKey(GetTypeName());
+	const nlohmann::json* src = &j;
+	if (j.contains(typeKey)) {
+		src = &j.at(typeKey);
+	}
+
+	player_ = src->value("PlayerPtr", player_);
+}
+
+void MeteoriteDirector::ExtractConfigToJson(nlohmann::json& j) const {
+
+	Actor::ExtractConfigToJson(j);
+
+	nlohmann::json derived;
+	derived["PlayerPtr"] = player_;
+
+	j[std::string(GetTypeName())] = std::move(derived);
 }
 
 void MeteoriteDirector::DisableGravity() {
@@ -155,6 +192,10 @@ void MeteoriteDirector::DerivativeGui() {
 	ImGui::Text("Warnings: %d", static_cast<int>(warnings_.size()));
 	ImGui::Text("Started : %s", started_ ? "yes" : "no");
 	ImGui::Text("Finished: %s", IsFinished() ? "yes" : "no");
+
+	// 号令待ちの相手。刺し忘れの切り分け用に解決結果も出す
+	GuiCmd::SceneObjectReferenceField("Target(Player)", player_);
+	ImGui::Text("ChainRestored: %s", IsChainRestored() ? "yes" : "no");
 
 	// ステージを行き来しながら落下地点を調整するためのデバッグ欄。
 	// 本番の値は Initialize で ResultCarry::stageIndex から入る。
@@ -172,7 +213,7 @@ MeteoriteDirector::MeteoriteDirectorParam::MeteoriteDirectorParam() {
 
 	AddField("startDelay", startDelay)
 		.Category("Timing")
-		.Tooltip("リザルトが始まってから号令を出すまでの秒数");
+		.Tooltip("塊が並び終わってから号令を出すまでの秒数");
 
 	AddField("blinkTimes", settings.blinkTimes)
 		.Category("Warning")

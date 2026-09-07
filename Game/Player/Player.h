@@ -165,6 +165,7 @@ private:
 	int debugAngleRejects_ = 0;
 	int debugBreakIndex_ = 1;
 
+	bool isResultChain_ = false;
 	bool resultMode_ = false;
 	bool restored_ = false;
 
@@ -196,5 +197,12 @@ public:
 
 	/// スタート時の天気予報を見せている間か。ゲーム進行を止めたいときに見る
 	bool IsForecastWaiting() const;
+	// リザルトで複製済みか
+	bool IsResultChain() const { return isResultChain_; }
+
+	// 接続中Floaterのいずれかの手が、指定した球の半径内にあるか
+	bool IsConnectedFloaterHandInsideRadius(
+		const CalyxEngine::Vector3& center,
+		float radius) const;
 
 };

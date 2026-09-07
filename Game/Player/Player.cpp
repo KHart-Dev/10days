@@ -82,8 +82,11 @@ void Player::Initialize() {
 	Actor::Initialize();
 	DisableGravity();
 
+	if (resultMode_) {
+		stageScale_ = ResultCarry::stageScale;
+	}
 	auto& wt = GetWorldTransform();
-	wt.scale *= stageScale_;
+	wt.scale = CalyxEngine::Vector3::One() * stageScale_;
 
 	if (Collider* collider = GetCollider()) {
 		ColliderConfig config = collider->ExtractConfig();
@@ -106,6 +109,10 @@ void Player::Initialize() {
 	if (auto manager = floaterManager_.Resolve()) {
 		manager->SetStageScale(stageScale_);
 	}
+
+	ResultCarry::stageScale = stageScale_;
+
+	isResultChain_ = false;
 }
 
 namespace {
@@ -127,8 +134,7 @@ namespace {
 
 void Player::Update(float dt) {
 	if (resultMode_) {
-		if (!restored_) { restored_ = BeginRestoreChain(); }
-		else { RestoreChainStep(dt); }
+		if (!restored_) { restored_ = BeginRestoreChain(); } else { RestoreChainStep(dt); }
 		if (auto manager = floaterManager_.Resolve()) {
 			BreakChain(*manager);
 		}
@@ -327,6 +333,7 @@ bool Player::BeginRestoreChain() {
 void Player::RestoreChainStep(float dt) {
 	// 全員出し終わっている
 	if (resultRestoreIndex_ >= ResultCarry::chain.size()) {
+		isResultChain_ = true;
 		return;
 	}
 
@@ -690,6 +697,37 @@ void Player::UpdateForecastPause() {
 
 bool Player::IsForecastWaiting() const {
 	return forecast_ && forecast_->IsWaitingAtStart();
+}
+
+bool Player::IsConnectedFloaterHandInsideRadius(
+	const CalyxEngine::Vector3& center,
+	float radius) const {
+
+	if (radius <= 0.0f) {
+		return false;
+	}
+
+	const float radiusSq = radius * radius;
+
+	// [0] はPlayer自身なので、接続中Floaterだけを見る
+	for (size_t i = 1; i < chain_.size(); ++i) {
+		const Member& member = chain_[i];
+		if (!member.floater) {
+			continue;
+		}
+
+		for (int hand = 0; hand < BodyNode::kHandCount; ++hand) {
+			const CalyxEngine::Vector3 handPos =
+				member.floater->GetHandWorld(hand);
+
+			const CalyxEngine::Vector3 diff = handPos - center;
+			if (diff.LengthSquared() <= radiusSq) {
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 void Player::ExportChain() const {

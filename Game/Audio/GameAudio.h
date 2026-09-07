@@ -22,9 +22,21 @@ namespace GameAudio {
 	inline constexpr const char* kSeMove = "moveSE.mp3";
 	inline constexpr const char* kSeGoal = "goalSE.mp3";
 	inline constexpr const char* kSeCount = "countSE.mp3";
+	inline constexpr const char* kSeOptionOpen = "optionOpenSE.mp3";
+	inline constexpr const char* kSeOptionClose = "optionCloseSE.mp3";
+	inline constexpr const char* kSeOptionChoose = "optionChooseSE.mp3";
+	inline constexpr const char* kSeOptionDecision = "optionDecisionSE.mp3";
+	inline constexpr const char* kSeDangerClose = "dangerCloseSE.mp3";
+
+	// タイトルSE
+	inline constexpr const char* kSeStart = "startSE.mp3";
 
 	// リザルトSE
-
+	inline constexpr const char* kSeResultCount = "resultCountSE.mp3";
+	inline constexpr const char* kSeClear = "clearSE.mp3";
+	inline constexpr const char* kSeGameover = "gameoverSE.mp3";
+	inline constexpr const char* kSeDanger = "dangerSE.mp3";
+	inline constexpr const char* kSeMeteo = "meteoSE.mp3";
 
 	// 既定音量
 	inline constexpr float kBgmVolume = 0.15f;

@@ -69,6 +69,103 @@
             "type": "Camera3d"
         },
         {
+            "Player": {
+                "FloaterManagerPtr": "d0906e04-1f2c-4d1d-b98f-9ec57e496b6e",
+                "moveSpeed": 5.0,
+                "resultMode": false,
+                "rotSpeedDeg": 250.0,
+                "stageClearLength": 5.0,
+                "stageScale": 1.0,
+                "yawAcceleration": 5.0
+            },
+            "cameraDitherEnabled": false,
+            "colliderConfig": {
+                "capsuleHeight": 2.0,
+                "capsuleRadius": 0.5,
+                "isCollisionEnabled": true,
+                "isDraw": true,
+                "isTrigger": false,
+                "layerId": 1,
+                "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius": 1.0,
+                "rotate": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "size": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            },
+            "colliderKind": 1,
+            "guid": "5c266559-75ca-454f-b2db-e271a42dc93e",
+            "modelConfig": {
+                "blendMode": 5,
+                "materialGuid": "00000000-0000-0000-0000-000000000000",
+                "modelName": "plane.obj",
+                "textureGuid": "98ee3ac9-6c0b-44ad-b622-9db2ab8d8628",
+                "uvTransConfig": {
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            "name": "Player",
+            "objectType": 2,
+            "outlineColor": {
+                "w": 1.0,
+                "x": 0.019999999552965164,
+                "y": 0.019999999552965164,
+                "z": 0.02500000037252903
+            },
+            "outlineEnabled": false,
+            "outlineThickness": 0.03500000014901161,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "physicsBodyConfig": {
+                "bodyType": 1,
+                "enabled": false,
+                "gravityScale": 1.0,
+                "mass": 1.0,
+                "pushbackRatio": 1.0,
+                "useGravity": true
+            },
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 0.7073880434036255,
+                    "x": 0.7068250179290771,
+                    "y": 0.0005632751272059977,
+                    "z": -0.0005628268118016422
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": -2.8404934406280518,
+                    "y": 0.10000000149011612,
+                    "z": 0.0
+                }
+            },
+            "type": "Player",
+            "visualOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
             "guid": "9979e82f-623f-4390-b90f-266b559130ad",
             "name": "DebugCamera",
             "objectType": 0,
@@ -260,7 +357,7 @@
                     "z": 8.52566909790039
                 },
                 "translation": {
-                    "x": 38.33355712890625,
+                    "x": 38.75400161743164,
                     "y": 0.0,
                     "z": 0.0
                 }
@@ -348,7 +445,7 @@
                     "z": 6.50809907913208
                 },
                 "translation": {
-                    "x": 35.620384216308594,
+                    "x": 36.04999923706055,
                     "y": 0.0,
                     "z": 4.4034624099731445
                 }
@@ -389,13 +486,13 @@
                     "z": 0.0
                 },
                 "scale": {
-                    "x": 192.0,
-                    "y": 128.0,
+                    "x": 160.6300048828125,
+                    "y": 103.2699966430664,
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 1268.0,
-                    "y": 707.707275390625,
+                    "x": 1262.4000244140625,
+                    "y": 735.0,
                     "z": 0.0
                 }
             },
@@ -435,8 +532,8 @@
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 10.0,
-                    "y": 710.0,
+                    "x": 12.145000457763672,
+                    "y": 755.0,
                     "z": 0.0
                 }
             },
@@ -471,13 +568,13 @@
                     "z": 0.0
                 },
                 "scale": {
-                    "x": 192.0,
-                    "y": 128.0,
+                    "x": 187.44000244140625,
+                    "y": 110.0,
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 1270.0,
-                    "y": 710.0,
+                    "x": 1274.8800048828125,
+                    "y": 745.0,
                     "z": 0.0
                 }
             },
@@ -512,13 +609,13 @@
                     "z": 0.0
                 },
                 "scale": {
-                    "x": 192.0,
+                    "x": 187.9199981689453,
                     "y": 128.0,
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 8.883056640625,
-                    "y": 580.2195434570313,
+                    "x": 12.34197998046875,
+                    "y": 601.8358154296875,
                     "z": 0.0
                 }
             },
@@ -600,7 +697,7 @@
                     "z": 1.7017995119094849
                 },
                 "translation": {
-                    "x": 35.0099983215332,
+                    "x": 35.439998626708984,
                     "y": 0.25,
                     "z": 4.038000106811523
                 }

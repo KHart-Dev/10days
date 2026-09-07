@@ -4,6 +4,7 @@
 
 #include "NumberUi.h"
 #include "../Player.h"
+#include <Game/Audio/GameAudio.h>
 
 #include <Engine/System/Command/EditorCommand/GuiCommand/ImGuiHelper/GuiCmd.h>
 
@@ -32,6 +33,9 @@ void PlayerTimeUis::Update(float dt) {
 	if (isCounting_) {
 		countTime_ -= dt;
 
+		if (countTime_ <= 4.0f) {
+			AlarmTimer(dt);
+		}
 		if (countTime_ <= 0.0f) {
 			countTime_ = 0.0f;
 			player_->AllBreak();
@@ -120,4 +124,14 @@ void PlayerTimeUis::DisableGravity() {
 	movement.SetMaxFallSpeed(0.0f);
 	movement.SetFloorProbeDistance(0.0f);
 	movement.SetFloorSnapDistance(0.0f);
+}
+
+void PlayerTimeUis::AlarmTimer(float dt) {
+	if (countAlarmTime_ > 0.0f) {
+		countAlarmTime_ -= dt;
+		return;
+	}
+	if (countTime_ <= 0.0f) return;
+	countAlarmTime_ = 0.5f;
+	GameAudio::PlaySe(GameAudio::kSeCount);
 }

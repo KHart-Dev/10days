@@ -13,6 +13,8 @@ namespace ResultCarry {
 
 	/// どのステージからリザルトへ来たか。落下地点をステージ別に読むのに使う
 	inline int stageIndex = 0;
+	// プレイヤーのスケール
+	inline float stageScale = 1.0f;
 	/// ステージごとのクリア距離
 	inline float stageClearDirection = 5.0f;
 	/// クリアしたステージの数

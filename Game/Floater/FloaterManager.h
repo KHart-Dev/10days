@@ -25,6 +25,8 @@ public:
 	const std::vector<std::shared_ptr<Floater>>& GetFloaters() const { return floaters_; }
 	float GetFieldHalfSize() const { return param_.spawnRadius; }
 
+	void SetStageScale(float scale) { stageScale_ = scale; }
+
 	/// <summary>1体を漂う側の管理から外して受け取る</summary>
 	std::shared_ptr<Floater> Detach(const Floater* floater);
 
@@ -34,6 +36,8 @@ public:
 	void Respawn();
 
 	std::shared_ptr<Floater> CreateChained(const CalyxEngine::Vector3& pos);
+
+	void SetupResult() { resultMode_ = true; }
 
 private:
 
@@ -82,6 +86,9 @@ private:
 	FloaterManagerParam param_;
 
 	bool isSpawned_ = false;
+	bool resultMode_ = false;
+
+	float stageScale_ = 1.0f;
 
 public:
 

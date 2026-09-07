@@ -31,6 +31,9 @@ public:
 	float GetReachBias() const { return reachBias_; }
 	bool CanConnect() const;
 
+	void SetStageScale(float scale) { stageScale_ = scale; }
+	void ApplyStageScale();
+
 	bool IsChained() const { return chained_; }
 	void MarkChained(int hand);
 	void RestoreChained();
@@ -70,6 +73,8 @@ private:
 
 	CalyxEngine::Vector3 boundsCenter_{};
 	float boundsRadius_ = 30.0f;
+
+	float stageScale_ = 1.0f;
 
 	CalyxEngine::EffectAsset explosionEffect_;
 	CalyxEngine::EffectHandle explosionHandle_{};

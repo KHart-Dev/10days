@@ -146,7 +146,7 @@ float Floater::GetYaw() const {
 }
 
 CalyxEngine::Vector3 Floater::GetArmWorld(int hand) const {
-	return BodyNode::RotateY(BodyNode::kHand[hand], GetYaw());
+	return BodyNode::RotateY(BodyNode::Hand(hand, stageScale_), GetYaw());
 }
 
 CalyxEngine::Vector3 Floater::GetHandWorld(int hand) const {
@@ -159,6 +159,17 @@ bool Floater::CanConnect() const {
 		result = false;
 	}
 	return result;
+}
+
+void Floater::ApplyStageScale() {
+	auto& wt = GetWorldTransform();
+	wt.scale *= stageScale_;
+
+	if (Collider* collider = GetCollider()) {
+		ColliderConfig config = collider->ExtractConfig();
+		config.size = { stageScale_, stageScale_, stageScale_ }; // 基準{1,1,1} × scale
+		collider->ApplyConfig(config);
+	}
 }
 
 void Floater::SetChainedTransform(const CalyxEngine::Vector3& pos, float worldYaw) {

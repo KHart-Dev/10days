@@ -9,6 +9,7 @@
 #include "Engine/System/Command/EditorCommand/GuiCommand/ImGuiHelper/GuiCmd.h"
 #include "UI/Panels/InspectorPanel.h"
 #include <Engine/Scene/Utility/SceneUtility.h>
+#include <Engine/Objects/Collider/BoxCollider.h>
 
 // game
 #include <Game/Audio/GameAudio.h>
@@ -49,6 +50,8 @@ void Player::DerivativeGui() {
 	if (BeginSection(CalyxEngine::ParamFilterSection::Object)) {
 		// SerializableObject ベースの param_ を GUI 表示
 		GuiCmd::SceneObjectReferenceField("Target(FloaterManager)", floaterManager_);
+		ImGui::DragFloat("stageScale", &stageScale_, 0.01f, 10.0f);
+		ImGui::DragFloat("stageClearLength", &stageClearLength_, 0.01f, 50.0f);
 		PropertyText("Manager", "%s", floaterManager_.Resolve() ? "OK" : "MISSING");
 		PropertyText("Connected", "%d", static_cast<int>(chain_.size()) - 1);
 		PropertyText("Anchors", "%d", static_cast<int>(handAnchors_.size()));
@@ -80,10 +83,22 @@ void Player::Initialize() {
 	Actor::Initialize();
 	DisableGravity();
 
+	if (resultMode_) {
+		stageScale_ = ResultCarry::stageScale;
+	}
+	auto& wt = GetWorldTransform();
+	wt.scale = CalyxEngine::Vector3::One() * stageScale_;
+
+	if (Collider* collider = GetCollider()) {
+		ColliderConfig config = collider->ExtractConfig();
+		config.size = { stageScale_, stageScale_, stageScale_ };
+		collider->ApplyConfig(config);
+	}
+
 	chain_.clear();
 	Member self{};
 	for (int i = 0; i < BodyNode::kHandCount; i++) {
-		self.handLocal[i] = BodyNode::kHand[i];
+		self.handLocal[i] = BodyNode::Hand(i, stageScale_);
 	}
 	chain_.push_back(self);
 
@@ -91,6 +106,14 @@ void Player::Initialize() {
 	prevSelfYaw_ = GetWorldTransform().eulerRotation.y;
 
 	HandConnectEffect_.Load("HandConnectParticle");
+
+	if (auto manager = floaterManager_.Resolve()) {
+		manager->SetStageScale(stageScale_);
+	}
+
+	ResultCarry::stageScale = stageScale_;
+
+	isResultChain_ = false;
 }
 
 namespace {
@@ -112,8 +135,7 @@ namespace {
 
 void Player::Update(float dt) {
 	if (resultMode_) {
-		if (!restored_) { restored_ = RestoreChain(); }
-		else { RestoreChainStep(dt); }
+		if (!restored_) { restored_ = BeginRestoreChain(); } else { RestoreChainStep(dt); }
 		if (auto manager = floaterManager_.Resolve()) {
 			BreakChain(*manager);
 		}
@@ -289,6 +311,8 @@ bool Player::RestoreChain() {
 			floater = manager->CreateChained(d.offset);
 			if (floater) {
 				floater->RestoreChained();
+				floater->SetStageScale(stageScale_);
+				floater->ApplyStageScale();
 			}
 		}
 		chain_.push_back(Member{ d, floater });
@@ -297,9 +321,20 @@ bool Player::RestoreChain() {
 	return true;
 }
 
+bool Player::BeginRestoreChain() {
+	auto& wt = GetWorldTransform();
+	wt.rotationSource = RotationSource::Euler;
+	wt.Update();
+	chain_.clear();
+	chain_.push_back(Member{ ResultCarry::chain[0], nullptr });
+	//ApplyChainTransforms();
+	return true;
+}
+
 void Player::RestoreChainStep(float dt) {
 	// 全員出し終わっている
 	if (resultRestoreIndex_ >= ResultCarry::chain.size()) {
+		isResultChain_ = true;
 		return;
 	}
 
@@ -329,6 +364,8 @@ void Player::RestoreChainStep(float dt) {
 
 	// 接続済み状態にする
 	floater->RestoreChained();
+	floater->SetStageScale(stageScale_);
+	floater->ApplyStageScale();
 
 	Member member{};
 	static_cast<ChainMemberData&>(member) = data;
@@ -348,11 +385,16 @@ void Player::ClampToField() {
 
 	const CalyxEngine::Vector3 center = { 0.0f,0.0f,0.0f };
 	const float limit = manager->GetFieldHalfSize() - param_.fieldMargin;
+	auto& wt = GetWorldTransform();
+
+	if (wt.translation.x <= -20.0f) {
+		wt.translation.x = -20.0f;
+	}
+	wt.translation.z = std::clamp(wt.translation.z, -param_.fieldZLimit, param_.fieldZLimit);
 	if (limit <= 0.0f) {
 		return;
 	}
 
-	auto& wt = GetWorldTransform();
 	const float x = wt.translation.x - center.x;
 	const float z = wt.translation.z - center.z;
 	const float distSq = x * x + z * z;
@@ -372,7 +414,7 @@ void Player::BuildHandAnchors() {
 	if (chain_.empty()) {
 		Member self{};
 		for (int i = 0; i < BodyNode::kHandCount; i++) {
-			self.handLocal[i] = BodyNode::kHand[i];
+			self.handLocal[i] = BodyNode::Hand(i, stageScale_);
 		}
 		chain_.push_back(self);
 	}
@@ -403,9 +445,11 @@ void Player::BuildHandAnchors() {
 void Player::CheckConnect(FloaterManager& manager, float dt) {
 
 	// 判定のしきい値。距離は2乗のまま、角度は内積のまま比べる
-	const float grabSq = param_.grabRadius * param_.grabRadius;
+	const float grabRadius = param_.grabRadius * stageScale_;
+	const float reachRange = param_.reachRange * stageScale_;
+	const float grabSq = grabRadius * grabRadius;
 	const float separationCos = std::cosf(CalyxEngine::ToRadians(param_.armSeparation));
-	const float reachSq = param_.reachRange * param_.reachRange;
+	const float reachSq = reachRange * reachRange;
 
 	debugAngleRejects_ = 0;
 	float nearestAllSq = 1e18f;
@@ -553,11 +597,11 @@ void Player::Attach(const std::shared_ptr<Floater>& floater, const HandAnchor& a
 	member.localAngle = drift + BodyNode::WrapAngle(target.localAngle - drift) * param_.alignToChain;
 
 	member.offset =
-		target.handLocal[anchor.hand] - BodyNode::RotateY(BodyNode::kHand[ownHand], member.localAngle);
+		target.handLocal[anchor.hand] - BodyNode::RotateY(BodyNode::Hand(ownHand, stageScale_), member.localAngle);
 	member.offset.y = floater->GetWorldTransform().GetWorldPosition().y - selfWt.translation.y;
 
 	for (int i = 0; i < BodyNode::kHandCount; i++) {
-		member.handLocal[i] = member.offset + BodyNode::RotateY(BodyNode::kHand[i], member.localAngle);
+		member.handLocal[i] = member.offset + BodyNode::RotateY(BodyNode::Hand(i, stageScale_), member.localAngle);
 	}
 
 	member.parent = anchor.member;
@@ -594,6 +638,8 @@ void Player::ApplyConfigFromJson(const nlohmann::json& j) {
 	param_.yawAcceleration = src->value("yawAcceleration", param_.yawAcceleration);
 	resultMode_ = src->value("resultMode", resultMode_);
 	floaterManager_ = src->value("FloaterManagerPtr", floaterManager_);
+	stageScale_ = src->value("stageScale", stageScale_);
+	stageClearLength_ = src->value("stageClearLength", stageClearLength_);
 }
 
 void Player::ExtractConfigToJson(nlohmann::json& j) const {
@@ -607,6 +653,8 @@ void Player::ExtractConfigToJson(nlohmann::json& j) const {
 	derived["yawAcceleration"] = param_.yawAcceleration;
 	derived["resultMode"] = resultMode_;
 	derived["FloaterManagerPtr"] = floaterManager_;
+	derived["stageScale"] = stageScale_;
+	derived["stageClearLength"] = stageClearLength_;
 	if (!derived.empty()) {
 		j[typeKey] = std::move(derived);
 	}
@@ -655,6 +703,37 @@ void Player::UpdateForecastPause() {
 
 bool Player::IsForecastWaiting() const {
 	return forecast_ && forecast_->IsWaitingAtStart();
+}
+
+bool Player::IsConnectedFloaterHandInsideRadius(
+	const CalyxEngine::Vector3& center,
+	float radius) const {
+
+	if (radius <= 0.0f) {
+		return false;
+	}
+
+	const float radiusSq = radius * radius;
+
+	// [0] はPlayer自身なので、接続中Floaterだけを見る
+	for (size_t i = 1; i < chain_.size(); ++i) {
+		const Member& member = chain_[i];
+		if (!member.floater) {
+			continue;
+		}
+
+		for (int hand = 0; hand < BodyNode::kHandCount; ++hand) {
+			const CalyxEngine::Vector3 handPos =
+				member.floater->GetHandWorld(hand);
+
+			const CalyxEngine::Vector3 diff = handPos - center;
+			if (diff.LengthSquared() <= radiusSq) {
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 void Player::ExportChain() const {

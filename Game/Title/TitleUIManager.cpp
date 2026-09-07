@@ -11,6 +11,7 @@
 // game
 #include <Game/UI/UiSprite.h>
 #include <Game/Scene/SceneFlow.h>
+#include <Game/Audio/GameAudio.h>
 
 // std
 #include <algorithm>
@@ -57,6 +58,7 @@ void TitleUIManager::Initialize() {
 		return;
 	}
 
+	GameAudio::PlayBgm(GameAudio::kBgmTitle);
 	InitializeSprites();
 }
 
@@ -89,8 +91,9 @@ void TitleUIManager::UpdateInput() {
 		CalyxFoundation::Input::TriggerKey(DIK_SPACE)) {
 
 		transitionRequested_ = true;
-		//SceneFlow::GoToAnimation();
-		SceneFlow::StartStage(0);
+		GameAudio::PlaySe(GameAudio::kSeStart);
+		SceneFlow::GoToAnimation();
+		//SceneFlow::StartStage(0);
 	}
 }
 

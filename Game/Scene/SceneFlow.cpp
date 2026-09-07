@@ -25,7 +25,9 @@ void SceneFlow::GoToAnimation() {
 void SceneFlow::StartStage(int stageIndex) {
 	ResultCarry::chain.clear();
 	ResultCarry::stageIndex = (std::max)(0, stageIndex);
-	RequestScene(kGameScenePath);
+	//RequestScene(kGameScenePath);
+	const std::string scenePath =kGameScenePath +std::to_string(stageIndex) +kSceneSuffix;
+	RequestScene(scenePath.c_str());
 }
 
 void SceneFlow::GoToResult() {

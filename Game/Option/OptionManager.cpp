@@ -14,6 +14,7 @@
 
 // game
 #include <Game/UI/UiSprite.h>
+#include <Game/Audio/GameAudio.h>
 
 // std
 #include <algorithm>
@@ -144,6 +145,7 @@ void OptionManager::Open() {
         return;
     }
 
+    GameAudio::PlaySe(GameAudio::kSeOptionOpen);
     SetupCornerMotions();
     ApplyStaticSpriteParams();
 
@@ -167,7 +169,7 @@ void OptionManager::Close() {
         animationState_ == AnimationState::Closing) {
         return;
     }
-
+    GameAudio::PlaySe(GameAudio::kSeOptionClose);
     animationState_ = AnimationState::Closing;
     animationTimer_ = 0.0f;
 }
@@ -362,7 +364,7 @@ void OptionManager::UpdateInput() {
 
     // B : 閉じる
     if (CalyxFoundation::Input::TriggerGamepadButton(
-        CalyxFoundation::PadButton::B)) {
+        CalyxFoundation::PadButton::B) || CalyxFoundation::Input::TriggerGamepadButton(CalyxFoundation::PadButton::START)) {
         Close();
         return;
     }
@@ -375,15 +377,16 @@ void OptionManager::UpdateInput() {
     if (CalyxFoundation::Input::TriggerKey(DIK_SPACE) ||
         CalyxFoundation::Input::TriggerGamepadButton(
             CalyxFoundation::PadButton::A)) {
+        GameAudio::PlaySe(GameAudio::kSeOptionDecision);
         ConfirmSelection();
     }
 
     // ← → : 選択
-    if (CalyxFoundation::Input::TriggerKey(DIK_LEFT)) {
+    if (CalyxFoundation::Input::TriggerKey(DIK_LEFT) || CalyxFoundation::Input::TriggerKey(DIK_A)) {
         MoveSelection(-1);
     }
 
-    if (CalyxFoundation::Input::TriggerKey(DIK_RIGHT)) {
+    if (CalyxFoundation::Input::TriggerKey(DIK_RIGHT) || CalyxFoundation::Input::TriggerKey(DIK_D)) {
         MoveSelection(1);
     }
 
@@ -587,6 +590,7 @@ void OptionManager::MoveSelection(int direction) {
     }
 
     selectedIndex_ += direction;
+    GameAudio::PlaySe(GameAudio::kSeOptionChoose);
 
     if (selectedIndex_ < 0) {
         selectedIndex_ = optionCount_ - 1;

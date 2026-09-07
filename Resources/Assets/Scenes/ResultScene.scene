@@ -69,36 +69,49 @@
             "type": "Camera3d"
         },
         {
-            "guid": "9979e82f-623f-4390-b90f-266b559130ad",
-            "name": "DebugCamera",
-            "objectType": 0,
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "dcfdca9b-12a6-42e4-a687-f10c8695216b",
+            "name": "Sprite2D",
+            "orderInLayer": 0,
             "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "sortingLayerId": 0,
+            "textureGuid": "80693316-61d2-4511-a0a1-a1dd3bf4161b",
+            "texturePath": "Textures/Numbers/meter.png",
             "transform": {
                 "inheritRotate": true,
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.11595099419355392,
-                    "x": 0.052184149622917175,
-                    "y": 0.9045015573501587,
-                    "z": -0.40707409381866455
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
                 },
                 "scale": {
-                    "x": 1.0,
-                    "y": 1.0,
+                    "x": 96.0,
+                    "y": 96.0,
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 1.5592771768569946,
-                    "y": 28.038938522338867,
-                    "z": 3.504836320877075
+                    "x": 705.0,
+                    "y": 132.5,
+                    "z": 0.0
                 }
             },
-            "type": "DebugCamera"
+            "type": "SpriteSceneObject2d"
         },
         {
             "Player": {
-                "FloaterManagerPtr": "d0906e04-1f2c-4d1d-b98f-9ec57e496b6e",
+                "FloaterManagerPtr": "797c4652-d306-4b00-b600-f4de9d9c1538",
                 "moveSpeed": 5.0,
                 "resultMode": true,
                 "rotSpeedDeg": 250.0,
@@ -168,7 +181,7 @@
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.0007962745730765164,
+                    "w": 0.0007962746894918382,
                     "x": -7.543776092688859e-08,
                     "y": 0.9999997019767761,
                     "z": -7.543776092688859e-08
@@ -192,45 +205,32 @@
             }
         },
         {
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            },
-            "color": {
-                "w": 1.0,
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "guid": "dcfdca9b-12a6-42e4-a687-f10c8695216b",
-            "name": "Sprite2D",
-            "orderInLayer": 0,
+            "guid": "9979e82f-623f-4390-b90f-266b559130ad",
+            "name": "DebugCamera",
+            "objectType": 0,
             "parentGuid": "00000000-0000-0000-0000-000000000000",
-            "sortingLayerId": 0,
-            "textureGuid": "80693316-61d2-4511-a0a1-a1dd3bf4161b",
-            "texturePath": "Textures/Numbers/meter.png",
             "transform": {
                 "inheritRotate": true,
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 1.0,
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
+                    "w": 0.7586612105369568,
+                    "x": 0.6293453574180603,
+                    "y": 0.12960727512836456,
+                    "z": -0.1075153797864914
                 },
                 "scale": {
-                    "x": 96.0,
-                    "y": 96.0,
+                    "x": 1.0,
+                    "y": 1.0,
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 705.0,
-                    "y": 132.5,
-                    "z": 0.0
+                    "x": -1.0111651420593262,
+                    "y": 32.75904083251953,
+                    "z": -7.261512279510498
                 }
             },
-            "type": "SpriteSceneObject2d"
+            "type": "DebugCamera"
         },
         {
             "DemoCameraPivot": {
@@ -291,24 +291,6 @@
             "type": "DemoCameraPivot"
         },
         {
-            "ResultManager": {
-                "bridgeDistanceOnesX": 640.0,
-                "bridgeDistanceY": 595.0,
-                "distanceDigitHeight": 100.0,
-                "distanceDigitSpacing": 47.0,
-                "distanceDigitWidth": 50.0,
-                "distanceUiOrderInLayer": 1100,
-                "planetRadius": 20.0,
-                "playerResultY": 0.5,
-                "resultCenterX": 640.0,
-                "resultCenterY": 250.0,
-                "resultHeight": 90.0,
-                "resultOrderInLayer": 1000,
-                "resultWidth": 180.0,
-                "spawnInterval": 0.20000000298023224,
-                "targetDistanceOnesX": 640.0,
-                "targetDistanceY": 125.0
-            },
             "cameraDitherEnabled": false,
             "colliderConfig": {
                 "capsuleHeight": 2.0,
@@ -536,6 +518,47 @@
                 "y": 1.0,
                 "z": 1.0
             },
+            "guid": "49e8b884-385d-424c-89e1-e24df652e87f",
+            "name": "Sprite2D",
+            "orderInLayer": 0,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "sortingLayerId": 0,
+            "textureGuid": "12981023-f4a4-4a25-9cfd-f1a059dc4d8b",
+            "texturePath": "Textures/Result/target.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 100.0,
+                    "y": 60.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 640.0,
+                    "y": 50.0,
+                    "z": 0.0
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
             "guid": "bffb7004-199b-49c3-a3f5-e76e574fbe43",
             "name": "Sprite2D",
             "orderInLayer": 0,
@@ -567,23 +590,65 @@
             "type": "SpriteSceneObject2d"
         },
         {
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
+            "cameraDitherEnabled": false,
+            "colliderConfig": {
+                "capsuleHeight": 2.0,
+                "capsuleRadius": 0.5,
+                "isCollisionEnabled": true,
+                "isDraw": true,
+                "isTrigger": false,
+                "layerId": 0,
+                "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius": 1.0,
+                "rotate": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "size": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
             },
-            "color": {
+            "colliderKind": 0,
+            "guid": "797c4652-d306-4b00-b600-f4de9d9c1538",
+            "modelConfig": {
+                "blendMode": 5,
+                "materialGuid": "00000000-0000-0000-0000-000000000000",
+                "modelName": "cone.obj",
+                "textureGuid": "00000000-0000-0000-0000-000000000000",
+                "uvTransConfig": {
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            "name": "Floater Manager",
+            "objectType": 2,
+            "outlineColor": {
                 "w": 1.0,
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
+                "x": 0.019999999552965164,
+                "y": 0.019999999552965164,
+                "z": 0.02500000037252903
             },
-            "guid": "49e8b884-385d-424c-89e1-e24df652e87f",
-            "name": "Sprite2D",
-            "orderInLayer": 0,
+            "outlineEnabled": false,
+            "outlineThickness": 0.03500000014901161,
             "parentGuid": "00000000-0000-0000-0000-000000000000",
-            "sortingLayerId": 0,
-            "textureGuid": "12981023-f4a4-4a25-9cfd-f1a059dc4d8b",
-            "texturePath": "Textures/Result/target.png",
+            "physicsBodyConfig": {
+                "bodyType": 1,
+                "enabled": true,
+                "gravityScale": 1.0,
+                "mass": 1.0,
+                "pushbackRatio": 1.0,
+                "useGravity": true
+            },
             "transform": {
                 "inheritRotate": true,
                 "inheritScale": true,
@@ -595,17 +660,22 @@
                     "z": 0.0
                 },
                 "scale": {
-                    "x": 100.0,
-                    "y": 60.0,
+                    "x": 1.0,
+                    "y": 1.0,
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 640.0,
-                    "y": 50.0,
-                    "z": 0.0
+                    "x": 13.79550552368164,
+                    "y": -3.975426197052002,
+                    "z": -0.3845474123954773
                 }
             },
-            "type": "SpriteSceneObject2d"
+            "type": "FloaterManager",
+            "visualOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         }
     ],
     "sceneName": "TestScene",
@@ -627,14 +697,18 @@
                 {
                     "id": 3,
                     "name": "GoalPoint"
+                },
+                {
+                    "id": 4,
+                    "name": "Meteorite"
                 }
             ],
             "matrixRows": [
                 0,
-                12,
+                28,
                 2,
                 2,
-                0,
+                2,
                 0,
                 0,
                 0,

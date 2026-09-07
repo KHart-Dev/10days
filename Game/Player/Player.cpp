@@ -377,11 +377,16 @@ void Player::ClampToField() {
 
 	const CalyxEngine::Vector3 center = { 0.0f,0.0f,0.0f };
 	const float limit = manager->GetFieldHalfSize() - param_.fieldMargin;
+	auto& wt = GetWorldTransform();
+
+	if (wt.translation.x <= -20.0f) {
+		wt.translation.x = -20.0f;
+	}
+	wt.translation.z = std::clamp(wt.translation.z, -param_.fieldZLimit, param_.fieldZLimit);
 	if (limit <= 0.0f) {
 		return;
 	}
 
-	auto& wt = GetWorldTransform();
 	const float x = wt.translation.x - center.x;
 	const float z = wt.translation.z - center.z;
 	const float distSq = x * x + z * z;

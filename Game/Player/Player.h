@@ -120,6 +120,9 @@ private:
 			AddField("fieldMargin", fieldMargin)
 				.Category("Movement")
 				.Tooltip("フィールドの縁からどれだけ内側で止まるか");
+			AddField("fieldYLimit", fieldZLimit)
+				.Category("Movement")
+				.Tooltip("フィールドのZの上限");
 		}
 
 		CalyxEngine::ParamPath GetParamPath() const override {
@@ -140,6 +143,7 @@ private:
 		float reachSpread = 40.0f;
 
 		float fieldMargin = 1.0f;
+		float fieldZLimit = 18.0f;
 	};
 
 	PlayerParam param_;

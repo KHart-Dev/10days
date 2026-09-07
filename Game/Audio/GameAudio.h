@@ -21,7 +21,7 @@ namespace GameAudio {
 	inline constexpr const char* kSeDamage = "damageSE.mp3";
 	inline constexpr const char* kSeMove = "moveSE.mp3";
 	inline constexpr const char* kSeGoal = "goalSE.mp3";
-	inline constexpr const char* kSeCount = "countSE.mp3"; // まだ
+	inline constexpr const char* kSeCount = "countSE.mp3";
 	inline constexpr const char* kSeOptionOpen = "optionOpenSE.mp3";
 	inline constexpr const char* kSeOptionClose = "optionCloseSE.mp3";
 	inline constexpr const char* kSeOptionChoose = "optionChooseSE.mp3";
@@ -29,7 +29,7 @@ namespace GameAudio {
 	inline constexpr const char* kSeDangerClose = "dangerCloseSE.mp3";
 
 	// タイトルSE
-	inline constexpr const char* kSeStart = "startSE.mp3"; // まだ
+	inline constexpr const char* kSeStart = "startSE.mp3";
 
 	// リザルトSE
 	inline constexpr const char* kSeResultCount = "resultCountSE.mp3"; // まだ

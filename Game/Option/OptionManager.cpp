@@ -6,6 +6,11 @@
 #include <Engine/Foundation/Clock/ClockManager.h>
 #include "Engine/System/Command/EditorCommand/GuiCommand/ImGuiHelper/GuiCmd.h"
 #include "UI/Panels/InspectorPanel.h"
+#include <Engine/Objects/Transform/Transform.h>
+#include <Engine/Graphics/Camera/3d/Camera3d.h>
+#include <Engine/Graphics/Context/GraphicsGroup.h>
+#include <Engine/Renderer/Model/ModelRenderer.h>
+#include <Engine/Assets/Model/BaseModel.h>
 
 // game
 #include <Game/UI/UiSprite.h>
@@ -53,6 +58,19 @@ void OptionManager::Initialize() {
 
     DisableGravity();
     Actor::SetDrawEnable(false);
+    SetCameraDitherEnabled(false);
+
+    previewRenderer_ = std::make_unique<ModelRenderer>();
+    previewRenderer_->SetOverlayMode(true);
+    previewCamera_ = std::make_unique<Camera3d>("OptionPreviewCamera");
+    previewCamera_->GetWorldTransform().Initialize();
+    previewCamera_->SetCamera({ 0.0f, 0.0f, -4.0f }, { 0.0f, 0.0f, 0.0f });
+    previewCamera_->SetAspectRatio(kScreenWidth / kScreenHeight);
+    previewCamera_->AlwaysUpdate(0.0f);
+    previewTransform_ = std::make_unique<WorldTransform>();
+	previewTransform_->Initialize();
+    previewTransform_->scale = { 1.25f, 1.25f, 1.25f };
+    previewTransform_->Update();
 
     InitializeSprites();
     SetAllVisible(false);
@@ -73,6 +91,7 @@ void OptionManager::Update(float dt) {
     // ClockManagerのTimeScaleが0になるとdtも0になるため、
     // OptionのUIアニメーションだけは実時間ベースのDeltaTimeで更新する。
     const float uiDt = GetUiDeltaTime();
+    previewRotationY_ = std::fmod(previewRotationY_ + uiDt * 1.2f, 2.0f * 3.1415926535f);
 
     // 引数dtはゲーム時間。Option表示中は0になる想定なのでUIアニメーションには使わない。
     (void)dt;
@@ -90,6 +109,33 @@ void OptionManager::Update(float dt) {
         ApplyAnimation(1.0f);
     }
 }
+
+void OptionManager::DrawOverlay3D(ID3D12GraphicsCommandList* cmd, PipelineService* pso,
+    LightLibrary* lightLibrary) {
+    auto* model = GetStaticModel();
+    if (!previewVisible_ || !previewRenderer_ || !previewCamera_ ||
+        !previewTransform_ || !model || !cmd || !pso || !lightLibrary) {
+        return;
+    }
+
+    previewTransform_->scale = { 1.25f * previewScale_, 1.25f * previewScale_, 1.25f * previewScale_ };
+    previewTransform_->eulerRotation.y = previewRotationY_;
+    previewTransform_->rotationSource = RotationSource::Euler;
+    previewTransform_->Update();
+    previewCamera_->AlwaysUpdate(0.0f);
+
+    const bool wasDrawEnabled = model->GetIsDrawEnable();
+    model->SetIsDrawEnable(true);
+    previewRenderer_->BeginFrame();
+    previewRenderer_->RegisterStatic(model, *previewTransform_, BillboardMode::None, this);
+    previewRenderer_->BuildAllVisibleBatches();
+    previewRenderer_->DrawAll(cmd, GraphicsGroup::GetInstance()->GetDevice().Get(), nullptr,
+        pso, lightLibrary, nullptr,
+        ModelRenderPhase::All, previewCamera_.get());
+    model->SetIsDrawEnable(wasDrawEnabled);
+}
+
+void OptionManager::SubmitSprites(SpriteRenderer&) const {}
 
 void OptionManager::Open() {
 
@@ -433,6 +479,7 @@ void OptionManager::UpdateAnimation(float dt) {
 
 void OptionManager::SetAllVisible(bool visible) {
 
+    previewVisible_ = visible;
     if (optionPanel_) {
         optionPanel_->SetVisible(visible);
     }
@@ -488,6 +535,8 @@ void OptionManager::ApplyAnimation(float t) {
             panelT
         );
     }
+
+    previewScale_ = scale;
 
     // 三角も中央パネルと一緒に拡大・フェードさせる。
     const float pressedBrightness =

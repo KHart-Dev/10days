@@ -31,6 +31,7 @@ Player::Player()
 	: Actor("plane.obj", "Player") {
 	// パラメータをロード（パラメータデータベースから既定値を読み込む）
 	param_.LoadParams();
+
 }
 
 Player::~Player() {

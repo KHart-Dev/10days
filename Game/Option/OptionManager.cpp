@@ -41,7 +41,7 @@ namespace {
 }
 
 OptionManager::OptionManager()
-    : Actor("debugCube.obj", "OptionManager") {
+    : Actor("planet.obj", "OptionManager") {
 
     // Player と同じように保存済みパラメータを読み込む
     param_.LoadParams();

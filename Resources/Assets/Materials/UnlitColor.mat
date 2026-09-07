@@ -1,0 +1,223 @@
+{
+  "fields": {
+    "color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "emissiveColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "emissiveIntensity": 0.0,
+    "envirometCoefficient": 0.5,
+    "isReflect": false,
+    "lightingMode": 4,
+    "normalMapFlipY": false,
+    "normalMapGuid": "00000000-0000-0000-0000-000000000000",
+    "normalMapStrength": 1.0,
+    "objectTextureGuid": "00000000-0000-0000-0000-000000000000",
+    "rimColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "rimIntensity": 0.0,
+    "rimPower": 3.0,
+    "roughness": 0.5,
+    "shininess": 20.0,
+    "toonBaseColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "toonBaseFeather": 0.029999999329447746,
+    "toonBaseStep": 0.25,
+    "toonEdgeSoftness": 0.029999999329447746,
+    "toonHighlightColor": [
+      1.149999976158142,
+      1.100000023841858,
+      1.0,
+      1.0
+    ],
+    "toonMidShadowColor": [
+      0.7200000286102295,
+      0.7599999904632568,
+      0.8600000143051147,
+      1.0
+    ],
+    "toonShadeFeather": 0.029999999329447746,
+    "toonShadeStep": -0.15000000596046448,
+    "toonShadowColor": [
+      0.41999998688697815,
+      0.46000000834465027,
+      0.5799999833106995,
+      1.0
+    ],
+    "toonSpecularIntensity": 0.3499999940395355,
+    "toonSpecularSoftness": 0.019999999552965164,
+    "toonSpecularThreshold": 0.9599999785423279,
+    "toonThreshold1": -0.15000000596046448,
+    "toonThreshold2": 0.25,
+    "toonThreshold3": 0.8199999928474426,
+    "useNormalMap": false
+  },
+  "graph": {
+    "links": [
+      {
+        "fromPinId": 31,
+        "id": 37,
+        "toPinId": 33
+      },
+      {
+        "fromPinId": 35,
+        "id": 38,
+        "toPinId": 4
+      },
+      {
+        "fromPinId": 41,
+        "id": 42,
+        "toPinId": 3
+      }
+    ],
+    "nextId": 43,
+    "nodes": [
+      {
+        "id": 1,
+        "inputs": [
+          {
+            "id": 2,
+            "kind": 0,
+            "name": "Surface",
+            "type": "shader.material"
+          },
+          {
+            "id": 3,
+            "kind": 0,
+            "name": "Lighting Mode",
+            "type": "core.int"
+          },
+          {
+            "id": 4,
+            "kind": 0,
+            "name": "BaseColor",
+            "type": "core.color"
+          },
+          {
+            "id": 5,
+            "kind": 0,
+            "name": "Emissive",
+            "type": "core.color"
+          },
+          {
+            "id": 6,
+            "kind": 0,
+            "name": "Emissive Intensity",
+            "type": "core.float"
+          }
+        ],
+        "outputs": [],
+        "position": [
+          895.0,
+          320.0
+        ],
+        "properties": {},
+        "title": "Output",
+        "type": "Output"
+      },
+      {
+        "id": 30,
+        "inputs": [],
+        "outputs": [
+          {
+            "id": 31,
+            "kind": 1,
+            "name": "Texture",
+            "type": "shader.texture2d"
+          }
+        ],
+        "position": [
+          275.0,
+          691.0
+        ],
+        "properties": {},
+        "title": "Object Texture",
+        "type": "ObjectTexture"
+      },
+      {
+        "id": 32,
+        "inputs": [
+          {
+            "id": 33,
+            "kind": 0,
+            "name": "Texture",
+            "type": "shader.texture2d"
+          },
+          {
+            "id": 34,
+            "kind": 0,
+            "name": "UV",
+            "type": "core.float2"
+          }
+        ],
+        "outputs": [
+          {
+            "id": 35,
+            "kind": 1,
+            "name": "Color",
+            "type": "core.color"
+          },
+          {
+            "id": 36,
+            "kind": 1,
+            "name": "Value",
+            "type": "core.float"
+          }
+        ],
+        "position": [
+          533.0,
+          673.0
+        ],
+        "properties": {},
+        "title": "Texture Sample",
+        "type": "TextureSample"
+      },
+      {
+        "id": 39,
+        "inputs": [
+          {
+            "id": 40,
+            "kind": 0,
+            "name": "Value",
+            "type": "core.int"
+          }
+        ],
+        "outputs": [
+          {
+            "id": 41,
+            "kind": 1,
+            "name": "Mode",
+            "type": "core.int"
+          }
+        ],
+        "position": [
+          468.0,
+          503.0
+        ],
+        "properties": {
+          "value": 4
+        },
+        "title": "Lighting Mode",
+        "type": "LightingMode"
+      }
+    ]
+  },
+  "guid": "084239bf-29ba-420f-a3d4-bbf35b540009",
+  "name": "UnlitColor",
+  "type": "MaterialAsset"
+}

@@ -28,6 +28,10 @@ void FloaterManager::Initialize() {
 
 void FloaterManager::Update([[maybe_unused]] float dt) {
 
+	if (resultMode_) {
+		return;
+	}
+
 	if (!isSpawned_) {
 		if (param_.playBgmOnStart) {
 			GameAudio::PlayBgm(GameAudio::kBgmGame); // FloaterManagerがゲーム中しか存在しないとしとく（他シーンにも配置するならば別箇所へ）

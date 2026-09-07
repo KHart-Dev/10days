@@ -3,6 +3,7 @@
 #include <Engine/Scene/Utility/SceneUtility.h>
 
 #include <Game/Player/Player.h>
+#include <Game/Floater/FloaterManager.h>
 #include <Game/Floater/Floater.h>
 #include <Game/Result/ResultCarry.h>
 #include <Game/Result/Planet/Planet.h>
@@ -33,18 +34,6 @@ void ResultManager::Update(float dt) {
     if (!initialized_) {
         return;
     }
-
-    if (nextFloaterIndex_ < ResultCarry::chain.size()) {
-
-        spawnTimer_ += dt;
-
-        if (spawnTimer_ >= spawnInterval_) {
-            spawnTimer_ = 0.0f;
-            SpawnNextFloater();
-        }
-    }
-
-    CheckStageClear();
     UpdateResultUi();
     UpdateDistanceUi();
 }
@@ -58,14 +47,17 @@ void ResultManager::InitializeActor() {
     auto* ctx = SceneContext::Current();
     if (ctx) {
         player_ = ctx->FindFirst<Player>();
+		floaterManager_ = ctx->FindFirst<FloaterManager>();
     }
 
-    if (!player_) {
-        return;
+    if (player_) {
+        player_->Initialize();
+        player_->SetupResult();
     }
-
-    player_->Initialize();
-    player_->SetupResult();
+    if (floaterManager_) {
+        floaterManager_->Initialize();
+        floaterManager_->SetupResult();
+    }
 
     auto& playerWt = player_->GetWorldTransform();
     playerWt.translation = GetWorldTransform().translation;
@@ -76,7 +68,6 @@ void ResultManager::InitializeActor() {
     nextFloaterIndex_ = 1;
     spawnTimer_ = 0.0f;
 
-    resultFloaters_.clear();
     planetTouched_ = { false, false };
     isClear_ = false;
 
@@ -259,56 +250,6 @@ void ResultManager::SetDistanceSpriteValue(
     }
 }
 
-int ResultManager::ComputeBridgeDistanceInt() const {
-
-    if (!player_ || resultFloaters_.empty()) {
-        return 0;
-    }
-
-    const auto& playerWt = player_->GetWorldTransform();
-
-    // ResultSceneでの左右方向に沿った見かけの橋の長さを出す。
-    // PlayerのY回転に追従するローカルX軸へ各手を射影し、max-min を距離とする。
-    const CalyxEngine::Vector3 axis =
-        BodyNode::RotateY(
-            CalyxEngine::Vector3{ 1.0f, 0.0f, 0.0f },
-            playerWt.eulerRotation.y
-        );
-
-    bool hasAnyHand = false;
-    float minProj = 0.0f;
-    float maxProj = 0.0f;
-
-    for (const std::shared_ptr<Floater>& floater : resultFloaters_) {
-        if (!floater) {
-            continue;
-        }
-
-        for (int hand = 0; hand < BodyNode::kHandCount; ++hand) {
-            const CalyxEngine::Vector3 p = floater->GetHandWorld(hand) - playerWt.translation;
-            const float projection =
-                p.x * axis.x +
-                p.y * axis.y +
-                p.z * axis.z;
-
-            if (!hasAnyHand) {
-                minProj = projection;
-                maxProj = projection;
-                hasAnyHand = true;
-            } else {
-                minProj = std::min(minProj, projection);
-                maxProj = std::fmax(maxProj, projection);
-            }
-        }
-    }
-
-    if (!hasAnyHand) {
-        return 0;
-    }
-
-    return static_cast<int>(std::roundf(maxProj - minProj));
-}
-
 void ResultManager::UpdateDistanceUi() {
 
     // Inspector等で位置調整値を変えた場合にも毎フレーム反映。
@@ -333,12 +274,6 @@ void ResultManager::UpdateDistanceUi() {
             )
             )
     );
-
-    // 下段: 現在のFloaterの手の広がり
-    SetDistanceSpriteValue(
-        bridgeDistanceSprites_,
-        ComputeBridgeDistanceInt()
-    );
 }
 
 void ResultManager::DisableGravity() {
@@ -351,135 +286,15 @@ void ResultManager::DisableGravity() {
 
 void ResultManager::SpawnPlanets() {
 
-    if (!player_) {
-        return;
-    }
-
-    const auto& playerWt = player_->GetWorldTransform();
-
-    const float clearDistance =
-        std::fabs(ResultCarry::stageClearDirection);
-
-    const float planetCenterDistance =
-        planetRadius_ + clearDistance * 0.5f;
-
-    const CalyxEngine::Vector3 leftOffset =
-        BodyNode::RotateY(
-            CalyxEngine::Vector3{ -planetCenterDistance, 0.0f, 0.0f },
-            playerWt.eulerRotation.y
-        );
-
-    const CalyxEngine::Vector3 rightOffset =
-        BodyNode::RotateY(
-            CalyxEngine::Vector3{ planetCenterDistance, 0.0f, 0.0f },
-            playerWt.eulerRotation.y
-        );
-
-    const std::array<CalyxEngine::Vector3, 2> positions = {
-        playerWt.translation + leftOffset,
-        playerWt.translation + rightOffset
-    };
-
     for (size_t i = 0; i < planets_.size(); ++i) {
 
         planets_[i] = SceneAPI::Instantiate<Planet>();
-
-        if (!planets_[i]) {
-            continue;
-        }
-
-        planets_[i]->Initialize();
-
-        auto& planetWt = planets_[i]->GetWorldTransform();
-        planetWt.translation = positions[i];
-        planetWt.rotationSource = RotationSource::Euler;
-        planetWt.eulerRotation.x = std::numbers::pi_v<float> *0.5f;
-        planetWt.Update();
-
-        planets_[i]->SetRadius(planetRadius_);
-    }
-}
-
-void ResultManager::SpawnNextFloater() {
-
-    if (!player_) {
-        return;
-    }
-
-    if (nextFloaterIndex_ >= ResultCarry::chain.size()) {
-        return;
-    }
-
-    const ChainMemberData& data =
-        ResultCarry::chain[nextFloaterIndex_];
-
-    const auto& playerWt =
-        player_->GetWorldTransform();
-
-    const CalyxEngine::Vector3 worldPos =
-        playerWt.translation +
-        BodyNode::RotateY(
-            data.offset,
-            playerWt.eulerRotation.y
-        );
-
-    std::shared_ptr<Floater> floater =
-        SceneAPI::InstantiatePrefabRoot<Floater>(
-            "Floater.prefab",
-            worldPos
-        );
-
-    if (!floater) {
-        return;
-    }
-
-    floater->Initialize();
-    floater->RestoreChained();
-    floater->SetChainedTransform(
-        worldPos,
-        playerWt.eulerRotation.y + data.localAngle
-    );
-
-    resultFloaters_.push_back(floater);
-    nextFloaterIndex_++;
-}
-
-void ResultManager::CheckStageClear() {
-
-    planetTouched_ = { false, false };
-
-    for (const std::shared_ptr<Floater>& floater : resultFloaters_) {
-
-        if (!floater) {
-            continue;
-        }
-
-        for (int hand = 0; hand < BodyNode::kHandCount; ++hand) {
-
-            const CalyxEngine::Vector3 handPosition =
-                floater->GetHandWorld(hand);
-
-            for (size_t planetIndex = 0;
-                planetIndex < planets_.size();
-                ++planetIndex) {
-
-                if (!planets_[planetIndex]) {
-                    continue;
-                }
-
-                if (planets_[planetIndex]->ContainsPoint(handPosition)) {
-                    planetTouched_[planetIndex] = true;
-                }
-            }
-        }
-    }
-
-    const bool clearNow =
-        planetTouched_[0] &&
-        planetTouched_[1];
-
-    if (clearNow && !isClear_) {
-        isClear_ = true;
-        ResultCarry::stageClearCount++;
+		planets_[i]->Initialize();
+		auto& wt = planets_[i]->GetWorldTransform();
+        float posX = static_cast<float>(i * 2);
+        wt.translation = { (posX - 1.0f) * 29.0f, 0.0f, 0.0f };
+		wt.rotationSource = RotationSource::Euler;
+		wt.eulerRotation.x = std::numbers::pi_v<float> * 0.5f;
+		wt.scale = { 15.0f, 15.0f, 15.0f };
     }
 }

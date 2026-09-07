@@ -35,6 +35,8 @@ public:
 
 	std::shared_ptr<Floater> CreateChained(const CalyxEngine::Vector3& pos);
 
+	void SetupResult() { resultMode_ = true; }
+
 private:
 
 	void Spawn(int count);
@@ -82,6 +84,7 @@ private:
 	FloaterManagerParam param_;
 
 	bool isSpawned_ = false;
+	bool resultMode_ = false;
 
 public:
 

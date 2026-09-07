@@ -8,6 +8,7 @@
 #include <vector>
 
 class Player;
+class FloaterManager;
 class Floater;
 class Planet;
 class UiSprite;
@@ -35,9 +36,7 @@ public:
 private:
 
     void InitializeActor();
-    void SpawnNextFloater();
     void SpawnPlanets();
-    void CheckStageClear();
 
     void InitializeResultUi();
     void UpdateResultUi();
@@ -57,15 +56,13 @@ private:
         const std::array<std::shared_ptr<UiSprite>, 2>& sprites,
         int value);
 
-    int ComputeBridgeDistanceInt() const;
-
     void DisableGravity();
 
 private:
 
     std::shared_ptr<Player> player_;
 
-    std::vector<std::shared_ptr<Floater>> resultFloaters_;
+    std::shared_ptr<FloaterManager> floaterManager_;
 
     std::array<std::shared_ptr<Planet>, 2> planets_{};
     std::array<bool, 2> planetTouched_{ false, false };

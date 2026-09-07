@@ -1,6 +1,6 @@
 {
   "assetDirectory": "Resources/Assets",
-  "engineVersion": "v1.3.8",
+  "engineVersion": "v1.3.11",
   "gameModule": "Generated/Outputs/Debug/10days.dll",
   "gameModules": {
     "Debug": "Generated/Outputs/Debug/10days.dll",

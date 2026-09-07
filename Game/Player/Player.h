@@ -59,6 +59,7 @@ private:
 	bool BreakChain(FloaterManager& manager);
 
 	bool RestoreChain();
+	bool BeginRestoreChain();
 
 	/// 天気予報を1回だけ生やす。ゲーム中の初回 Update から呼ぶ
 	void SpawnForecast();
@@ -175,6 +176,10 @@ private:
 
 	CalyxEngine::EffectAsset HandConnectEffect_;
 	CalyxEngine::EffectHandle HandConnectHandle_{};
+
+	// ステージごとのPlayerとFloaterの基準サイズ（ステージごとにスケールを変えるので持つ。FloaterManagerにも渡してFloaterのサイズも変える）
+	float stageScale_ = 1.0f;
+	float stageClearLength_ = 5.0f;
 
 public:
 	// シリアライズ用インターフェース

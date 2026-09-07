@@ -83,6 +83,8 @@ void FloaterManager::Spawn(int count) {
 		floater->SetDriftSpeed(param_.driftSpeed);
 		floater->SetSpinSpeed(param_.spinSpeed);
 		floater->SetBounds(center, param_.spawnRadius);
+		floater->SetStageScale(stageScale_);
+		floater->ApplyStageScale();
 
 		auto& wt = floater->GetWorldTransform();
 		const float angle = Random::Generate(0.0f, CalyxEngine::kTwoPi);

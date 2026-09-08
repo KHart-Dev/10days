@@ -147,6 +147,13 @@ private:
 				.Category("Movement")
 				.Tooltip("フィールドのXの下限。Floaterにも同じ値が渡る");
 
+			AddField("shakeAmplitude", shakeAmplitude)
+				.Category("Shake");
+			AddField("shakeFrequency", shakeFrequency)
+				.Category("Shake");
+			AddField("shakeAngle", shakeAngle)
+				.Category("Shake");
+
 			AddField("controlUiCenterX", controlUiCenterX)
 				.Category("ControlUI")
 				.Tooltip("操作説明UIの中心X座標(px)。1280x720基準で左端が0");
@@ -190,6 +197,10 @@ private:
 		float fieldZLimit = 18.0f;
 		float fieldMinX = -20.0f;
 
+		float shakeAmplitude = 0.06f;
+		float shakeFrequency = 18.0f;
+		float shakeAngle = 0.05f;
+
 		// 操作説明UI。1280x720基準の画面座標で、アンカーは中心
 		float controlUiCenterX = 1090.0f;
 		float controlUiCenterY = 600.0f;
@@ -215,6 +226,9 @@ private:
 
 	CalyxEngine::Vector3 prevSelfPos_{};
 	float prevSelfYaw_ = 0.0f;
+
+	bool  memberShaking_ = false;
+	float shakeTimer_ = 0.0f;
 
 	// 繋がらないときの切り分け用。距離で落ちているのか角度で落ちているのかを見る
 	float debugNearestDist_ = -1.0f;

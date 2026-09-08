@@ -294,11 +294,22 @@ void Player::Update(float dt) {
 		CheckConnect(*manager, dt);
 	}
 
+	if (memberShaking_) { shakeTimer_ += dt; }
 	// 塊は自機の姿勢から毎フレーム組み直す
 	ApplyChainTransforms();
 
 	// 基底更新（アニメやコンポーネント処理）
 	Actor::Update(dt);
+}
+
+void Player::MemberShakeStart() {
+	if (memberShaking_) { return; }
+	memberShaking_ = true;
+	shakeTimer_ = 0.0f;
+}
+
+void Player::MemberShakeStop() {
+	memberShaking_ = false;
 }
 
 void Player::ApplyChainTransforms() {
@@ -310,13 +321,24 @@ void Player::ApplyChainTransforms() {
 	// 先頭は自機自身なので飛ばす
 	for (size_t i = 1; i < chain_.size(); i++) {
 		const Member& member = chain_[i];
-		if (!member.floater) {
-			continue;
+		if (!member.floater) continue;
+
+		CalyxEngine::Vector3 pos = selfPos + BodyNode::RotateY(member.offset, selfYaw);
+		float yaw = selfYaw + member.localAngle;
+
+		if (memberShaking_) {
+			const float phase = static_cast<float>(i) * 1.7f;
+			const float t = shakeTimer_ * param_.shakeFrequency;
+			const float amp = param_.shakeAmplitude * stageScale_;
+			const float u = std::clamp((shakeTimer_ / 2.0f), 0.0f, 1.0f);
+			const float rate = 0.2f + (1.0f - 0.2f) * u;
+
+			pos.x += std::sin(t * 2.0f + phase) * amp * rate;
+			pos.z += std::cos(t * 2.3f + phase * 1.3f) * amp * rate;
+			yaw += std::sin(t * 3.1f + phase) * param_.shakeAngle * rate;
 		}
 
-		member.floater->SetChainedTransform(
-			selfPos + BodyNode::RotateY(member.offset, selfYaw),
-			selfYaw + member.localAngle);
+		member.floater->SetChainedTransform(pos, yaw);
 	}
 }
 

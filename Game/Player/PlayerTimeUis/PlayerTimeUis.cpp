@@ -51,8 +51,11 @@ void PlayerTimeUis::Update(float dt) {
 		if (isCounting_) {
 
 			countTime_ -= dt;
-			if (countTime_ <= 4.0f) {
+			if (countTime_ <= 3.0f) {
 				AlarmTimer(dt);
+				player->MemberShakeStart();
+			} else {
+				player->MemberShakeStop();
 			}
 			if (countTime_ <= 0.0f) {
 				countTime_ = 0.0f;

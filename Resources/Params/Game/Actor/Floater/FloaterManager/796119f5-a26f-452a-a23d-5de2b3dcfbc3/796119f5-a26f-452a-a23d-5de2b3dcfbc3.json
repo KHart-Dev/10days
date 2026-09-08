@@ -2,7 +2,7 @@
     "fields": {
         "driftSpeed": 1.2000000476837158,
         "playBgmOnStart": true,
-        "spawnCount": 11,
+        "spawnCount": 25,
         "spawnRadius": 30.0,
         "spinSpeed": 1.2000000476837158
     }

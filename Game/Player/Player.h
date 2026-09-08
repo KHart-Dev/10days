@@ -221,7 +221,7 @@ private:
 	size_t resultRestoreIndex_ = 1;
 
 	float resultRestoreTimer_ = 0.0f;
-	float resultRestoreInterval_ = 0.2f;
+	float resultRestoreInterval_ = 0.3f;
 
 	CalyxEngine::EffectAsset HandConnectEffect_;
 	CalyxEngine::EffectHandle HandConnectHandle_{};

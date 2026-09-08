@@ -110,10 +110,14 @@ void ResultManager::UpdateResultUi(float dt) {
 
     if (isClear_) {
         resultClearSprite_->SetTexture("Textures/Result/clear.png");
+        if (!isResultOnce_) return;
         GameAudio::PlaySe(GameAudio::kSeClear);
+        isResultOnce_ = false;
     } else {
         resultClearSprite_->SetTexture("Textures/Result/gameover.png");
-        GameAudio::PlaySe(GameAudio::kSeGameover);
+        if (!isResultOnce_) return;
+        GameAudio::PlaySe(GameAudio::kSeGameover,0.3f);
+        isResultOnce_ = false;
     }
 }
 

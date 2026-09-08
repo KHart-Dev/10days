@@ -110,8 +110,10 @@ void ResultManager::UpdateResultUi(float dt) {
 
     if (isClear_) {
         resultClearSprite_->SetTexture("Textures/Result/clear.png");
+        GameAudio::PlaySe(GameAudio::kSeClear);
     } else {
         resultClearSprite_->SetTexture("Textures/Result/gameover.png");
+        GameAudio::PlaySe(GameAudio::kSeGameover);
     }
 }
 

@@ -33,7 +33,7 @@ void MeteoriteWarning::Initialize() {
 	// Actor::Update を呼ぶ以上、切らないと置いた場所から落ちていく
 	DisableGravity();
 
-	SetTexture("Textures/circle/groundPrediction.png");
+	SetTexture("Textures/meteo/attention.png");
 
 	// phase_ たちはメンバ初期化子で既定値が入っている。
 	// ここで入れ直すと、Initialize より先に Start() が来たときに号令を潰す

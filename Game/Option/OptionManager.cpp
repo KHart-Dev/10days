@@ -87,27 +87,39 @@ void OptionManager::Update(float dt) {
 
     const float uiDt = GetUiDeltaTime();
 
-    previewRotationY_ = std::fmod(previewRotationY_ + uiDt * 1.2f, 2.0f * std::numbers::pi_v<float>);
+    previewRotationY_ = std::fmod(previewRotationY_ + uiDt * 0.75f, 2.0f * std::numbers::pi_v<float>);
 
     if (Camera3d* camera = CameraManager::GetMain3d()) {
-
         CalyxEngine::Vector3 position =
             camera->GetTranslate() +
             camera->GetForward() * 4.0f;
 
         // 少し斜め上から見る
-        position.y -= 0.4f;
+        position.y -= 1.0f;
 
         SetTranslate(position);
     }
 
     // 惑星を横方向に自転
-    SetRotate(CalyxEngine::Vector3{ std::numbers::pi_v<float> *0.5f,0.0f,previewRotationY_ });
+    CalyxEngine::Quaternion baseRotation =
+        CalyxEngine::Quaternion::MakeRotateX(
+            std::numbers::pi_v<float> *0.5f
+        );
+
+    // 横倒しした惑星を自転
+    CalyxEngine::Quaternion spinRotation =
+        CalyxEngine::Quaternion::MakeRotateY(
+            previewRotationY_
+        );
+
+    // 合成
+    CalyxEngine::Quaternion rotation = baseRotation * spinRotation;
+    SetRotate(rotation);
 
     const float modelScale = 1.25f * previewScale_;
     SetScale({ modelScale,modelScale,modelScale });
-
-    GetWorldTransform().Update();
+    worldTransform_.Update();
+    Actor::Update(uiDt);
 
     (void)dt;
 
@@ -596,9 +608,9 @@ void OptionManager::MoveSelection(int direction) {
 
     // TODO: 選択カーソルや画像差し替え
     if (selectedIndex_ == 0) {
-		SetTexture("Textures/Planet/planet01.png");
+		SetTexture("Textures/Planet/planet02.png");
     } else if (selectedIndex_ == 1) {
-        SetTexture("Textures/Planet/planet02.png");
+        SetTexture("Textures/Planet/planet01.png");
     } else {
         SetTexture("Textures/Planet/planet0" + std::to_string(selectedIndex_ + 1) + ".png");
     }

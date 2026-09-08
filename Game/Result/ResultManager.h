@@ -91,7 +91,7 @@ private:
     float targetDistanceOnesX_ = 640.0f;
     float targetDistanceCenterY_ = 125.0f;
     float bridgeDistanceOnesX_ = 640.0f;
-    float bridgeDistanceCenterY_ = 610.0f;
+    float bridgeDistanceCenterY_ = 600.0f;
 
     float distanceDigitWidth_ = 54.0f;
     float distanceDigitHeight_ = 108.0f;

@@ -268,6 +268,8 @@ private:
     float EaseInBack(float t) const;
     static float Lerp(float a, float b, float t);
 
+    void RandomCornersTexture();
+
 private:
 
     OptionParam param_;
@@ -302,6 +304,7 @@ private:
 
     int selectedIndex_ = 0;
     int optionCount_ = 2;
+    bool isSelectScene_ = false;
 
     // 1280x720 基準
     static constexpr float kScreenWidth = 1280.0f;

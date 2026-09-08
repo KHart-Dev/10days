@@ -9,6 +9,7 @@
 // game
 #include "Floater.h"
 #include <Game/Audio/GameAudio.h>
+#include <Game/Player/Player.h>
 
 // std
 #include <algorithm>
@@ -61,6 +62,7 @@ std::shared_ptr<Floater> FloaterManager::CreateChained(const CalyxEngine::Vector
 	floater->SetSpinSpeed(param_.spinSpeed);
 	const CalyxEngine::Vector3 center = GetWorldTransform().translation;
 	floater->SetBounds(center, param_.spawnRadius);
+	floater->SetFieldLimits(fieldMinX_, fieldZLimit_);
 
 	auto& wt = floater->GetWorldTransform();
 	wt.Update();
@@ -71,6 +73,18 @@ std::shared_ptr<Floater> FloaterManager::CreateChained(const CalyxEngine::Vector
 void FloaterManager::Spawn(int count) {
 
 	const CalyxEngine::Vector3 center = GetWorldTransform().translation;
+
+	CalyxEngine::Vector3 keepOutCenter = center;
+	float keepOut = 0.0f;
+	if (auto* ctx = SceneContext::Current()) {
+		if (auto player = ctx->FindFirst<Player>()) {
+			keepOutCenter = player->GetWorldTransform().translation;
+			keepOut = param_.spawnKeepOut * stageScale_;
+			if (keepOut > 15.0f) {
+				keepOut = 15.0f;
+			}
+		}
+	}
 
 	for (int i = 0; i < count; i++) {
 
@@ -85,18 +99,28 @@ void FloaterManager::Spawn(int count) {
 		floater->SetDriftSpeed(param_.driftSpeed);
 		floater->SetSpinSpeed(param_.spinSpeed);
 		floater->SetBounds(center, param_.spawnRadius);
+		floater->SetFieldLimits(fieldMinX_, fieldZLimit_);
 		floater->SetStageScale(stageScale_);
 		floater->ApplyStageScale();
 
 		auto& wt = floater->GetWorldTransform();
-		const float angle = Random::Generate(0.0f, CalyxEngine::kTwoPi);
-		const float radius = param_.spawnRadius * std::sqrtf(Random::Generate(0.0f, 1.0f));
-		wt.translation = {
-			center.x + std::sinf(angle) * radius,
-			center.y,
-			center.z + std::cosf(angle) * radius
-		};
+		CalyxEngine::Vector3 pos{};
+		for (int tries = 0; tries < 8; tries++) {
+			const float angle = Random::Generate(0.0f, CalyxEngine::kTwoPi);
+			const float radius = param_.spawnRadius * std::sqrtf(Random::Generate(0.0f, 1.0f));
+			pos = { center.x + std::sinf(angle) * radius, center.y, center.z + std::cosf(angle) * radius };
+
+			const float dx = pos.x - keepOutCenter.x;
+			const float dz = pos.z - keepOutCenter.z;
+			if ((dx * dx + dz * dz) >= keepOut * keepOut) {
+				break;              // 十分離れた
+			}
+		}
+		wt.translation = pos;
 		wt.Update();
+
+		// 座標を入れ終えてから。範囲外に湧いた個体はここで中心へ向く
+		floater->BeginDrift();
 
 		floaters_.push_back(std::move(floater));
 	}

@@ -36,7 +36,7 @@ void ResultManager::Update(float dt) {
         return;
     }
     UpdatePlanetTouchState();
-    UpdateResultUi();
+    UpdateResultUi(dt);
     UpdateDistanceUi();
 }
 
@@ -76,37 +76,41 @@ void ResultManager::InitializeActor() {
 
 void ResultManager::InitializeResultUi() {
 
-    resultColorSprite_ =
+    resultClearSprite_ =
         SceneAPI::Instantiate<UiSprite>("Textures/white1x1.dds");
 
-    if (!resultColorSprite_) {
+    if (!resultClearSprite_) {
         return;
     }
 
-    resultColorSprite_->SetAnchor({ 0.5f, 0.5f });
-    resultColorSprite_->SetPositionPx(640.0f, 250.0f);
-    resultColorSprite_->SetSizePx(180.0f, 90.0f);
-    resultColorSprite_->SetOrderInLayer(1000);
-    resultColorSprite_->SetVisible(false);
+    resultClearSprite_->SetAnchor({ 0.5f, 0.5f });
+    resultClearSprite_->SetPositionPx(640.0f, 250.0f);
+    resultClearSprite_->SetSizePx(300.0f, 150.0f);
+    resultClearSprite_->SetOrderInLayer(1000);
+    resultClearSprite_->SetVisible(false);
 }
 
-void ResultManager::UpdateResultUi() {
+void ResultManager::UpdateResultUi(float dt) {
 
-    if (!resultColorSprite_) {
+    if (!resultClearSprite_) {
         return;
     }
 
     // 結果が確定してからCLEAR / GAMEOVERを表示する。
-    resultColorSprite_->SetVisible(resultFixed_);
+    resultClearSprite_->SetVisible(resultFixed_);
 
     if (!resultFixed_) {
         return;
+    } else {
+        clearAlpha_ += dt;
+		clearAlpha_ = std::clamp(clearAlpha_, 0.0f, 1.0f);
+		resultClearSprite_->SetColorRGBA(1.0f, 1.0f, 1.0f, clearAlpha_);
     }
 
     if (isClear_) {
-        resultColorSprite_->SetTexture("Textures/Result/clear.png");
+        resultClearSprite_->SetTexture("Textures/Result/clear.png");
     } else {
-        resultColorSprite_->SetTexture("Textures/Result/gameover.png");
+        resultClearSprite_->SetTexture("Textures/Result/gameover.png");
     }
 }
 
@@ -327,9 +331,8 @@ void ResultManager::UpdatePlanetTouchState() {
 
     // 現在の最上位Stageを初クリアした時だけ、次のStageを解放する。
     // 一度++されると stageIndex != stageClearCount になるので連続加算されない。
-    if (isClear_ &&
-        ResultCarry::stageIndex == ResultCarry::stageClearCount) {
-
+    if (!addIndex_ && isClear_ && ResultCarry::stageIndex == ResultCarry::stageClearCount) {
+		addIndex_ = true;
         ++ResultCarry::stageClearCount;
     }
 }

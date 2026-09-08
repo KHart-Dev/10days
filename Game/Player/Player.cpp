@@ -503,7 +503,7 @@ void Player::RestoreChainStep(float dt) {
 	floater->SetStageScale(stageScale_);
 	floater->ApplyStageScale();
 
-	GameAudio::PlaySe(GameAudio::kSeResultCount,0.5f);
+	GameAudio::PlaySe(GameAudio::kSeResultCount,0.6f);
 
 	Member member{};
 	static_cast<ChainMemberData&>(member) = data;

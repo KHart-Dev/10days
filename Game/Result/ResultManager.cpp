@@ -116,7 +116,7 @@ void ResultManager::UpdateResultUi(float dt) {
     } else {
         resultClearSprite_->SetTexture("Textures/Result/gameover.png");
         if (!isResultOnce_) return;
-        GameAudio::PlaySe(GameAudio::kSeGameover);
+        GameAudio::PlaySe(GameAudio::kSeGameover,0.3f);
         isResultOnce_ = false;
     }
 }

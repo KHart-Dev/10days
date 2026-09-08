@@ -22,7 +22,7 @@ namespace ResultCarry {
 
 	inline void Clear() {
 		chain.clear();
-		stageIndex = 4;
+		stageIndex = 0;
 	}
 
 };

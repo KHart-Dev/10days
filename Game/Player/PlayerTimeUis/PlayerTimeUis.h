@@ -56,6 +56,8 @@ private:
 
 	// カウントの時間
 	float countTime_ = 0.0f;
+	// 拡縮時間
+	float numberPulseTimer_ = 0.0f;
 
 	bool Initialize_ = false;
 

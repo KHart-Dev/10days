@@ -115,6 +115,33 @@ void PlayerTimeUis::Update(float dt) {
 			}
 		}
 
+		const CalyxEngine::Vector3 baseScale{ 0.5f, 0.9f, 1.0f };
+
+		if (countTime_ > 0.0f && countTime_ <= 3.0f) {
+			numberPulseTimer_ += dt;
+
+			const float pulse = (std::sin(numberPulseTimer_ * 10.0f) + 1.0f) * 0.5f;
+			const float scaleRate = 1.0f + pulse * 0.4f;
+
+			for (auto& numberUi : numberUis_) {
+				if (numberUi) {
+					numberUi->SetScale({
+						baseScale.x * scaleRate,
+						baseScale.y * scaleRate,
+						baseScale.z
+						});
+				}
+			}
+		} else {
+			numberPulseTimer_ = 0.0f;
+
+			for (auto& numberUi : numberUis_) {
+				if (numberUi) {
+					numberUi->SetScale(baseScale);
+				}
+			}
+		}
+
 		Actor::Update(dt);
 	}
 }

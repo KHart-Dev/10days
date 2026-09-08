@@ -18,8 +18,6 @@ namespace {
 }
 
 Obstacle::Obstacle() :Actor("plane.obj", "Obstacle") {
-
-	param_.LoadParams();
 	SetTexture("Textures/Obstacle/block.png");
 
 	// plane.obj is authored on XY. Lay it on XZ for the pseudo-2D obstacle.
@@ -34,6 +32,8 @@ void Obstacle::Initialize() noexcept {
 	if (IsTransient()) {
 		return;
 	}
+	param_.ownerGuid_ = GetGuid();
+	param_.LoadParams();
 
 	// Serialized scene transforms can overwrite the constructor default.
 	worldTransform_.eulerRotation.x = std::numbers::pi_v<float> * 0.5f;
@@ -225,5 +225,5 @@ Obstacle::ObstacleParam::ObstacleParam() {
 //		パス
 /////////////////////////////////////////////////////////////////////////////////
 CalyxEngine::ParamPath Obstacle::ObstacleParam::GetParamPath() const {
-	return { CalyxEngine::ParamDomain::Game, "Obstacle","Actor" };
+	return { CalyxEngine::ParamDomain::Game, ownerGuid_.ToString(),"Actor/Obstacle" };
 }

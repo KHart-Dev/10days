@@ -77,6 +77,15 @@ void Meteorite::Update(float dt) {
 	}
 
 	Actor::Update(dt);
+
+	if (firstUpdate_) {
+		if (Collider* collider = GetCollider()) {
+			ColliderConfig config = collider->ExtractConfig();
+			config.isCollisionEnabled = true;
+			collider->ApplyConfig(config);
+		}
+		firstUpdate_ = false;
+	}
 }
 
 void Meteorite::Launch(const CalyxEngine::Vector3& velocity, float colliderRadius, float spinSpeed) {
@@ -133,6 +142,7 @@ void Meteorite::SetupCollider(float radius) {
 		config.radius = radius;
 		// 押し返さず、当たったことだけ伝える
 		config.isTrigger = true;
+		config.isCollisionEnabled = false;
 		collider->ApplyConfig(config);
 	}
 

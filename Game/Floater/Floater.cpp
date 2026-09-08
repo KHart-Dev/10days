@@ -32,6 +32,9 @@ namespace {
 	constexpr float kBreakCooltime = 2.0f;
 	constexpr float kBreakSpeedScale = 4.0f;
 	constexpr float kBreakBlinkCycle = 0.12f;
+	// 範囲外に湧いた個体が合流するまでの倍率。遠くても10秒弱で中心へ着く
+	constexpr float kEnterSpeedScale = 3.0f;
+	constexpr float kEnterAimSpread = 0.4f;
 
 	void RequestBreakCameraShake() {
 		auto* context = SceneContext::Current();
@@ -155,7 +158,8 @@ CalyxEngine::Vector3 Floater::GetHandWorld(int hand) const {
 
 bool Floater::CanConnect() const {
 	bool result = true;
-	if (IsChained() || breakedCooltime_ > 0.0f) {
+	// entering_ は範囲の縁に着いた時点で落ちるので、壁越しに掴まれるのだけを防ぐ
+	if (IsChained() || breakedCooltime_ > 0.0f || entering_) {
 		result = false;
 	}
 	return result;
@@ -248,17 +252,47 @@ void Floater::Drift(float dt) {
 		const float t = std::clamp(breakedCooltime_ / kBreakCooltime, 0.0f, 1.0f);
 		dSpeed *= 1.0f + (kBreakSpeedScale - 1.0f) * t;
 	}
+	if (entering_) {
+		dSpeed *= kEnterSpeedScale;
+	}
 	wt.translation = wt.translation + driftDir_ * (dSpeed * dt);
 	wt.translation.y = 0.5f;
 	wt.eulerRotation.y += spinRate_ * spinSpeed_ * dt;
 
-	BounceOnEdge();
+	// 範囲へ入るまでは壁で跳ね返さない。跳ね返すと外側に貼り付いたまま入れなくなる。
+	// 判定は移動した後に置く。移動前だと、まだ外に居るのに BounceOnEdge が走る
+	if (entering_) {
+		if (IsInsideField()) {
+			entering_ = false;
+		}
+	} else {
+		BounceOnEdge();
+	}
 
 	wt.Update();
 }
 
 void Floater::BounceOnEdge() {
 	auto& wt = GetWorldTransform();
+
+	if (wt.translation.x < fieldMinX_) {
+		wt.translation.x = fieldMinX_;
+		if (driftDir_.x < 0.0f) {
+			driftDir_.x = -driftDir_.x;
+		}
+	}
+
+	if (wt.translation.z > fieldZLimit_) {
+		wt.translation.z = fieldZLimit_;
+		if (driftDir_.z > 0.0f) {
+			driftDir_.z = -driftDir_.z;
+		}
+	} else if (wt.translation.z < -fieldZLimit_) {
+		wt.translation.z = -fieldZLimit_;
+		if (driftDir_.z < 0.0f) {
+			driftDir_.z = -driftDir_.z;
+		}
+	}
 
 	const float x = wt.translation.x - boundsCenter_.x;
 	const float z = wt.translation.z - boundsCenter_.z;
@@ -282,6 +316,46 @@ void Floater::BounceOnEdge() {
 
 	wt.translation.x = boundsCenter_.x + nx * boundsRadius_;
 	wt.translation.z = boundsCenter_.z + nz * boundsRadius_;
+}
+
+bool Floater::IsInsideField() const {
+	const auto& wt = GetWorldTransform();
+
+	if (wt.translation.x < fieldMinX_) {
+		return false;
+	}
+	if (std::abs(wt.translation.z) > fieldZLimit_) {
+		return false;
+	}
+
+	const float x = wt.translation.x - boundsCenter_.x;
+	const float z = wt.translation.z - boundsCenter_.z;
+	return (x * x + z * z) <= (boundsRadius_ * boundsRadius_);
+}
+
+void Floater::BeginDrift() {
+
+	entering_ = !IsInsideField();
+	if (!entering_) {
+		return;
+	}
+
+	const float aimAngle = Random::Generate(0.0f, kEnterAimSpread);
+	const float aimRadius = boundsRadius_ * kEnterAimSpread * std::sqrtf(Random::Generate(0.0f, 1.0f));
+
+	CalyxEngine::Vector3 aim = boundsCenter_;
+	aim.x += std::sinf(aimAngle) * aimRadius;
+	aim.z += std::cosf(aimAngle) * aimRadius;
+
+	// 範囲外なら、漂う向きを捨てて中心へ向け直す
+	CalyxEngine::Vector3 toCenter = aim - GetWorldTransform().translation;
+	toCenter.y = 0.0f;
+	if (toCenter.LengthSquared() <= 0.0f) {
+		entering_ = false;
+		return;
+	}
+
+	driftDir_ = toCenter.Normalize();
 }
 
 void Floater::ApplyChainedLook() {

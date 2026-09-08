@@ -171,6 +171,8 @@ void Player::Initialize() {
 
 	if (auto manager = floaterManager_.Resolve()) {
 		manager->SetStageScale(stageScale_);
+		// 湧きは manager の初回 Update なので、ここで渡せば間に合う
+		manager->SetFieldLimits(param_.fieldMinX, param_.fieldZLimit);
 	}
 
 	ResultCarry::stageScale = stageScale_;
@@ -521,8 +523,8 @@ void Player::ClampToField() {
 	const float limit = manager->GetFieldHalfSize() - param_.fieldMargin;
 	auto& wt = GetWorldTransform();
 
-	if (wt.translation.x <= -20.0f) {
-		wt.translation.x = -20.0f;
+	if (wt.translation.x <= param_.fieldMinX) {
+		wt.translation.x = param_.fieldMinX;
 	}
 	wt.translation.z = std::clamp(wt.translation.z, -param_.fieldZLimit, param_.fieldZLimit);
 	if (limit <= 0.0f) {

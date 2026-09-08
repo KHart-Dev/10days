@@ -25,6 +25,15 @@ public:
 		boundsRadius_ = radius;
 	}
 
+	/// <summary>Player と同じ壁の値を受け取る</summary>
+	void SetFieldLimits(float minX, float zLimit) {
+		fieldMinX_ = minX;
+		fieldZLimit_ = zLimit;
+	}
+
+	/// <summary>湧かせた座標を入れ終えてから呼ぶ。範囲外なら中心へ向かう状態で始まる</summary>
+	void BeginDrift();
+
 	float GetYaw() const;
 	CalyxEngine::Vector3 GetArmWorld(int hand) const; // 中心から手へのベクトル
 	CalyxEngine::Vector3 GetHandWorld(int hand) const; // 手のワールド座標
@@ -56,6 +65,7 @@ private:
 
 	void Drift(float dt);
 	void BounceOnEdge();
+	bool IsInsideField() const;
 
 	void ApplyChainedLook();
 
@@ -71,8 +81,16 @@ private:
 	float breakedCooltime_ = 0.0f; // 壊れた後、すぐに繋がらないように
 	int connectedHand_ = -1;
 
+	// 範囲外に湧いた個体が、範囲へ入るまでの間だけ立つ。
+	// 立っている間は壁で跳ね返さず、代わりに中心へ向かって加速する
+	bool entering_ = false;
+
 	CalyxEngine::Vector3 boundsCenter_{};
 	float boundsRadius_ = 30.0f;
+
+	// Player の ClampToField と同じ壁。Player から FloaterManager 経由で入る
+	float fieldMinX_ = -20.0f;
+	float fieldZLimit_ = 18.0f;
 
 	float stageScale_ = 1.0f;
 

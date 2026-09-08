@@ -44,6 +44,7 @@ private:
 	float boundsRadius_ = 60.0f;
 
 	bool dead_ = false;
+	bool firstUpdate_ = true;
 
 	CalyxEngine::EffectAsset moveEffect_;
 	CalyxEngine::EffectAsset hitEffect_;

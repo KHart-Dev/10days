@@ -10,6 +10,7 @@
 #include <Game/Meteorite/InResult/MeteoriteDirector.h>
 #include <Game/Floater/BodyNode.h>
 #include <Game/UI/UiSprite.h>
+#include <Game/Audio/GameAudio.h>
 
 #include <algorithm>
 #include <cmath>

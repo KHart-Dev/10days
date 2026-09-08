@@ -14,11 +14,6 @@
 
 class UiSprite;
 class SpriteRenderer;
-class PipelineService;
-class LightLibrary;
-class ModelRenderer;
-class Camera3d;
-class WorldTransform;
 
 CALYX_OBJECT(
     Category = GameObject,
@@ -35,8 +30,6 @@ public:
     void Initialize() override;
     void Update(float dt) override;
     void SubmitSprites(SpriteRenderer& renderer) const override;
-    void DrawOverlay3D(ID3D12GraphicsCommandList* cmd, PipelineService* pso,
-        LightLibrary* lightLibrary) override;
 
     void Open();
     void Close();
@@ -279,9 +272,6 @@ private:
     std::shared_ptr<UiSprite> rightArrow_;
     std::array<SpriteMotion, static_cast<size_t>(CornerIndex::Count)> corners_{};
 
-    std::unique_ptr<ModelRenderer> previewRenderer_;
-    std::unique_ptr<Camera3d> previewCamera_;
-    std::unique_ptr<WorldTransform> previewTransform_;
     bool previewVisible_ = false;
     float previewScale_ = 0.0f;
     float previewRotationY_ = 0.0f;

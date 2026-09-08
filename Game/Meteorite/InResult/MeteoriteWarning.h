@@ -69,6 +69,8 @@ private:
 	float timer_ = 0.0f;
 	int   blinkedCount_ = 0;
 
+	bool wasVisible_ = false;
+
 	std::shared_ptr<FallingMeteorite> meteorite_;
 
 public:

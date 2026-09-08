@@ -97,6 +97,16 @@ private:
 
     float planetRadius_ = 16.0f;
 
+    // 人間橋の距離計算
+    float bridgeMinHandX_ = 0.0f;
+    float bridgeMaxHandX_ = 0.0f;
+    // Resultシーン上での実際の手のX距離
+    float bridgeWorldDistance_ = 0.0f;
+    // stageClearDirection基準へ変換した距離
+    float bridgeConvertedDistance_ = 0.0f;
+    // 左右Planetの内側同士の距離
+    float planetEffectiveDistance_ = 0.0f;
+
     bool initialized_ = false;
 
     // Playerの復元と隕石落下が完了し、結果を確定できる状態

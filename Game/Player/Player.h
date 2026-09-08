@@ -265,4 +265,12 @@ public:
 		const CalyxEngine::Vector3& center,
 		float radius) const;
 
+	// 接続中Floaterの全ての手から、X座標の最小値と最大値を取得する。
+	// 接続中Floaterが1人もいない場合はfalse。
+	bool GetConnectedFloaterHandXRange(
+		float& minX,
+		float& maxX) const;
+
+	// 接続中Floaterの手のX方向の最大距離
+	float GetConnectedFloaterHandXDistance() const;
 };

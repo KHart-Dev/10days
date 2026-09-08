@@ -6,6 +6,7 @@
 
 // game
 #include "FallingMeteorite.h"
+#include <Game/Audio/GameAudio.h>
 
 // std
 #include <numbers>
@@ -32,7 +33,7 @@ void MeteoriteWarning::Initialize() {
 	// Actor::Update を呼ぶ以上、切らないと置いた場所から落ちていく
 	DisableGravity();
 
-	SetTexture("Textures/circle/groundPrediction.png");
+	SetTexture("Textures/meteo/attention.png");
 
 	// phase_ たちはメンバ初期化子で既定値が入っている。
 	// ここで入れ直すと、Initialize より先に Start() が来たときに号令を潰す
@@ -91,7 +92,12 @@ void MeteoriteWarning::UpdateBlinking(float dt) {
 	timer_ += dt;
 
 	// 1周期の前半だけ見せる
-	SetDrawEnable(timer_ < settings_.blinkPeriod * 0.5f);
+	const bool nowVisible = timer_ < settings_.blinkPeriod * 0.5f;
+	SetDrawEnable(nowVisible);
+	if (nowVisible && !wasVisible_) {
+		GameAudio::PlaySe(GameAudio::kSeDanger);
+	}
+	wasVisible_ = nowVisible;
 
 	if (timer_ < settings_.blinkPeriod) {
 		return;
@@ -138,6 +144,7 @@ void MeteoriteWarning::DropMeteorite() {
 					settings_.impactHold);
 
 	meteorite_ = std::move(meteorite);
+	GameAudio::PlaySe(GameAudio::kSeMeteo);
 }
 
 void MeteoriteWarning::DisableGravity() {

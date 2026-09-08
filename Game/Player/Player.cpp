@@ -176,6 +176,7 @@ void Player::Initialize() {
 	}
 
 	ResultCarry::stageScale = stageScale_;
+	ResultCarry::stageClearDirection = stageClearLength_;
 
 	isResultChain_ = false;
 }
@@ -468,6 +469,7 @@ bool Player::BeginRestoreChain() {
 }
 
 void Player::RestoreChainStep(float dt) {
+
 	// 全員出し終わっている
 	if (resultRestoreIndex_ >= ResultCarry::chain.size()) {
 		isResultChain_ = true;
@@ -508,6 +510,41 @@ void Player::RestoreChainStep(float dt) {
 	member.floater = floater;
 
 	chain_.push_back(std::move(member));
+
+	// =========================================
+	// 追加したFloaterのTransformを確定
+	// =========================================
+	ApplyChainTransforms();
+
+	// =========================================
+	// 手を繋いだ位置にエフェクトを出す
+	// =========================================
+
+	if (data.parent >= 0 &&
+		static_cast<size_t>(data.parent) < chain_.size() &&
+		data.parentHand >= 0 &&
+		data.parentHand < BodyNode::kHandCount) {
+
+		const auto& playerWt =
+			GetWorldTransform();
+
+		const Member& parent =
+			chain_[data.parent];
+
+		// ゲーム中のHandAnchor::posと同じ計算
+		const CalyxEngine::Vector3 connectPos =
+			playerWt.translation +
+			BodyNode::RotateY(
+				parent.handLocal[data.parentHand],
+				playerWt.eulerRotation.y
+			);
+
+		HandConnectHandle_ =
+			EffectAPI::Play(
+				HandConnectEffect_,
+				connectPos
+			);
+	}
 
 	// 次のFloaterへ
 	resultRestoreIndex_++;

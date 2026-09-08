@@ -78,6 +78,9 @@ private:
     std::shared_ptr<UiSprite> resultClearSprite_;
 	float clearAlpha_ = 0.0f;
 
+    std::shared_ptr<UiSprite> resultGameOverSprite_;
+	float gameOverTime_ = 0.0f;
+
     // Distance UIは2D UiSpriteで描画する。
     // 上段: 目標距離 / 下段: 実際の人間橋距離
     std::array<std::shared_ptr<UiSprite>, 2> targetDistanceSprites_{};
@@ -93,7 +96,7 @@ private:
     float distanceDigitWidth_ = 54.0f;
     float distanceDigitHeight_ = 108.0f;
     float distanceDigitSpacing_ = 58.0f;
-    int distanceUiOrderInLayer_ = 1100;
+    int distanceUiOrderInLayer_ = 900;
 
     float planetRadius_ = 16.0f;
 

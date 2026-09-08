@@ -88,6 +88,20 @@ void ResultManager::InitializeResultUi() {
     resultClearSprite_->SetSizePx(300.0f, 150.0f);
     resultClearSprite_->SetOrderInLayer(1000);
     resultClearSprite_->SetVisible(false);
+
+    resultGameOverSprite_ = 
+		SceneAPI::Instantiate<UiSprite>("Textures/white1x1.dds");
+
+    if (!resultGameOverSprite_) {
+        return;
+    }
+
+    resultGameOverSprite_->SetAnchor({ 0.5f, 0.5f });
+    resultGameOverSprite_->SetPositionPx(800.0f, 577.0f);
+    resultGameOverSprite_->SetSizePx(300.0f, 180.0f);
+    resultGameOverSprite_->SetOrderInLayer(1000);
+    resultGameOverSprite_->SetVisible(false);
+    resultGameOverSprite_->SetRotationDeg(-15.0f);
 }
 
 void ResultManager::UpdateResultUi(float dt) {
@@ -105,12 +119,29 @@ void ResultManager::UpdateResultUi(float dt) {
         clearAlpha_ += dt;
 		clearAlpha_ = std::clamp(clearAlpha_, 0.0f, 1.0f);
 		resultClearSprite_->SetColorRGBA(1.0f, 1.0f, 1.0f, clearAlpha_);
+
+		bool isClearDirection = ResultCarry::stageClearDirection < bridgeConvertedDistance_;
+        if (!isClear_ && isClearDirection) {
+            gameOverTime_ += dt;
+            gameOverTime_ = std::clamp(gameOverTime_, 0.0f, 1.0f);
+            resultGameOverSprite_->SetColorRGBA(1.0f, 1.0f, 1.0f, gameOverTime_);
+            float scale = (1.0f - gameOverTime_) * 5.0f + gameOverTime_;
+            resultGameOverSprite_->SetSizePx(300.0f * scale, 180.0f * scale);
+            resultGameOverSprite_->SetVisible(resultFixed_);
+        }
     }
 
     if (isClear_) {
         resultClearSprite_->SetTexture("Textures/Result/clear.png");
     } else {
         resultClearSprite_->SetTexture("Textures/Result/gameover.png");
+        if (!planetTouched_[0] && !planetTouched_[1]) {
+            resultGameOverSprite_->SetTexture("Textures/Result/bothGameover.png");
+        } else if (!planetTouched_[0]) {
+            resultGameOverSprite_->SetTexture("Textures/Result/leftGameover.png");
+        } else if (!planetTouched_[1]) {
+            resultGameOverSprite_->SetTexture("Textures/Result/rightGameover.png");
+        }
     }
 }
 

@@ -106,6 +106,10 @@ private:
 				.Category("Movement")
 				.Tooltip("繋いだ人数ぶんの重さ。回転が遅くなる");
 
+			AddField("moveSpeedScaleGain", moveSpeedScaleGain)
+				.Category("Movement")
+				.Tooltip("繋いだ人数ぶんの重さ。回転が遅くなる");
+
 			AddField("grabRadius", grabRadius)
 				.Category("Connect")
 				.Tooltip("手を繋ぐ半径");
@@ -169,6 +173,7 @@ private:
 		float rotSpeedDeg = 180.0f;
 		float yawAcceleration = 10.0f;
 		float heaviness = 0.10f;
+		float moveSpeedScaleGain = 0.2f;
 
 		float grabRadius = 1.2f;
 		float armSeparation = 60.0f;

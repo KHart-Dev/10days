@@ -41,10 +41,10 @@ void FallingMeteorite::Update(float dt) {
 	{
 		auto& wt = GetWorldTransform();
 		wt.translation.y -= fallSpeed_ * dt;
+		EnableCollider(true);
 
 		if (wt.translation.y <= impactPos_.y) {
 			wt.translation = impactPos_;
-			EnableCollider(true);
 			timer_ = 0.0f;
 			phase_ = Phase::Impact;
 		}
@@ -52,15 +52,25 @@ void FallingMeteorite::Update(float dt) {
 		break;
 	}
 	case Phase::Impact:
+	{
+		auto& wt = GetWorldTransform();
+		wt.translation.y -= fallSpeed_ * dt;
+
 		timer_ += dt;
 		if (timer_ >= impactHold_) {
-			EnableCollider(false);
 			phase_ = Phase::Done;
 		}
 		break;
-
+	}
 	case Phase::Idle:
 	case Phase::Done:
+	{
+		auto& wt = GetWorldTransform();
+		EnableCollider(false);
+		if (wt.translation.y > -200.0f) {
+			wt.translation.y -= fallSpeed_ * dt;
+		}
+	}
 	default:
 		break;
 	}

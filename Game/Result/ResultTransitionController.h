@@ -51,6 +51,6 @@ private:
     // シーン遷移の二重実行防止
     bool transitionRequested_ = false;
 
-    // Stage0 ～ Stage4
-    static constexpr int kLastStageIndex_ = 4;
+    // Stage0 ～ Stage5
+    static constexpr int kLastStageIndex_ = 5;
 };

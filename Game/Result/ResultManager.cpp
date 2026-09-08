@@ -10,6 +10,7 @@
 #include <Game/Meteorite/InResult/MeteoriteDirector.h>
 #include <Game/Floater/BodyNode.h>
 #include <Game/UI/UiSprite.h>
+#include <Game/Audio/GameAudio.h>
 
 #include <algorithm>
 #include <cmath>
@@ -133,6 +134,9 @@ void ResultManager::UpdateResultUi(float dt) {
 
     if (isClear_) {
         resultClearSprite_->SetTexture("Textures/Result/clear.png");
+        if (!isResultOnce_) return;
+        GameAudio::PlaySe(GameAudio::kSeClear);
+        isResultOnce_ = false;
     } else {
         resultClearSprite_->SetTexture("Textures/Result/gameover.png");
         if (!planetTouched_[0] && !planetTouched_[1]) {
@@ -142,6 +146,9 @@ void ResultManager::UpdateResultUi(float dt) {
         } else if (!planetTouched_[1]) {
             resultGameOverSprite_->SetTexture("Textures/Result/rightGameover.png");
         }
+        if (!isResultOnce_) return;
+        GameAudio::PlaySe(GameAudio::kSeGameover,0.5f);
+        isResultOnce_ = false;
     }
 }
 

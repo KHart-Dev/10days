@@ -8,9 +8,7 @@
 #include "UI/Panels/InspectorPanel.h"
 #include <Engine/Objects/Transform/Transform.h>
 #include <Engine/Graphics/Camera/3d/Camera3d.h>
-#include <Engine/Graphics/Context/GraphicsGroup.h>
-#include <Engine/Renderer/Model/ModelRenderer.h>
-#include <Engine/Assets/Model/BaseModel.h>
+#include <Engine/Graphics/Camera/Manager/CameraManager.h>
 
 // game
 #include <Game/Result/ResultCarry.h>
@@ -64,18 +62,7 @@ void OptionManager::Initialize() {
     DisableGravity();
     Actor::SetDrawEnable(false);
     SetCameraDitherEnabled(false);
-
-    previewRenderer_ = std::make_unique<ModelRenderer>();
-    previewRenderer_->SetOverlayMode(true);
-    previewCamera_ = std::make_unique<Camera3d>("OptionPreviewCamera");
-    previewCamera_->GetWorldTransform().Initialize();
-    previewCamera_->SetCamera({ 0.0f, 0.0f, -4.0f }, { 0.0f, 0.0f, 0.0f });
-    previewCamera_->SetAspectRatio(kScreenWidth / kScreenHeight);
-    previewCamera_->AlwaysUpdate(0.0f);
-    previewTransform_ = std::make_unique<WorldTransform>();
-	previewTransform_->Initialize();
-    previewTransform_->scale = { 1.25f, 1.25f, 1.25f };
-    previewTransform_->Update();
+    SetDrawInForeground(true);
 
     InitializeSprites();
     SetAllVisible(false);
@@ -102,6 +89,16 @@ void OptionManager::Update(float dt) {
     const float uiDt = GetUiDeltaTime();
     previewRotationY_ = std::fmod(previewRotationY_ + uiDt * 1.2f, 2.0f * 3.1415926535f);
 
+    // Keep the preview in screen-relative space while using the engine's regular
+    // foreground model pass. This avoids issuing a nested ModelRenderer frame from
+    // inside the sprite pass, which invalidated transient GPU buffers after merges.
+    if (Camera3d* camera = CameraManager::GetMain3d()) {
+        SetTranslate(camera->GetTranslate() + camera->GetForward() * 4.0f);
+    }
+    SetRotate(CalyxEngine::Vector3{ 0.0f, previewRotationY_, 0.0f });
+    const float modelScale = 1.25f * previewScale_;
+    SetScale({ modelScale, modelScale, modelScale });
+
     // 引数dtはゲーム時間。Option表示中は0になる想定なのでUIアニメーションには使わない。
     (void)dt;
 
@@ -117,31 +114,6 @@ void OptionManager::Update(float dt) {
     if (animationState_ == AnimationState::Opened) {
         ApplyAnimation(1.0f);
     }
-}
-
-void OptionManager::DrawOverlay3D(ID3D12GraphicsCommandList* cmd, PipelineService* pso,
-    LightLibrary* lightLibrary) {
-    auto* model = GetStaticModel();
-    if (!previewVisible_ || !previewRenderer_ || !previewCamera_ ||
-        !previewTransform_ || !model || !cmd || !pso || !lightLibrary) {
-        return;
-    }
-
-    previewTransform_->scale = { 1.25f * previewScale_, 1.25f * previewScale_, 1.25f * previewScale_ };
-    previewTransform_->eulerRotation.y = previewRotationY_;
-    previewTransform_->rotationSource = RotationSource::Euler;
-    previewTransform_->Update();
-    previewCamera_->AlwaysUpdate(0.0f);
-
-    const bool wasDrawEnabled = model->GetIsDrawEnable();
-    model->SetIsDrawEnable(true);
-    previewRenderer_->BeginFrame();
-    previewRenderer_->RegisterStatic(model, *previewTransform_, BillboardMode::None, this);
-    previewRenderer_->BuildAllVisibleBatches();
-    previewRenderer_->DrawAll(cmd, GraphicsGroup::GetInstance()->GetDevice().Get(), nullptr,
-        pso, lightLibrary, nullptr,
-        ModelRenderPhase::All, previewCamera_.get());
-    model->SetIsDrawEnable(wasDrawEnabled);
 }
 
 void OptionManager::SubmitSprites(SpriteRenderer&) const {}
@@ -497,6 +469,7 @@ void OptionManager::UpdateAnimation(float dt) {
 void OptionManager::SetAllVisible(bool visible) {
 
     previewVisible_ = visible;
+    Actor::SetDrawEnable(visible);
     if (optionPanel_) {
         optionPanel_->SetVisible(visible);
     }

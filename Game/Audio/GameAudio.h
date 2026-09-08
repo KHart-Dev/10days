@@ -32,11 +32,11 @@ namespace GameAudio {
 	inline constexpr const char* kSeStart = "startSE.mp3";
 
 	// リザルトSE
-	inline constexpr const char* kSeResultCount = "resultCountSE.mp3"; // まだ
-	inline constexpr const char* kSeClear = "clearSE.mp3"; // まだ
-	inline constexpr const char* kSeGameover = "gameoverSE.mp3"; // まだ
-	inline constexpr const char* kSeDanger = "dangerSE.mp3"; // まだ
-	inline constexpr const char* kSeMeteo = "meteoSE.mp3"; // まだ
+	inline constexpr const char* kSeResultCount = "resultCountSE.mp3";
+	inline constexpr const char* kSeClear = "clearSE.mp3";
+	inline constexpr const char* kSeGameover = "gameoverSE.mp3";
+	inline constexpr const char* kSeDanger = "dangerSE.mp3";
+	inline constexpr const char* kSeMeteo = "meteoSE.mp3";
 
 	// 既定音量
 	inline constexpr float kBgmVolume = 0.15f;

@@ -117,4 +117,6 @@ private:
 
     bool isClear_ = false;
     bool addIndex_ = false;
+
+    bool isResultOnce_ = true;
 };

@@ -67,6 +67,8 @@ private:
 
 			AddField("playBgmOnStart", playBgmOnStart)
 				.Category("Spawner");
+			AddField("spawnKeepOut", spawnKeepOut)
+				.Category("Spawner");
 		}
 
 		Guid ownerGuid_;
@@ -78,6 +80,7 @@ private:
 		float spawnRadius = 30.0f;
 		float driftSpeed = 1.2f;
 		float spinSpeed = 1.2f;
+		float spawnKeepOut = 5.0f;
 		
 		bool playBgmOnStart = true;
 	};

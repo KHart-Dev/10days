@@ -62,6 +62,7 @@ private:
 	struct ObstacleParam
 		: public CalyxEngine::SerializableObject {
 		ObstacleParam();
+		Guid ownerGuid_;
 		CalyxEngine::ParamPath GetParamPath() const override;
 
 		CalyxEngine::Vector2 size_{ 1.0f,1.0f };		//< 5でサイズ1 サイズ１ごとに棘が増える

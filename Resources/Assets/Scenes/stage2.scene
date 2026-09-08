@@ -78,10 +78,10 @@
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.8402285575866699,
-                    "x": 0.5420024394989014,
-                    "y": -0.013269028626382351,
-                    "z": 0.008559392765164375
+                    "w": 7.549790126404332e-08,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
                 },
                 "scale": {
                     "x": 1.0,
@@ -89,9 +89,9 @@
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 5.907438278198242,
-                    "y": 24.25141716003418,
-                    "z": -5.949426174163818
+                    "x": -8.74227794156468e-07,
+                    "y": 0.5,
+                    "z": 10.0
                 }
             },
             "type": "DebugCamera"
@@ -103,7 +103,7 @@
                 "resultMode": false,
                 "rotSpeedDeg": 250.0,
                 "stageClearLength": 5.0,
-                "stageScale": 1.0,
+                "stageScale": 2.0,
                 "yawAcceleration": 5.0
             },
             "cameraDitherEnabled": false,
@@ -126,9 +126,9 @@
                     "z": 0.0
                 },
                 "size": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
+                    "x": 2.0,
+                    "y": 2.0,
+                    "z": 2.0
                 }
             },
             "colliderKind": 1,
@@ -176,9 +176,9 @@
                     "z": -0.0005628268118016422
                 },
                 "scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
+                    "x": 2.0,
+                    "y": 2.0,
+                    "z": 2.0
                 },
                 "translation": {
                     "x": -2.8404934406280518,
@@ -1057,6 +1057,94 @@
                 }
             },
             "type": "FloaterManager",
+            "visualOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "cameraDitherEnabled": false,
+            "colliderConfig": {
+                "capsuleHeight": 2.0,
+                "capsuleRadius": 0.5,
+                "isCollisionEnabled": true,
+                "isDraw": true,
+                "isTrigger": false,
+                "layerId": 0,
+                "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius": 1.0,
+                "rotate": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "size": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            },
+            "colliderKind": 0,
+            "guid": "864a8c96-050c-44f6-834a-ce94aec295dc",
+            "modelConfig": {
+                "blendMode": 0,
+                "materialGuid": "00000000-0000-0000-0000-000000000000",
+                "modelName": "cone.obj",
+                "textureGuid": "00000000-0000-0000-0000-000000000000",
+                "uvTransConfig": {
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            "name": "Meteorite Spawner",
+            "objectType": 2,
+            "outlineColor": {
+                "w": 1.0,
+                "x": 0.019999999552965164,
+                "y": 0.019999999552965164,
+                "z": 0.02500000037252903
+            },
+            "outlineEnabled": false,
+            "outlineThickness": 0.03500000014901161,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "physicsBodyConfig": {
+                "bodyType": 1,
+                "enabled": true,
+                "gravityScale": 1.0,
+                "mass": 1.0,
+                "pushbackRatio": 1.0,
+                "useGravity": true
+            },
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 0.0,
+                    "y": 0.5,
+                    "z": 0.0
+                }
+            },
+            "type": "MeteoriteSpawner",
             "visualOffset": {
                 "x": 0.0,
                 "y": 0.0,

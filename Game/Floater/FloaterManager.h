@@ -27,6 +27,12 @@ public:
 
 	void SetStageScale(float scale) { stageScale_ = scale; }
 
+	/// <summary>Player の ClampToField と同じ壁を、湧かせる Floater へ配る</summary>
+	void SetFieldLimits(float minX, float zLimit) {
+		fieldMinX_ = minX;
+		fieldZLimit_ = zLimit;
+	}
+
 	/// <summary>1体を漂う側の管理から外して受け取る</summary>
 	std::shared_ptr<Floater> Detach(const Floater* floater);
 
@@ -92,6 +98,10 @@ private:
 	bool resultMode_ = false;
 
 	float stageScale_ = 1.0f;
+
+	// Player::Initialize から入る。既定値は Player 側のパラメータ既定と揃えてある
+	float fieldMinX_ = -20.0f;
+	float fieldZLimit_ = 18.0f;
 
 public:
 

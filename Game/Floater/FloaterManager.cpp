@@ -62,6 +62,7 @@ std::shared_ptr<Floater> FloaterManager::CreateChained(const CalyxEngine::Vector
 	floater->SetSpinSpeed(param_.spinSpeed);
 	const CalyxEngine::Vector3 center = GetWorldTransform().translation;
 	floater->SetBounds(center, param_.spawnRadius);
+	floater->SetFieldLimits(fieldMinX_, fieldZLimit_);
 
 	auto& wt = floater->GetWorldTransform();
 	wt.Update();
@@ -98,12 +99,11 @@ void FloaterManager::Spawn(int count) {
 		floater->SetDriftSpeed(param_.driftSpeed);
 		floater->SetSpinSpeed(param_.spinSpeed);
 		floater->SetBounds(center, param_.spawnRadius);
+		floater->SetFieldLimits(fieldMinX_, fieldZLimit_);
 		floater->SetStageScale(stageScale_);
 		floater->ApplyStageScale();
 
 		auto& wt = floater->GetWorldTransform();
-		const float angle = Random::Generate(0.0f, CalyxEngine::kTwoPi);
-		const float radius = param_.spawnRadius * std::sqrtf(Random::Generate(0.0f, 1.0f));
 		CalyxEngine::Vector3 pos{};
 		for (int tries = 0; tries < 8; tries++) {
 			const float angle = Random::Generate(0.0f, CalyxEngine::kTwoPi);
@@ -118,6 +118,9 @@ void FloaterManager::Spawn(int count) {
 		}
 		wt.translation = pos;
 		wt.Update();
+
+		// 座標を入れ終えてから。範囲外に湧いた個体はここで中心へ向く
+		floater->BeginDrift();
 
 		floaters_.push_back(std::move(floater));
 	}

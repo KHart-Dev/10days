@@ -136,6 +136,9 @@ private:
 			AddField("fieldYLimit", fieldZLimit)
 				.Category("Movement")
 				.Tooltip("フィールドのZの上限");
+			AddField("fieldMinX", fieldMinX)
+				.Category("Movement")
+				.Tooltip("フィールドのXの下限。Floaterにも同じ値が渡る");
 
 			AddField("controlUiCenterX", controlUiCenterX)
 				.Category("ControlUI")
@@ -177,6 +180,7 @@ private:
 
 		float fieldMargin = 1.0f;
 		float fieldZLimit = 18.0f;
+		float fieldMinX = -20.0f;
 
 		// 操作説明UI。1280x720基準の画面座標で、アンカーは中心
 		float controlUiCenterX = 1090.0f;

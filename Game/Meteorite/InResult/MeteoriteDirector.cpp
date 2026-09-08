@@ -131,7 +131,7 @@ void MeteoriteDirector::LoadStage(int stageIndex) {
 	// 位置の同期は「子 → 配列」の一方向なので、読み込んだ pos[] は生えている
 	// 予告円には伝わらない。一度全部捨てて、次の RebuildWarnings で生成時の
 	// 種付けを通して新しい位置に生え直させる。
-	RebuildWarnings(0);
+	RebuildWarnings(param_.stageIndex_);
 }
 
 bool MeteoriteDirector::IsChainRestored() const {

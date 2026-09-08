@@ -252,7 +252,10 @@ void ResultManager::SetDistanceSpriteValue(
 
 void ResultManager::UpdateDistanceUi() {
 
-    // Inspector等で位置調整値を変えた場合にも毎フレーム反映。
+    // =========================================
+    // UI配置
+    // =========================================
+
     LayoutDistanceSpriteGroup(
         targetDistanceSprites_,
         targetDistanceOnesX_,
@@ -265,12 +268,165 @@ void ResultManager::UpdateDistanceUi() {
         bridgeDistanceCenterY_
     );
 
-    // 上段: ステージの目標距離
+
+    // =========================================
+    // 上段 : ステージの目標距離
+    // =========================================
+
+    const float targetDistance =
+        std::fabs(
+            ResultCarry::stageClearDirection
+        );
+
     SetDistanceSpriteValue(
         targetDistanceSprites_,
         static_cast<int>(
+            std::roundf(targetDistance)
+            )
+    );
+
+
+    // =========================================
+    // 下段 : 実際の人間橋距離
+    // =========================================
+
+    const std::shared_ptr<Player> player =
+        player_.lock();
+
+    if (!player) {
+
+        bridgeMinHandX_ = 0.0f;
+        bridgeMaxHandX_ = 0.0f;
+        bridgeWorldDistance_ = 0.0f;
+        bridgeConvertedDistance_ = 0.0f;
+
+        SetDistanceSpriteValue(
+            bridgeDistanceSprites_,
+            0
+        );
+
+        return;
+    }
+
+
+    // =========================================
+    // 接続中Floaterの手の
+    // 最小X / 最大Xを取得
+    // =========================================
+
+    if (!player->GetConnectedFloaterHandXRange(
+        bridgeMinHandX_,
+        bridgeMaxHandX_)) {
+
+        bridgeWorldDistance_ = 0.0f;
+        bridgeConvertedDistance_ = 0.0f;
+
+        SetDistanceSpriteValue(
+            bridgeDistanceSprites_,
+            0
+        );
+
+        return;
+    }
+
+
+    // =========================================
+    // 手から手までの実際のX距離
+    // =========================================
+
+    bridgeWorldDistance_ =
+        bridgeMaxHandX_ -
+        bridgeMinHandX_;
+
+
+    // =========================================
+    // 左右Planetの有効距離を計算
+    //
+    // Planet中心間距離
+    //   - 左Planet半径
+    //   - 右Planet半径
+    //
+    // つまりPlanetの内側～内側の距離
+    // =========================================
+
+    if (!planets_[0] || !planets_[1]) {
+
+        planetEffectiveDistance_ = 0.0f;
+        bridgeConvertedDistance_ = 0.0f;
+
+        SetDistanceSpriteValue(
+            bridgeDistanceSprites_,
+            0
+        );
+
+        return;
+    }
+
+    const CalyxEngine::Vector3 leftPlanetPos =
+        planets_[0]->
+        GetWorldTransform().
+        GetWorldPosition();
+
+    const CalyxEngine::Vector3 rightPlanetPos =
+        planets_[1]->
+        GetWorldTransform().
+        GetWorldPosition();
+
+
+    const float planetCenterDistance =
+        std::fabs(
+            rightPlanetPos.x -
+            leftPlanetPos.x
+        );
+
+
+    planetEffectiveDistance_ =
+        planetCenterDistance -
+        planetRadius_ * 2.0f;
+
+
+    // 0除算防止
+    if (planetEffectiveDistance_ <= 0.0f) {
+
+        bridgeConvertedDistance_ = 0.0f;
+
+        SetDistanceSpriteValue(
+            bridgeDistanceSprites_,
+            0
+        );
+
+        return;
+    }
+
+
+    // =========================================
+    // Result上の距離を
+    // stageClearDirection基準へ変換
+    //
+    // bridgeWorldDistance
+    // --------------------- × stageClearDirection
+    // planetEffectiveDistance
+    // =========================================
+
+    const float distanceRatio =
+        bridgeWorldDistance_ /
+        planetEffectiveDistance_;
+
+
+    bridgeConvertedDistance_ =
+        distanceRatio *
+        targetDistance;
+
+
+    // =========================================
+    // 青い数字へ表示
+    // =========================================
+
+    SetDistanceSpriteValue(
+        bridgeDistanceSprites_,
+        static_cast<int>(
             std::roundf(
-                std::fabs(ResultCarry::stageClearDirection)
+                bridgeConvertedDistance_
             )
             )
     );

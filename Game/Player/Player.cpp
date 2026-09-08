@@ -937,6 +937,65 @@ bool Player::IsConnectedFloaterHandInsideRadius(
 	return false;
 }
 
+bool Player::GetConnectedFloaterHandXRange(
+	float& minX,
+	float& maxX) const {
+
+	bool foundHand = false;
+
+	minX = 0.0f;
+	maxX = 0.0f;
+
+	// [0]はPlayer自身なので除外
+	for (size_t i = 1; i < chain_.size(); ++i) {
+
+		const Member& member = chain_[i];
+
+		if (!member.floater) {
+			continue;
+		}
+
+		// Floaterの両手を見る
+		for (int hand = 0;
+			hand < BodyNode::kHandCount;
+			++hand) {
+
+			const CalyxEngine::Vector3 handPos =
+				member.floater->GetHandWorld(hand);
+
+			if (!foundHand) {
+
+				// 最初に見つかった手を初期値にする
+				minX = handPos.x;
+				maxX = handPos.x;
+
+				foundHand = true;
+				continue;
+			}
+
+			minX = std::min(minX, handPos.x);
+			maxX = std::fmax(maxX, handPos.x);
+		}
+	}
+
+	return foundHand;
+}
+
+float Player::GetConnectedFloaterHandXDistance() const {
+
+	float minX = 0.0f;
+	float maxX = 0.0f;
+
+	if (!GetConnectedFloaterHandXRange(
+		minX,
+		maxX)) {
+
+		return 0.0f;
+	}
+
+	return maxX - minX;
+}
+
 void Player::ExportChain() const {
 	ResultCarry::chain.assign(chain_.begin(), chain_.end());
 }

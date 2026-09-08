@@ -42,7 +42,7 @@ private:
     void SpawnPlanets();
 
     void InitializeResultUi();
-    void UpdateResultUi();
+    void UpdateResultUi(float dt);
     void InitializeDistanceUi();
     void UpdateDistanceUi();
     void UpdatePlanetTouchState();
@@ -75,7 +75,8 @@ private:
     std::array<bool, 2> planetTouched_{ false, false };
 
     // クリア/失敗確認用
-    std::shared_ptr<UiSprite> resultColorSprite_;
+    std::shared_ptr<UiSprite> resultClearSprite_;
+	float clearAlpha_ = 0.0f;
 
     // Distance UIは2D UiSpriteで描画する。
     // 上段: 目標距離 / 下段: 実際の人間橋距離
@@ -94,7 +95,7 @@ private:
     float distanceDigitSpacing_ = 58.0f;
     int distanceUiOrderInLayer_ = 1100;
 
-    float planetRadius_ = 15.0f;
+    float planetRadius_ = 16.0f;
 
     bool initialized_ = false;
 
@@ -102,4 +103,5 @@ private:
     bool resultFixed_ = false;
 
     bool isClear_ = false;
+    bool addIndex_ = false;
 };

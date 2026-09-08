@@ -13,13 +13,17 @@
 #include <Engine/Assets/Model/BaseModel.h>
 
 // game
+#include <Game/Result/ResultCarry.h>
 #include <Game/UI/UiSprite.h>
 #include <Game/Audio/GameAudio.h>
+#include <Game/Scene/SceneFlow.h>
 
 // std
 #include <algorithm>
 #include <cmath>
 #include <nlohmann/json.hpp>
+#include <array>
+#include <random>
 
 namespace {
 
@@ -85,6 +89,10 @@ void OptionManager::Initialize() {
 
     lastUiUpdateTime_ = std::chrono::steady_clock::now();
     uiClockInitialized_ = true;
+
+    optionCount_ = 0;
+    optionCount_ = ResultCarry::stageClearCount + 2;
+    isSelectScene_ = false;
 }
 
 void OptionManager::Update(float dt) {
@@ -157,6 +165,7 @@ void OptionManager::Open() {
 
     SetAllVisible(true);
     ApplyAnimation(0.0f);
+    RandomCornersTexture();
 
     // Player / Floater / ギミックなどゲーム側のDeltaTimeを止める。
     // UIはGetUiDeltaTime()で実時間更新するので、Optionアニメーションは止まらない。
@@ -266,7 +275,7 @@ void OptionManager::SetupCornerMotions() {
         motion.targetY = insetY;
 
         // 中央へ向くように斜めにする
-        motion.rotationDeg = angle;
+        motion.rotationDeg = -angle * 3.0f;
     }
 
     // 左下
@@ -292,7 +301,7 @@ void OptionManager::SetupCornerMotions() {
         motion.targetX = kScreenWidth - insetX;
         motion.targetY = insetY;
 
-        motion.rotationDeg = -angle;
+        motion.rotationDeg = angle * 3.0f;
     }
 
     // 右下
@@ -347,6 +356,10 @@ void OptionManager::ApplyStaticSpriteParams() {
 
 void OptionManager::UpdateInput() {
 
+    if (isSelectScene_) {
+		return;
+    }
+
     // Esc : 開く / 閉じる
     if (CalyxFoundation::Input::TriggerKey(DIK_ESCAPE)) {
         Toggle();
@@ -379,6 +392,7 @@ void OptionManager::UpdateInput() {
             CalyxFoundation::PadButton::A)) {
         GameAudio::PlaySe(GameAudio::kSeOptionDecision);
         ConfirmSelection();
+        return;
     }
 
     // ← → : 選択
@@ -603,9 +617,17 @@ void OptionManager::MoveSelection(int direction) {
 
 void OptionManager::ConfirmSelection() {
 
-    // TODO:
-    // 0 : やりなおす
-    // 1 : タイトルへ戻る
+	// 0: タイトルへ戻る
+	// 1: クリア済みステージの最終ステージを再開
+	// 2～: クリア済みステージの選択再開
+    isSelectScene_ = true;
+    if (selectedIndex_ == 0) {
+        SceneFlow::GoToTitle();
+	} else if (selectedIndex_ == 1) {
+        SceneFlow::StartStage(ResultCarry::stageClearCount);
+    } else {
+        SceneFlow::StartStage(std::clamp((selectedIndex_ - 2), 0, ResultCarry::stageClearCount));
+    }
 }
 
 void OptionManager::DisableGravity() {
@@ -682,13 +704,34 @@ float OptionManager::Lerp(float a, float b, float t) {
     return a + (b - a) * t;
 }
 
+void OptionManager::RandomCornersTexture() {
+
+    std::array<int, 4> numbers = { 1, 2, 3, 4 };
+
+    static std::random_device rd;
+    static std::mt19937 engine(rd());
+
+    std::shuffle(numbers.begin(), numbers.end(), engine);
+
+	for (int i = 0; i < 4; ++i) {
+		const int num = numbers[i];
+		const std::string texturePath =
+			"Textures/Option/alien" + std::to_string(num) + ".png";
+		if (corners_[i].sprite) {
+			corners_[i].sprite->SetTexture(texturePath);
+		}
+	}
+
+}
+
 void OptionManager::DerivativeGui() {
 
     using namespace GuiCmd;
 
     if (BeginSection(CalyxEngine::ParamFilterSection::Object)) {
         PropertyText("State", "%s", isOpen_ ? "Open" : "Closed");
-        PropertyText("Selected", "%d", selectedIndex_);
+        PropertyText("SelectIndex", "%d", selectedIndex_);
+        PropertyText("OptionCount", "%d", optionCount_);
 
         // Player と同じようにSerializableObjectの項目をInspectorへ表示
         param_.ShowGui();

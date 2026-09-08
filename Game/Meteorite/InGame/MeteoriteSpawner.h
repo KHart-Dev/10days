@@ -108,9 +108,9 @@ private:
 		float intervalMax = 3.0f;
 		int   maxAlive = 8;
 
-		float flowAngle = 225.0f;
+		float flowAngle = 265.0f;
 		float spawnDistance = 45.0f;
-		float spawnSpread = 35.0f;
+		float spawnSpread = 20.0f;
 		float despawnRadius = 60.0f;
 		float spawnHeight = 0.5f;
 

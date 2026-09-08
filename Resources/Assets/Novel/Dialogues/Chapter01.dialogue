@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "lines": [
+    { "guid": "1d083102-f14c-4f79-8900-8160457f82dd", "speaker": "Alice", "text": "こんにちは。", "charactersPerSecond": 30.0, "autoAdvance": false, "autoAdvanceDelay": 0.0 },
+    { "guid": "bf9fbf31-6cdc-48a6-82ed-cff06093ad3c", "speaker": "Bob", "text": "今日はいい天気だね。", "charactersPerSecond": 30.0, "autoAdvance": false, "autoAdvanceDelay": 0.0 },
+    { "guid": "a2815558-26cc-4095-861d-47d224998eb7", "speaker": "Alice", "text": "そうですね。", "charactersPerSecond": 30.0, "autoAdvance": false, "autoAdvanceDelay": 0.0 }
+  ]
+}

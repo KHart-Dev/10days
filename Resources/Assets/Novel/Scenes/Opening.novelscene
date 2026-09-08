@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "events": [
+    { "guid": "b280cd95-5655-4445-9161-bdb2f8ec3c7b", "type": "ChangeBackground", "data": { "textureGuid": "50c03942-26cc-410d-9c87-b99347927b65" } },
+    { "guid": "3ceac58c-164d-4616-9034-8279c4d17817", "type": "ShowImage", "data": { "textureGuid": "98ee3ac9-6c0b-44ad-b622-9db2ab8d8628", "position": { "x": 480.0, "y": 540.0 }, "scale": { "x": 1.0, "y": 1.0 } } },
+    { "guid": "81acdc8a-b982-4f34-8252-4ef1aa256f70", "type": "Dialogue", "data": { "dialogueAssetGuid": "337b7624-34ea-454a-a98c-94e2d77bb963", "dialogueLineGuid": "1d083102-f14c-4f79-8900-8160457f82dd" } },
+    { "guid": "913f5c46-c007-4f24-ae0a-d1c7e94128df", "type": "Dialogue", "data": { "dialogueAssetGuid": "337b7624-34ea-454a-a98c-94e2d77bb963", "dialogueLineGuid": "bf9fbf31-6cdc-48a6-82ed-cff06093ad3c" } },
+    { "guid": "63991673-8c15-44cf-8aad-3b9c6f294bc9", "type": "Dialogue", "data": { "dialogueAssetGuid": "337b7624-34ea-454a-a98c-94e2d77bb963", "dialogueLineGuid": "a2815558-26cc-4095-861d-47d224998eb7" } },
+    { "guid": "ece8f855-8fc4-410e-b13b-13fac2949183", "type": "Wait", "data": { "duration": 0.5 } }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "lines": [
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "1d083102-f14c-4f79-8900-8160457f82dd",
+      "speaker": "はると",
+      "text": "10Daysお疲れ様です"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "bf9fbf31-6cdc-48a6-82ed-cff06093ad3c",
+      "speaker": "りお",
+      "text": "お疲れさまでした。\n早かったですね"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "a2815558-26cc-4095-861d-47d224998eb7",
+      "speaker": "ふみか",
+      "text": "そうですね。\n田中さん仕事まだですか？"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "fb236bcc-8342-4cdf-892b-2b2dc9e461bb",
+      "speaker": "田中",
+      "text": "ごめんなさい(´;ω;｀)"
+    }
+  ],
+  "version": 1
+}

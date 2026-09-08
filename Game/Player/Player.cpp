@@ -878,6 +878,10 @@ void Player::SpawnForecast() {
 		return;
 	}
 
+	if (ResultCarry::stageIndex <= 2) {
+		return;
+	}
+
 	forecast_ = SceneAPI::Instantiate<MeteoriteForecast>();
 	if (!forecast_) {
 		return;

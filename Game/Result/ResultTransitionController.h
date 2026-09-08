@@ -52,5 +52,5 @@ private:
     bool transitionRequested_ = false;
 
     // Stage0 ～ Stage4
-    static constexpr int kLastStageIndex_ = 4;
+    static constexpr int kLastStageIndex_ = 5;
 };

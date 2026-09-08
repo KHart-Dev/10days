@@ -194,10 +194,10 @@ private:
 
         // 4隅Sprite
         float cornerWidth = 300.0f;
-        float cornerHeight = 240.0f;
-        float cornerRotationDeg = 45.0f;
-        float cornerInsetX = 95.0f;
-        float cornerInsetY = 90.0f;
+        float cornerHeight = 330.0f;
+        float cornerRotationDeg = -45.0f;
+        float cornerInsetX = 120;
+        float cornerInsetY = 100.0f;
         float cornerStartOutsideX = 220.0f;
         float cornerStartOutsideY = 170.0f;
 

@@ -63,6 +63,7 @@ void OptionManager::Initialize() {
     Actor::SetDrawEnable(false);
     SetCameraDitherEnabled(false);
     SetDrawInForeground(true);
+    SetTexture("Textures/Planet/planet01.png");
 
     InitializeSprites();
     SetAllVisible(false);
@@ -84,25 +85,32 @@ void OptionManager::Initialize() {
 
 void OptionManager::Update(float dt) {
 
-    // ClockManagerのTimeScaleが0になるとdtも0になるため、
-    // OptionのUIアニメーションだけは実時間ベースのDeltaTimeで更新する。
     const float uiDt = GetUiDeltaTime();
-    previewRotationY_ = std::fmod(previewRotationY_ + uiDt * 1.2f, 2.0f * 3.1415926535f);
 
-    // Keep the preview in screen-relative space while using the engine's regular
-    // foreground model pass. This avoids issuing a nested ModelRenderer frame from
-    // inside the sprite pass, which invalidated transient GPU buffers after merges.
+    previewRotationY_ = std::fmod(previewRotationY_ + uiDt * 1.2f, 2.0f * std::numbers::pi_v<float>);
+
     if (Camera3d* camera = CameraManager::GetMain3d()) {
-        SetTranslate(camera->GetTranslate() + camera->GetForward() * 4.0f);
-    }
-    SetRotate(CalyxEngine::Vector3{ 0.0f, previewRotationY_, 0.0f });
-    const float modelScale = 1.25f * previewScale_;
-    SetScale({ modelScale, modelScale, modelScale });
 
-    // 引数dtはゲーム時間。Option表示中は0になる想定なのでUIアニメーションには使わない。
+        CalyxEngine::Vector3 position =
+            camera->GetTranslate() +
+            camera->GetForward() * 4.0f;
+
+        // 少し斜め上から見る
+        position.y -= 0.4f;
+
+        SetTranslate(position);
+    }
+
+    // 惑星を横方向に自転
+    SetRotate(CalyxEngine::Vector3{ std::numbers::pi_v<float> *0.5f,0.0f,previewRotationY_ });
+
+    const float modelScale = 1.25f * previewScale_;
+    SetScale({ modelScale,modelScale,modelScale });
+
+    GetWorldTransform().Update();
+
     (void)dt;
 
-    // Inspectorで値を変更したときに、サイズ・角度・配置をその場で確認できるようにする。
     SetupCornerMotions();
     ApplyStaticSpriteParams();
 
@@ -110,7 +118,6 @@ void OptionManager::Update(float dt) {
     UpdateArrowFeedback(uiDt);
     UpdateAnimation(uiDt);
 
-    // Opened中はパラメータ変更や押下色を毎フレーム反映する。
     if (animationState_ == AnimationState::Opened) {
         ApplyAnimation(1.0f);
     }
@@ -134,6 +141,8 @@ void OptionManager::Open() {
     animationTimer_ = 0.0f;
     leftArrowFeedbackTimer_ = 0.0f;
     rightArrowFeedbackTimer_ = 0.0f;
+    selectedIndex_ = 0;
+    SetTexture("Textures/Planet/planet01.png");
 
     SetAllVisible(true);
     ApplyAnimation(0.0f);
@@ -586,6 +595,13 @@ void OptionManager::MoveSelection(int direction) {
     }
 
     // TODO: 選択カーソルや画像差し替え
+    if (selectedIndex_ == 0) {
+		SetTexture("Textures/Planet/planet01.png");
+    } else if (selectedIndex_ == 1) {
+        SetTexture("Textures/Planet/planet02.png");
+    } else {
+        SetTexture("Textures/Planet/planet0" + std::to_string(selectedIndex_ + 1) + ".png");
+    }
 }
 
 void OptionManager::ConfirmSelection() {

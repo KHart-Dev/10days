@@ -110,8 +110,8 @@ void Player::DerivativeGui() {
 	if (BeginSection(CalyxEngine::ParamFilterSection::Object)) {
 		// SerializableObject ベースの param_ を GUI 表示
 		GuiCmd::SceneObjectReferenceField("Target(FloaterManager)", floaterManager_);
-		ImGui::DragFloat("stageScale", &stageScale_, 0.01f, 10.0f);
-		ImGui::DragFloat("stageClearLength", &stageClearLength_, 0.01f, 50.0f);
+		ImGui::DragFloat("stageScale", &stageScale_, 0.01f, 0.0f, 10.0f);
+		ImGui::DragFloat("stageClearLength", &stageClearLength_, 0.01f, 1.0f, 50.0f);
 		PropertyText("Manager", "%s", floaterManager_.Resolve() ? "OK" : "MISSING");
 		PropertyText("Connected", "%d", static_cast<int>(chain_.size()) - 1);
 		PropertyText("Anchors", "%d", static_cast<int>(handAnchors_.size()));
@@ -235,7 +235,7 @@ void Player::Update(float dt) {
 
 	// 移動
 	CalyxEngine::Vector3 worldDir = BuildWorldMoveDirection(state.move);
-	const float moveSpeed = param_.moveSpeed; // m/s
+	const float moveSpeed = param_.moveSpeed * (1.0f + (stageScale_ * 1.0f) * param_.moveSpeedScaleGain); // m/s
 	if (worldDir.LengthSquared() > 0.0f) {
 		// 移動量を加算（物理は使わないシンプル実装）
 		CalyxEngine::Vector3 delta = worldDir * (moveSpeed * dt);

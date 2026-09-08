@@ -281,7 +281,7 @@ void Player::Update(float dt) {
 		wt.Update();
 	}
 
-	if (worldDir.LengthSquared() > 0.0f || std::abs(yawVelocity_) > kMoveSeYawThreshold) {
+	if ((worldDir.LengthSquared() > 0.0f || std::abs(yawVelocity_) > kMoveSeYawThreshold) && dt > 0.0f) {
 		GameAudio::PlaySeLoop(GameAudio::kSeMove);
 	} else {
 		GameAudio::StopSe();

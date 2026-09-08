@@ -32,6 +32,9 @@ public:
 	void Initialize() override;
 	void Update(float dt) override;
 
+	void MemberShakeStart();
+	void MemberShakeStop();
+
 private:
 
 	/// <summary>塊に繋がった1人</summary>

@@ -69,32 +69,45 @@
             "type": "Camera3d"
         },
         {
-            "guid": "9979e82f-623f-4390-b90f-266b559130ad",
-            "name": "DebugCamera",
-            "objectType": 0,
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "dcfdca9b-12a6-42e4-a687-f10c8695216b",
+            "name": "Sprite2D",
+            "orderInLayer": 0,
             "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "sortingLayerId": 0,
+            "textureGuid": "80693316-61d2-4511-a0a1-a1dd3bf4161b",
+            "texturePath": "Textures/Numbers/meter.png",
             "transform": {
                 "inheritRotate": true,
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.8402285575866699,
-                    "x": 0.5420024394989014,
-                    "y": -0.013269028626382351,
-                    "z": 0.008559392765164375
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
                 },
                 "scale": {
-                    "x": 1.0,
-                    "y": 1.0,
+                    "x": 96.0,
+                    "y": 96.0,
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 5.907438278198242,
-                    "y": 24.25141716003418,
-                    "z": -5.949426174163818
+                    "x": 705.0,
+                    "y": 132.5,
+                    "z": 0.0
                 }
             },
-            "type": "DebugCamera"
+            "type": "SpriteSceneObject2d"
         },
         {
             "Player": {
@@ -103,7 +116,7 @@
                 "resultMode": true,
                 "rotSpeedDeg": 250.0,
                 "stageClearLength": 5.0,
-                "stageScale": 1.0,
+                "stageScale": 3.0,
                 "yawAcceleration": 5.0
             },
             "cameraDitherEnabled": false,
@@ -126,9 +139,9 @@
                     "z": 0.0
                 },
                 "size": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
+                    "x": 3.0,
+                    "y": 3.0,
+                    "z": 3.0
                 }
             },
             "colliderKind": 1,
@@ -170,15 +183,15 @@
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.000796274864114821,
+                    "w": 0.0007962749223224819,
                     "x": -7.543776092688859e-08,
                     "y": 0.9999997019767761,
                     "z": -7.543776092688859e-08
                 },
                 "scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
+                    "x": 3.0,
+                    "y": 3.0,
+                    "z": 3.0
                 },
                 "translation": {
                     "x": 0.0,
@@ -194,45 +207,32 @@
             }
         },
         {
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            },
-            "color": {
-                "w": 1.0,
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "guid": "dcfdca9b-12a6-42e4-a687-f10c8695216b",
-            "name": "Sprite2D",
-            "orderInLayer": 0,
+            "guid": "9979e82f-623f-4390-b90f-266b559130ad",
+            "name": "DebugCamera",
+            "objectType": 0,
             "parentGuid": "00000000-0000-0000-0000-000000000000",
-            "sortingLayerId": 0,
-            "textureGuid": "80693316-61d2-4511-a0a1-a1dd3bf4161b",
-            "texturePath": "Textures/Numbers/meter.png",
             "transform": {
                 "inheritRotate": true,
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 1.0,
+                    "w": 4.371138828673793e-08,
                     "x": 0.0,
-                    "y": 0.0,
+                    "y": 1.0,
                     "z": 0.0
                 },
                 "scale": {
-                    "x": 96.0,
-                    "y": 96.0,
+                    "x": 1.0,
+                    "y": 1.0,
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 705.0,
-                    "y": 132.5,
-                    "z": 0.0
+                    "x": -8.74227794156468e-07,
+                    "y": 0.5,
+                    "z": 10.0
                 }
             },
-            "type": "SpriteSceneObject2d"
+            "type": "DebugCamera"
         },
         {
             "DemoCameraPivot": {
@@ -523,47 +523,6 @@
                 "y": 1.0,
                 "z": 1.0
             },
-            "guid": "bffb7004-199b-49c3-a3f5-e76e574fbe43",
-            "name": "Sprite2D",
-            "orderInLayer": 0,
-            "parentGuid": "00000000-0000-0000-0000-000000000000",
-            "sortingLayerId": 0,
-            "textureGuid": "e07f12a3-655a-42e1-9878-f403011b0688",
-            "texturePath": "Textures/Result/humanBridge.png",
-            "transform": {
-                "inheritRotate": true,
-                "inheritScale": true,
-                "inheritTranslate": true,
-                "rotation": {
-                    "w": 1.0,
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 100.0,
-                    "y": 60.0,
-                    "z": 1.0
-                },
-                "translation": {
-                    "x": 640.0,
-                    "y": 670.0,
-                    "z": 0.0
-                }
-            },
-            "type": "SpriteSceneObject2d"
-        },
-        {
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            },
-            "color": {
-                "w": 1.0,
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
             "guid": "49e8b884-385d-424c-89e1-e24df652e87f",
             "name": "Sprite2D",
             "orderInLayer": 0,
@@ -589,6 +548,47 @@
                 "translation": {
                     "x": 640.0,
                     "y": 50.0,
+                    "z": 0.0
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "bffb7004-199b-49c3-a3f5-e76e574fbe43",
+            "name": "Sprite2D",
+            "orderInLayer": 0,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "sortingLayerId": 0,
+            "textureGuid": "e07f12a3-655a-42e1-9878-f403011b0688",
+            "texturePath": "Textures/Result/humanBridge.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 100.0,
+                    "y": 60.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 640.0,
+                    "y": 670.0,
                     "z": 0.0
                 }
             },

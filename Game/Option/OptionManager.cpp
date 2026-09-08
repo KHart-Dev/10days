@@ -63,7 +63,7 @@ void OptionManager::Initialize() {
     Actor::SetDrawEnable(false);
     SetCameraDitherEnabled(false);
     SetDrawInForeground(true);
-    SetTexture("Textures/Planet/planet01.png");
+    SetTexture("Textures/Planet/planet02.png");
 
     InitializeSprites();
     SetAllVisible(false);

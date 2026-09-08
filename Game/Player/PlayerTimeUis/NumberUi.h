@@ -32,20 +32,39 @@ public:
 		SetUvScale(uvScale);
 		model_->uvTransform.translate = uvOffset;
 	}
+
 	void SetPosition(const CalyxEngine::Vector3& pos) {
 		auto& wt = GetWorldTransform();
 		wt.translation = pos;
 		wt.Update();
 	}
 
-	// 親オブジェクトを設定（Player 等）
-	void SetParent(const std::shared_ptr<SceneObject>& parent, bool inheritScale = true) {
+	// 親オブジェクトを設定
+	void SetParent(
+		const std::shared_ptr<SceneObject>& parent,
+		bool inheritScale = true) {
+
 		SceneObject::SetParent(parent, inheritScale);
+	}
+
+	// =========================
+	// フェードアウト開始
+	// =========================
+	void StartFade(float duration);
+
+	bool IsDead() const {
+		return dead_;
 	}
 
 private:
 
 	void DisableGravity();
 
-};
+private:
 
+	bool isFading_ = false;
+	bool dead_ = false;
+
+	float fadeTimer_ = 0.0f;
+	float fadeDuration_ = 1.0f;
+};

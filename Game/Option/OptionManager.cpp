@@ -154,7 +154,7 @@ void OptionManager::Open() {
     leftArrowFeedbackTimer_ = 0.0f;
     rightArrowFeedbackTimer_ = 0.0f;
     selectedIndex_ = 0;
-    SetTexture("Textures/Planet/planet01.png");
+    SetTexture("Textures/Planet/planet02.png");
 
     SetAllVisible(true);
     ApplyAnimation(0.0f);
@@ -315,19 +315,19 @@ void OptionManager::ApplyStaticSpriteParams() {
 
     if (optionPanel_) {
         optionPanel_->SetSizePx(param_.panelWidth, param_.panelHeight);
-        optionPanel_->SetOrderInLayer(param_.panelOrderInLayer);
+        optionPanel_->SetOrderInLayer(900);
     }
 
     if (leftArrow_) {
         leftArrow_->SetSizePx(param_.arrowWidth, param_.arrowHeight);
         leftArrow_->SetRotationDeg(0.0f);
-        leftArrow_->SetOrderInLayer(param_.arrowOrderInLayer);
+        leftArrow_->SetOrderInLayer(1000);
     }
 
     if (rightArrow_) {
         rightArrow_->SetSizePx(param_.arrowWidth, param_.arrowHeight);
         rightArrow_->SetRotationDeg(180.0f);
-        rightArrow_->SetOrderInLayer(param_.arrowOrderInLayer);
+        rightArrow_->SetOrderInLayer(1000);
     }
 
     for (SpriteMotion& motion : corners_) {
@@ -340,7 +340,7 @@ void OptionManager::ApplyStaticSpriteParams() {
             param_.cornerHeight
         );
 
-        motion.sprite->SetOrderInLayer(param_.cornerOrderInLayer);
+        motion.sprite->SetOrderInLayer(1000);
 
         // UiSpriteへ追加したZ回転用Setter。
         motion.sprite->SetRotationDeg(motion.rotationDeg);

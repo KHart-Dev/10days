@@ -235,7 +235,7 @@ void Player::Update(float dt) {
 
 	// 移動
 	CalyxEngine::Vector3 worldDir = BuildWorldMoveDirection(state.move);
-	const float moveSpeed = param_.moveSpeed * (1.0f + (stageScale_ * 1.0f) * param_.moveSpeedScaleGain); // m/s
+	const float moveSpeed = param_.moveSpeed * (1.0f + (stageScale_ - 1.0f) * param_.moveSpeedScaleGain); // m/s
 	if (worldDir.LengthSquared() > 0.0f) {
 		// 移動量を加算（物理は使わないシンプル実装）
 		CalyxEngine::Vector3 delta = worldDir * (moveSpeed * dt);

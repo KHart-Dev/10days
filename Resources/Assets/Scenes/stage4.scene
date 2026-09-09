@@ -78,10 +78,10 @@
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.7182160019874573,
-                    "x": 0.6935083866119385,
-                    "y": -0.04076926037669182,
-                    "z": 0.039366740733385086
+                    "w": 0.718216061592102,
+                    "x": 0.6935083270072937,
+                    "y": -0.04076901823282242,
+                    "z": 0.03936650604009628
                 },
                 "scale": {
                     "x": 1.0,
@@ -102,7 +102,7 @@
                 "moveSpeed": 5.0,
                 "resultMode": false,
                 "rotSpeedDeg": 250.0,
-                "stageClearLength": 5.0,
+                "stageClearLength": 20.0,
                 "stageScale": 1.5,
                 "yawAcceleration": 5.0
             },
@@ -196,7 +196,7 @@
         },
         {
             "PlayerTimeUis": {
-                "addTimePerConnect": 3.5,
+                "addTimePerConnect": 2.0,
                 "maxTime": 10.0
             },
             "cameraDitherEnabled": false,
@@ -1437,7 +1437,7 @@
         },
         {
             "NumberUi": {
-                "number": 4
+                "number": 0
             },
             "cameraDitherEnabled": false,
             "colliderConfig": {
@@ -2629,7 +2629,7 @@
         },
         {
             "NumberUi": {
-                "number": 0
+                "number": 2
             },
             "cameraDitherEnabled": false,
             "colliderConfig": {

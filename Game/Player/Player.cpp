@@ -226,6 +226,8 @@ void Player::Update(float dt) {
 	// 予報を見せている間は自機も止める。開始時の待ちだけでなく、
 	// ゲーム中に Y / TAB で覗いている間も止まる。閉じる入力は予報側が自分で見ている
 	if (IsForecastBlocking()) {
+		// 移動音はループなので、ここで止めないと予報を見ている間ずっと鳴り続ける
+		GameAudio::StopSe();
 		Actor::Update(dt);
 		return;
 	}

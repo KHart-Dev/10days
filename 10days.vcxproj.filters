@@ -33,6 +33,9 @@
     <ClCompile Include="Game\Title\TitleUIManager.cpp" />
     <ClCompile Include="Game\Meteorite\BackGround\BackGroundObjects.cpp" />
     <ClCompile Include="Game\Result\ResultTransitionController.cpp" />
+    <ClCompile Include="Game\Novel\NovelPlayerEvent.cpp" />
+    <ClCompile Include="Game\Tutorial\Tutorial.cpp" />
+    <ClCompile Include="Game\Tutorial\TutorialUi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Audio\GameAudio.h" />
@@ -65,5 +68,8 @@
     <ClInclude Include="Game\Title\TitleUIManager.h" />
     <ClInclude Include="Game\Meteorite\BackGround\BackGroundObjects.h" />
     <ClInclude Include="Game\Result\ResultTransitionController.h" />
+    <ClInclude Include="Game\Novel\NovelPlayerEvent.h" />
+    <ClInclude Include="Game\Tutorial\Tutorial.h" />
+    <ClInclude Include="Game\Tutorial\TutorialUi.h" />
   </ItemGroup>
 </Project>

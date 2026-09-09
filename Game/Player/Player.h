@@ -269,6 +269,8 @@ private:
 	bool resultMode_ = false;
 	bool restored_ = false;
 
+	bool firstStageRotation_ = false;
+
 	// ResultSceneでFloaterを順番に出す
 	size_t resultRestoreIndex_ = 1;
 
@@ -308,6 +310,7 @@ public:
 	void ExportChain() const;
 	void SetupResult();
 
+	bool GetFirstStageRotation() const { return firstStageRotation_; }
 	/// スタート時の天気予報を見せている間か。ゲーム進行を止めたいときに見る
 	bool IsForecastBlocking() const;
 	// リザルトで複製済みか

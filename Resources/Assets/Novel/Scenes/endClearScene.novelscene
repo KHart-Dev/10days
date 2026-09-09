@@ -4,6 +4,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 1.0,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "a1f996a7-ac6a-426c-93ea-b806b1090dfd"
       },
@@ -22,6 +23,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 1.0,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "962fabbd-182e-4549-8a80-de773bdb40ad"
       },
@@ -40,6 +42,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 1.0,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "88113c71-8b68-4699-aee0-ddee420490d7"
       },
@@ -58,6 +61,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 1.0,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "73f8431e-5e7a-4e5f-9d5c-21b1780cb671"
       },
@@ -76,6 +80,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 1.0,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "e8c5c888-5da7-4aa6-ba00-c45f6d317e7f"
       },
@@ -102,6 +107,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 1.0,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "927d21fa-9e9a-46e8-87d5-5289c291017a"
       },
@@ -120,6 +126,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 2.200000047683716,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "e4bff84d-fb0f-468b-bc19-2e736ca65c95"
       },
@@ -145,12 +152,12 @@
   ],
   "textSettings": {
     "dialoguePosition": {
-      "x": 150.0,
-      "y": 350.0
+      "x": 175.0,
+      "y": 525.0
     },
     "dialogueSize": {
-      "x": 1760.0,
-      "y": 220.0
+      "x": 1164.0,
+      "y": 251.0
     },
     "dialogueStyle": {
       "color": {
@@ -159,15 +166,15 @@
         "y": 1.0,
         "z": 1.0
       },
-      "fontSize": 32.0,
-      "letterSpacing": 0.0,
+      "fontSize": 45.0,
+      "letterSpacing": 10.699999809265137,
       "lineSpacing": 1.0,
       "maxWidth": 0.0,
       "wordWrap": true
     },
     "fontGuid": "6faeb7f1-d14c-4d08-b254-f2023899aa74",
     "speakerPosition": {
-      "x": 80.0,
+      "x": -498.0,
       "y": 700.0
     },
     "speakerSize": {

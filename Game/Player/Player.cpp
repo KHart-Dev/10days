@@ -30,6 +30,8 @@ namespace {
 		"Textures/GameUI/operationKey.png";
 	constexpr const char* kPadTexture =
 		"Textures/GameUI/operationPad.png";
+	constexpr const char* kForecastTexture =
+		"Textures/GameUI/attentionUI.png";
 
 	// 入力デバイスの判定用。スティックとトリガーは遊びを越えたときだけ触ったと見る
 	constexpr float kDeviceStickThresholdSq = 0.3f * 0.3f;
@@ -253,8 +255,8 @@ void Player::Update(float dt) {
 	// ユーザー入力から目標角速度を決定
 	// 左右キーは残すが、主要な回転入力はゲームパッドのトリガー（LT/RT）で受け付ける
 	float targetAngularVel = 0.0f;
-	if (CalyxFoundation::Input::PushKey(DIK_LEFT)) targetAngularVel -= rotSpeed;
-	if (CalyxFoundation::Input::PushKey(DIK_RIGHT)) targetAngularVel += rotSpeed;
+	if (CalyxFoundation::Input::PushKey(DIK_LEFT) || CalyxFoundation::Input::PushGamepadButton(CalyxFoundation::PadButton::LB)) targetAngularVel -= rotSpeed;
+	if (CalyxFoundation::Input::PushKey(DIK_RIGHT) || CalyxFoundation::Input::PushGamepadButton(CalyxFoundation::PadButton::RB)) targetAngularVel += rotSpeed;
 
 	// ゲームパッドのトリガー（0.0 - 1.0）を回転入力として扱う
 	const float leftTrigger = CalyxFoundation::Input::GetLeftTrigger();

@@ -13,7 +13,7 @@
                 "z": -0.8379999995231628
             },
             "guid": "260f6a73-56cb-4004-bedb-47d1a8171382",
-            "intensity": 1.0,
+            "intensity": 0.5730000138282776,
             "name": "DirectionalLight",
             "objectType": 1,
             "parentGuid": "00000000-0000-0000-0000-000000000000",
@@ -69,45 +69,32 @@
             "type": "Camera3d"
         },
         {
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            },
-            "color": {
-                "w": 1.0,
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "guid": "dcfdca9b-12a6-42e4-a687-f10c8695216b",
-            "name": "Sprite2D",
-            "orderInLayer": 0,
+            "guid": "9979e82f-623f-4390-b90f-266b559130ad",
+            "name": "DebugCamera",
+            "objectType": 0,
             "parentGuid": "00000000-0000-0000-0000-000000000000",
-            "sortingLayerId": 0,
-            "textureGuid": "80693316-61d2-4511-a0a1-a1dd3bf4161b",
-            "texturePath": "Textures/Numbers/meter.png",
             "transform": {
                 "inheritRotate": true,
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 1.0,
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
+                    "w": 0.729636549949646,
+                    "x": 0.6836876273155212,
+                    "y": 0.010364037938416004,
+                    "z": -0.00971136149019003
                 },
                 "scale": {
-                    "x": 96.0,
-                    "y": 96.0,
+                    "x": 1.0,
+                    "y": 1.0,
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 705.0,
-                    "y": 132.5,
-                    "z": 0.0
+                    "x": -0.018448270857334137,
+                    "y": 10.478882789611816,
+                    "z": -0.6492792963981628
                 }
             },
-            "type": "SpriteSceneObject2d"
+            "type": "DebugCamera"
         },
         {
             "Player": {
@@ -116,7 +103,7 @@
                 "resultMode": true,
                 "rotSpeedDeg": 250.0,
                 "stageClearLength": 5.0,
-                "stageScale": 2.700000047683716,
+                "stageScale": 1.399999976158142,
                 "yawAcceleration": 5.0
             },
             "cameraDitherEnabled": false,
@@ -139,9 +126,9 @@
                     "z": 0.0
                 },
                 "size": {
-                    "x": 2.700000047683716,
-                    "y": 2.700000047683716,
-                    "z": 2.700000047683716
+                    "x": 1.399999976158142,
+                    "y": 1.399999976158142,
+                    "z": 1.399999976158142
                 }
             },
             "colliderKind": 1,
@@ -184,15 +171,15 @@
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.0007962753879837692,
+                    "w": 0.0007962755626067519,
                     "x": -7.543776092688859e-08,
                     "y": 0.9999997019767761,
                     "z": -7.543776092688859e-08
                 },
                 "scale": {
-                    "x": 2.700000047683716,
-                    "y": 2.700000047683716,
-                    "z": 2.700000047683716
+                    "x": 1.399999976158142,
+                    "y": 1.399999976158142,
+                    "z": 1.399999976158142
                 },
                 "translation": {
                     "x": 0.0,
@@ -208,32 +195,45 @@
             }
         },
         {
-            "guid": "9979e82f-623f-4390-b90f-266b559130ad",
-            "name": "DebugCamera",
-            "objectType": 0,
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "dcfdca9b-12a6-42e4-a687-f10c8695216b",
+            "name": "Sprite2D",
+            "orderInLayer": 0,
             "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "sortingLayerId": 0,
+            "textureGuid": "80693316-61d2-4511-a0a1-a1dd3bf4161b",
+            "texturePath": "Textures/Numbers/meter.png",
             "transform": {
                 "inheritRotate": true,
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.729636549949646,
-                    "x": 0.6836876273155212,
-                    "y": 0.010364037938416004,
-                    "z": -0.00971136149019003
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
                 },
                 "scale": {
-                    "x": 1.0,
-                    "y": 1.0,
+                    "x": 96.0,
+                    "y": 96.0,
                     "z": 1.0
                 },
                 "translation": {
-                    "x": -0.018448270857334137,
-                    "y": 10.478882789611816,
-                    "z": -0.6492792963981628
+                    "x": 705.0,
+                    "y": 132.5,
+                    "z": 0.0
                 }
             },
-            "type": "DebugCamera"
+            "type": "SpriteSceneObject2d"
         },
         {
             "DemoCameraPivot": {
@@ -526,47 +526,6 @@
                 "y": 1.0,
                 "z": 1.0
             },
-            "guid": "49e8b884-385d-424c-89e1-e24df652e87f",
-            "name": "Sprite2D",
-            "orderInLayer": 0,
-            "parentGuid": "00000000-0000-0000-0000-000000000000",
-            "sortingLayerId": 0,
-            "textureGuid": "12981023-f4a4-4a25-9cfd-f1a059dc4d8b",
-            "texturePath": "Textures/Result/target.png",
-            "transform": {
-                "inheritRotate": true,
-                "inheritScale": true,
-                "inheritTranslate": true,
-                "rotation": {
-                    "w": 1.0,
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 100.0,
-                    "y": 60.0,
-                    "z": 1.0
-                },
-                "translation": {
-                    "x": 640.0,
-                    "y": 50.0,
-                    "z": 0.0
-                }
-            },
-            "type": "SpriteSceneObject2d"
-        },
-        {
-            "anchor": {
-                "x": 0.5,
-                "y": 0.5
-            },
-            "color": {
-                "w": 1.0,
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
             "guid": "bffb7004-199b-49c3-a3f5-e76e574fbe43",
             "name": "Sprite2D",
             "orderInLayer": 0,
@@ -592,6 +551,47 @@
                 "translation": {
                     "x": 640.0,
                     "y": 670.0,
+                    "z": 0.0
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "49e8b884-385d-424c-89e1-e24df652e87f",
+            "name": "Sprite2D",
+            "orderInLayer": 0,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "sortingLayerId": 0,
+            "textureGuid": "12981023-f4a4-4a25-9cfd-f1a059dc4d8b",
+            "texturePath": "Textures/Result/target.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 100.0,
+                    "y": 60.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 640.0,
+                    "y": 50.0,
                     "z": 0.0
                 }
             },

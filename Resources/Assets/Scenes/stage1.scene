@@ -13,7 +13,7 @@
                 "z": -0.8379999995231628
             },
             "guid": "260f6a73-56cb-4004-bedb-47d1a8171382",
-            "intensity": 1.0,
+            "intensity": 0.5730000138282776,
             "name": "DirectionalLight",
             "objectType": 1,
             "parentGuid": "00000000-0000-0000-0000-000000000000",
@@ -102,7 +102,7 @@
                 "moveSpeed": 5.0,
                 "resultMode": false,
                 "rotSpeedDeg": 250.0,
-                "stageClearLength": 5.0,
+                "stageClearLength": 7.0,
                 "stageScale": 2.4000000953674316,
                 "yawAcceleration": 5.0
             },
@@ -196,7 +196,7 @@
         },
         {
             "PlayerTimeUis": {
-                "addTimePerConnect": 3.5,
+                "addTimePerConnect": 2.0,
                 "maxTime": 10.0
             },
             "cameraDitherEnabled": false,
@@ -729,6 +729,7 @@
                 "z": 0.0
             }
         },
+
         {
             "anchor": {
                 "x": 0.0,
@@ -770,6 +771,7 @@
             },
             "type": "SpriteSceneObject2d"
         },
+
         {
             "cameraDitherEnabled": false,
             "colliderConfig": {
@@ -1082,7 +1084,7 @@
         },
         {
             "NumberUi": {
-                "number": 3
+                "number": 7
             },
             "cameraDitherEnabled": false,
             "colliderConfig": {
@@ -1168,7 +1170,7 @@
                     "z": 0.551103949546814
                 },
                 "translation": {
-                    "x": 0.026000000536441803,
+                    "x": -0.17399999499320984,
                     "y": -0.18098250031471252,
                     "z": -0.18351279199123383
                 }
@@ -1180,107 +1182,7 @@
                 "z": 0.0
             }
         },
-        {
-            "NumberUi": {
-                "number": 2
-            },
-            "cameraDitherEnabled": false,
-            "colliderConfig": {
-                "capsuleHeight": 2.0,
-                "capsuleRadius": 0.5,
-                "isCollisionEnabled": true,
-                "isDraw": true,
-                "isTrigger": false,
-                "layerId": 0,
-                "offset": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "radius": 1.0,
-                "rotate": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "size": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            },
-            "colliderKind": 0,
-            "drawInForeground": false,
-            "guid": "9426274b-af67-49e9-857f-294205a376b9",
-            "modelConfig": {
-                "blendMode": 5,
-                "colorOverride": {
-                    "w": 1.0,
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "materialGuid": "00000000-0000-0000-0000-000000000000",
-                "modelName": "plane.obj",
-                "textureGuid": "00000000-0000-0000-0000-000000000000",
-                "uvTransConfig": {
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 0.10000000149011612,
-                        "y": 1.0
-                    }
-                }
-            },
-            "name": "NumberUi",
-            "objectType": 2,
-            "outlineColor": {
-                "w": 1.0,
-                "x": 0.019999999552965164,
-                "y": 0.019999999552965164,
-                "z": 0.02500000037252903
-            },
-            "outlineEnabled": false,
-            "outlineThickness": 0.03500000014901161,
-            "parentGuid": "be522078-d0b1-4863-bfcd-0c1c80237dd9",
-            "physicsBodyConfig": {
-                "bodyType": 1,
-                "enabled": true,
-                "gravityScale": 1.0,
-                "mass": 1.0,
-                "pushbackRatio": 1.0,
-                "useGravity": true
-            },
-            "prefabAssetGuid": "d5cbce4f-7f7d-4541-b53a-96705b5c700d",
-            "prefabSourceGuid": "c25b4012-6cd5-4bb6-888a-6bfd5040ae18",
-            "transform": {
-                "inheritRotate": true,
-                "inheritScale": true,
-                "inheritTranslate": true,
-                "rotation": {
-                    "w": 1.0,
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 0.2747001051902771,
-                    "y": 0.4944600760936737,
-                    "z": 0.5494000911712646
-                },
-                "translation": {
-                    "x": -0.4410000443458557,
-                    "y": -0.1824498325586319,
-                    "z": -0.19145473837852478
-                }
-            },
-            "type": "NumberUi",
-            "visualOffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        {
+{
             "cameraDitherEnabled": false,
             "colliderConfig": {
                 "capsuleHeight": 2.0,
@@ -1371,7 +1273,7 @@
                 "z": 0.0
             }
         },
-        {
+{
             "cameraDitherEnabled": false,
             "colliderConfig": {
                 "capsuleHeight": 2.0,

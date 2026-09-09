@@ -807,6 +807,19 @@ private:
     ImGui::TextDisabled("対象を追加するには、HierarchyのTextまたはSpriteを"
                         "タイムライン上の「＋」へドロップします。");
 
+    const bool isText =
+        object && dynamic_cast<CalyxEngine::TextSceneObject2d *>(object.get());
+    if (isText && ImGui::Button("このテキストをすぐ非表示")) {
+      data.advanceMode_ = CalyxEngine::NovelClipAdvanceMode::Time;
+      data.duration_ = 0.0f;
+      data.hideOnComplete_ = true;
+      saveMessage_ = "未保存の変更があります";
+    }
+    if (isText) {
+      ImGui::SameLine();
+      ImGui::TextDisabled("テクスチャ変更の直後に置くと同時に非表示になります。");
+    }
+
     int advanceMode =
         data.advanceMode_ == CalyxEngine::NovelClipAdvanceMode::Time ? 0 : 1;
     const char *advanceNames[] = {"時間で進む", "ボタン入力で進む"};
@@ -819,7 +832,8 @@ private:
       ImGui::DragFloat("表示時間", &data.duration_, 0.05f, 0.0f, 600.0f,
                        "%.2f 秒");
     }
-    ImGui::Checkbox("完了時に非表示", &data.hideOnComplete_);
+    ImGui::Checkbox("完了時に非表示（Text / Sprite）",
+                    &data.hideOnComplete_);
   }
 
   void DrawTextSettings() {

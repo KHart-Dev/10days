@@ -18,6 +18,8 @@ public:
 	void Initialize() override;
 	void Update(float dt) override;
 
+	void WtInitialize();
+
 	// =========================
 	// Scene保存 / Editor
 	// =========================

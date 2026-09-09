@@ -14,13 +14,6 @@ void NumberUi::Initialize() {
 	DisableGravity();
 	SetTexture("Textures/numbers/number.png");
 
-	auto& wt = GetWorldTransform();
-	wt.scale = CalyxEngine::Vector3(0.5f, 0.9f, 1.0f);
-	wt.eulerRotation.x =std::numbers::pi_v<float> *0.5f;
-	wt.rotationSource = RotationSource::Euler;
-	wt.inheritRotate = false;
-	wt.Update();
-
 	SetColor({ 1.0f,1.0f,1.0f,1.0f });
 	// ★ Sceneに保存されているNumberUiだけ適用
 	if (hasSerializedNumber_) {
@@ -62,6 +55,15 @@ void NumberUi::Update(float dt) {
 	}
 
 	Actor::Update(dt);
+}
+
+void NumberUi::WtInitialize() {
+	auto& wt = GetWorldTransform();
+	wt.scale = CalyxEngine::Vector3(0.5f, 0.9f, 1.0f);
+	wt.eulerRotation.x = std::numbers::pi_v<float> *0.5f;
+	wt.rotationSource = RotationSource::Euler;
+	wt.inheritRotate = false;
+	wt.Update();
 }
 
 void NumberUi::StartFade(float duration) {

@@ -17,9 +17,12 @@ public:
     UiSprite() = default;
 
     /// 生成時にテクスチャを指定する(空なら白1x1のまま)
-    UiSprite(const std::string& texturePath) {
+    UiSprite(const std::string& texturePath,const std::string& name = "") {
         if (!texturePath.empty()) {
             texturePath_ = texturePath;
+        }
+        if (!name.empty()) {
+            name_ = name;
         }
     }
 

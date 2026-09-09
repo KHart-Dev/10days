@@ -35,7 +35,11 @@ void PlayerTimeUis::Update(float dt) {
 			if (!isCounting_) {
 				isCounting_ = true;
 			}
-			countTime_ += param_.addTimePerConnect;
+			if (player->GetConnectedCount() == 2) {
+				countTime_ += 5.0f;
+			} else {
+				countTime_ += param_.addTimePerConnect;
+			}
 			if (countTime_ > param_.maxTime) {
 				countTime_ = param_.maxTime;
 			}
@@ -43,9 +47,15 @@ void PlayerTimeUis::Update(float dt) {
 			// =============================
 			// 追加された数字を表示
 			// =============================
-			ShowAddNumber(
-				static_cast<int>(param_.addTimePerConnect)
-			);
+			if (player->GetConnectedCount() == 2) {
+				ShowAddNumber(
+					static_cast<int>(5.0f)
+				);
+			} else {
+				ShowAddNumber(
+					static_cast<int>(param_.addTimePerConnect)
+				);
+			}
 		}
 
 		if (isCounting_) {

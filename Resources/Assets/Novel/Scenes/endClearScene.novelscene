@@ -5,9 +5,9 @@
         "advanceMode": "Input",
         "duration": 1.0,
         "hideOnComplete": false,
-        "sceneObjectGuid": "449ead54-7fe7-41d3-ae42-deab85f67f7b"
+        "sceneObjectGuid": "a1f996a7-ac6a-426c-93ea-b806b1090dfd"
       },
-      "guid": "58445922-275c-4061-b8e7-9263cd5aa86b",
+      "guid": "3350f31f-59be-4562-9da2-7f1eec2cbf0d",
       "type": "SceneObject"
     },
     {
@@ -15,9 +15,9 @@
         "advanceMode": "Input",
         "duration": 1.0,
         "hideOnComplete": false,
-        "sceneObjectGuid": "f90668e0-7776-42bc-bf3b-733a1a1deb7f"
+        "sceneObjectGuid": "962fabbd-182e-4549-8a80-de773bdb40ad"
       },
-      "guid": "b357a223-cdb4-49cb-95de-3ddd650c65bb",
+      "guid": "0106e557-ded1-4618-a644-3c7a394f23e3",
       "type": "SceneObject"
     },
     {
@@ -25,9 +25,9 @@
         "advanceMode": "Input",
         "duration": 1.0,
         "hideOnComplete": false,
-        "sceneObjectGuid": "1b531745-eeaa-47ed-861b-eceedd57dd4a"
+        "sceneObjectGuid": "88113c71-8b68-4699-aee0-ddee420490d7"
       },
-      "guid": "5868d6c4-a362-4ec9-9fc8-740311b191dd",
+      "guid": "b8b7e61d-e604-4b24-bc2d-33ef5fb10384",
       "type": "SceneObject"
     },
     {
@@ -35,9 +35,9 @@
         "advanceMode": "Input",
         "duration": 1.0,
         "hideOnComplete": false,
-        "sceneObjectGuid": "8484865a-eebb-42b7-85b0-0b531de7ef24"
+        "sceneObjectGuid": "73f8431e-5e7a-4e5f-9d5c-21b1780cb671"
       },
-      "guid": "e463897d-06da-4bd0-8cf0-b0a5b7402869",
+      "guid": "b35f15d0-60cb-4406-8843-788761690227",
       "type": "SceneObject"
     },
     {
@@ -45,9 +45,9 @@
         "advanceMode": "Input",
         "duration": 1.0,
         "hideOnComplete": false,
-        "sceneObjectGuid": "8034c56d-de07-4715-a7e1-803f7b3a6971"
+        "sceneObjectGuid": "e8c5c888-5da7-4aa6-ba00-c45f6d317e7f"
       },
-      "guid": "6e46c06e-bf4e-4ebd-b665-5cf9f0448fee",
+      "guid": "5f7bb483-5cce-4358-83be-eed16bd9123a",
       "type": "SceneObject"
     },
     {
@@ -55,19 +55,19 @@
         "advanceMode": "Input",
         "duration": 1.0,
         "hideOnComplete": false,
-        "sceneObjectGuid": "b17b70f1-ab97-4843-a27c-23556108fcb3"
+        "sceneObjectGuid": "927d21fa-9e9a-46e8-87d5-5289c291017a"
       },
-      "guid": "5c8b15db-f461-420c-a418-a7e523f8e582",
+      "guid": "17da5e42-41c7-4070-9973-d475bedaea6f",
       "type": "SceneObject"
     },
     {
       "data": {
         "advanceMode": "Input",
-        "duration": 1.0,
+        "duration": 2.200000047683716,
         "hideOnComplete": false,
-        "sceneObjectGuid": "b8e0b276-62e8-41d0-9ae6-8c082cda42f2"
+        "sceneObjectGuid": "e4bff84d-fb0f-468b-bc19-2e736ca65c95"
       },
-      "guid": "76c709bf-c06f-4cdf-8628-5ce30e22a105",
+      "guid": "c9943d74-725e-410d-9f4a-b7d6e3757d6e",
       "type": "SceneObject"
     }
   ],

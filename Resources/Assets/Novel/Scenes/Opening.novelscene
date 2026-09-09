@@ -12,6 +12,22 @@
     },
     {
       "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "a49707a1-066c-4197-816b-e4032fb767dd"
+      },
+      "guid": "e308a5e6-9678-4a1f-bea1-4d80cd23a667",
+      "type": "Dialogue"
+    },
+    {
+      "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "6ff4636d-f7a7-45f0-b3f3-d8f031bf536b"
+      },
+      "guid": "590bba07-2d39-46b3-8b2f-4ae0df0c9c2c",
+      "type": "Dialogue"
+    },
+    {
+      "data": {
         "advanceMode": "Input",
         "duration": 1.0,
         "hideOnComplete": false,
@@ -19,6 +35,22 @@
       },
       "guid": "b357a223-cdb4-49cb-95de-3ddd650c65bb",
       "type": "SceneObject"
+    },
+    {
+      "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "f8f1be52-0fde-45b5-b69e-dd86957b3db2"
+      },
+      "guid": "bfc48c29-285e-4218-bedc-7773edbc067e",
+      "type": "Dialogue"
+    },
+    {
+      "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "fffd357e-a3c2-4596-87b3-6a05acce09bc"
+      },
+      "guid": "24e0197f-5936-40d6-8b35-da89bf24e8b7",
+      "type": "Dialogue"
     },
     {
       "data": {
@@ -32,6 +64,30 @@
     },
     {
       "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "3f5cfcda-dec9-4236-9b32-89a6097845de"
+      },
+      "guid": "5f4b2e4b-39e2-4dba-8f7e-20ffb96bacdf",
+      "type": "Dialogue"
+    },
+    {
+      "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "85daadf5-3545-4179-b528-7567fc5179e5"
+      },
+      "guid": "94719f31-818c-4cdb-a071-008208d54919",
+      "type": "Dialogue"
+    },
+    {
+      "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "36c763ae-eb0f-4b5d-8b03-41a54754dd80"
+      },
+      "guid": "58d55ea2-3a1f-44ac-99f2-29b44d86a8bb",
+      "type": "Dialogue"
+    },
+    {
+      "data": {
         "advanceMode": "Input",
         "duration": 1.0,
         "hideOnComplete": false,
@@ -39,6 +95,22 @@
       },
       "guid": "e463897d-06da-4bd0-8cf0-b0a5b7402869",
       "type": "SceneObject"
+    },
+    {
+      "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "25632286-7789-4236-9d8b-5b8ffc5abedc"
+      },
+      "guid": "b52fe9c1-8ef9-4cc7-82a5-fbbe9fe1dc90",
+      "type": "Dialogue"
+    },
+    {
+      "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "0e2ede15-6c1e-41f1-9d7a-c499a116c43b"
+      },
+      "guid": "9c979ad4-e931-4ff4-b9c4-7bc9f0b7cdfb",
+      "type": "Dialogue"
     },
     {
       "data": {
@@ -52,6 +124,22 @@
     },
     {
       "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "6d06e4eb-c393-4807-be82-f372cfb41626"
+      },
+      "guid": "222fa47f-153f-45a0-82ad-8597b79d3810",
+      "type": "Dialogue"
+    },
+    {
+      "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "db00ce71-c9b0-4ac1-a17a-523b145dc74b"
+      },
+      "guid": "bc96ea7f-80c7-432c-a01e-3a10e506bbd5",
+      "type": "Dialogue"
+    },
+    {
+      "data": {
         "advanceMode": "Input",
         "duration": 1.0,
         "hideOnComplete": false,
@@ -62,6 +150,22 @@
     },
     {
       "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "1a66d1a4-f4fd-42ea-85b8-fdc7b2b6672d"
+      },
+      "guid": "be927bd3-8b7a-4def-bb34-32d203bc8bd1",
+      "type": "Dialogue"
+    },
+    {
+      "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "58d61a7d-a321-4c6c-bc27-2016371b59d8"
+      },
+      "guid": "6d1e7e27-767b-415e-a6bb-cd37cebbfe4b",
+      "type": "Dialogue"
+    },
+    {
+      "data": {
         "advanceMode": "Input",
         "duration": 1.0,
         "hideOnComplete": false,
@@ -69,12 +173,20 @@
       },
       "guid": "76c709bf-c06f-4cdf-8628-5ce30e22a105",
       "type": "SceneObject"
+    },
+    {
+      "data": {
+        "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
+        "dialogueLineGuid": "7c10beb0-1346-413b-b663-57ca472eaa01"
+      },
+      "guid": "e1e5c0f8-f978-40ed-803e-1b60f85f41e0",
+      "type": "Dialogue"
     }
   ],
   "textSettings": {
     "dialoguePosition": {
-      "x": 80.0,
-      "y": 760.0
+      "x": 150.0,
+      "y": 350.0
     },
     "dialogueSize": {
       "x": 1760.0,

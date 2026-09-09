@@ -1,0 +1,77 @@
+{
+  "lines": [
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "92e1315b-9079-422d-8e85-896fce87c9dc",
+      "speaker": "01",
+      "text": "あなたが作った人間橋で\n惑星がつながり..."
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "4a697744-0085-480d-80a8-d982967bbb9f",
+      "speaker": "02",
+      "text": "2人は再び巡り合うことが出来ました...！"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 20.0,
+      "guid": "2fa7eeb3-70ef-425e-a7e7-5855916d68a1",
+      "speaker": "03",
+      "text": "2人は幸せなkissを....\n.....ん？"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "2d8bce96-acbc-4d28-b239-fef0ab8c7142",
+      "speaker": "04",
+      "text": "ゴォォォォォォォッ！！！"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "c9eb6b0b-f8c4-44e0-a2e0-7de60368c400",
+      "speaker": "05",
+      "text": "ドカーーーン！！！"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "dbb4be6b-6d93-4199-92af-e725bf8d0ed0",
+      "speaker": "05",
+      "text": "なんと、飛んできたいん石が当たって\n橋が大破！"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "5e192d03-869d-44ea-8dca-91c66e957cf8",
+      "speaker": "06",
+      "text": "2人は再び離れ離れになってしまいました..."
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "3633b8e4-aaba-44be-a589-2be295f0ca32",
+      "speaker": "07",
+      "text": "恋愛エイリアンの挑戦は\nまだまだ続きそうです..."
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "1fcaaf4d-2fc2-49d7-8c84-dd5f09669a6b",
+      "speaker": "07",
+      "text": "「もうこんな宇宙、こりごりだ～！！」"
+    }
+  ],
+  "version": 1
+}

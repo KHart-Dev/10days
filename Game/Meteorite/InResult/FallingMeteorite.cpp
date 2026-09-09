@@ -32,6 +32,8 @@ void FallingMeteorite::Initialize() {
 	wt.rotationSource = RotationSource::Euler;
 
 	DisableGravity();
+
+	moveEffect_.Load("ResultMeteorite");
 }
 
 void FallingMeteorite::Update(float dt) {
@@ -42,7 +44,7 @@ void FallingMeteorite::Update(float dt) {
 		auto& wt = GetWorldTransform();
 		wt.translation.y -= fallSpeed_ * dt;
 		EnableCollider(true);
-
+		moveHandle_ = EffectAPI::Play(moveEffect_, GetWorldPosition() + CalyxEngine::Vector3{ 0.0f, -0.5f, 0.0f });
 		if (wt.translation.y <= impactPos_.y) {
 			wt.translation = impactPos_;
 			timer_ = 0.0f;
@@ -55,7 +57,7 @@ void FallingMeteorite::Update(float dt) {
 	{
 		auto& wt = GetWorldTransform();
 		wt.translation.y -= fallSpeed_ * dt;
-
+		moveHandle_ = EffectAPI::Play(moveEffect_, GetWorldPosition() + CalyxEngine::Vector3{ 0.0f, -0.5f, 0.0f });
 		timer_ += dt;
 		if (timer_ >= impactHold_) {
 			phase_ = Phase::Done;
@@ -67,6 +69,7 @@ void FallingMeteorite::Update(float dt) {
 	{
 		auto& wt = GetWorldTransform();
 		EnableCollider(false);
+		moveHandle_ = EffectAPI::Play(moveEffect_, GetWorldPosition() + CalyxEngine::Vector3{ 0.0f, -0.5f, 0.0f });
 		if (wt.translation.y > -200.0f) {
 			wt.translation.y -= fallSpeed_ * dt;
 		}

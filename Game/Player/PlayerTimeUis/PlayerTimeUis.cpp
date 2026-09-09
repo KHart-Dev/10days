@@ -35,7 +35,11 @@ void PlayerTimeUis::Update(float dt) {
 			if (!isCounting_) {
 				isCounting_ = true;
 			}
-			countTime_ += param_.addTimePerConnect;
+			if (player->GetConnectedCount() == 2) {
+				countTime_ += 5.0f;
+			} else {
+				countTime_ += param_.addTimePerConnect;
+			}
 			if (countTime_ > param_.maxTime) {
 				countTime_ = param_.maxTime;
 			}
@@ -43,9 +47,15 @@ void PlayerTimeUis::Update(float dt) {
 			// =============================
 			// 追加された数字を表示
 			// =============================
-			ShowAddNumber(
-				static_cast<int>(param_.addTimePerConnect)
-			);
+			if (player->GetConnectedCount() == 2) {
+				ShowAddNumber(
+					static_cast<int>(5.0f)
+				);
+			} else {
+				ShowAddNumber(
+					static_cast<int>(param_.addTimePerConnect)
+				);
+			}
 		}
 
 		if (isCounting_) {
@@ -191,6 +201,7 @@ void PlayerTimeUis::InitializeActor() {
 		if (numberUis_[i]) {
 			numberUis_[i]->SetParent(player_.lock());
 			numberUis_[i]->Initialize();
+			numberUis_[i]->WtInitialize();
 			float posX = static_cast<float>(i) - 0.5f;
 			numberUis_[i]->SetPosition(CalyxEngine::Vector3(posX, 0.1f, player_.lock()->GetWorldTransform().scale.x / 1.5f));
 		}
@@ -199,6 +210,7 @@ void PlayerTimeUis::InitializeActor() {
 	if (addNumberUi_) {
 		addNumberUi_->SetParent(player_.lock());
 		addNumberUi_->Initialize();
+		addNumberUi_->WtInitialize();
 		addNumberUi_->SetPosition(CalyxEngine::Vector3{ 0.275f,0.1f,player_.lock()->GetWorldTransform().scale.x / 1.5f + 1.25f });
 		addNumberUi_->SetScale(CalyxEngine::Vector3{ 0.35f,0.63f,0.5f });
 
@@ -210,6 +222,7 @@ void PlayerTimeUis::InitializeActor() {
 	if (addPlusUi_) {
 		addPlusUi_->SetParent(player_.lock());
 		addPlusUi_->Initialize();
+		addPlusUi_->WtInitialize();
 		// NumberUi::Initialize()でnumber.pngになるため、その後に+画像へ変更
 		addPlusUi_->SetTexture("Textures/numbers/plus.png");
 		addPlusUi_->SetPosition(CalyxEngine::Vector3{ -0.325f, 0.1f, player_.lock()->GetWorldTransform().scale.x / 1.5f + 1.25f });

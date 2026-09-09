@@ -4,6 +4,9 @@
 #include <Engine/Objects/3D/Actor/Actor.h>
 #include <Engine/Foundation/Math/Vector3.h>
 
+#include <Engine/Application/Effects/EffectAsset.h>
+#include <Engine/Application/Effects/EffectPlayer.h>
+
 /// <summary>リザルトで真上から落ちてくる隕石。1地点につき1個</summary>
 CALYX_OBJECT(Category = GameObject, DisplayName = "Falling Meteorite", Icon = "UI/Tool/cube.dds")
 class FallingMeteorite : public Actor {
@@ -44,5 +47,8 @@ private:
 	float fallSpeed_ = 0.0f;
 	float impactHold_ = 0.0f;
 	float timer_ = 0.0f;
+
+	CalyxEngine::EffectAsset moveEffect_;
+	CalyxEngine::EffectHandle moveHandle_{};
 
 };

@@ -147,6 +147,7 @@ void Player::Initialize() {
 		stageScale_ = ResultCarry::stageScale;
 	} else {
 		InitializeControlUi();
+		ResultCarry::stageClearDirection = stageClearLength_;
 	}
 	auto& wt = GetWorldTransform();
 	wt.scale = CalyxEngine::Vector3::One() * stageScale_;
@@ -176,7 +177,7 @@ void Player::Initialize() {
 	}
 
 	ResultCarry::stageScale = stageScale_;
-	ResultCarry::stageClearDirection = stageClearLength_;
+
 
 	isResultChain_ = false;
 }

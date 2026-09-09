@@ -80,8 +80,8 @@
                 "rotation": {
                     "w": 0.7514685988426208,
                     "x": 0.6596184968948364,
-                    "y": 0.01059048529714346,
-                    "z": -0.009296038188040257
+                    "y": 0.010590478777885437,
+                    "z": -0.009296031668782234
                 },
                 "scale": {
                     "x": 1.0,
@@ -193,7 +193,7 @@
                 "moveSpeed": 5.0,
                 "resultMode": false,
                 "rotSpeedDeg": 250.0,
-                "stageClearLength": 5.0,
+                "stageClearLength": 15.0,
                 "stageScale": 1.7999999523162842,
                 "yawAcceleration": 5.0
             },
@@ -287,8 +287,8 @@
         },
         {
             "PlayerTimeUis": {
-                "addTimePerConnect": 3.5,
-                "maxTime": 10.0
+                "addTimePerConnect": 2.0,
+                "maxTime": 8.0
             },
             "cameraDitherEnabled": false,
             "colliderConfig": {
@@ -1034,7 +1034,7 @@
         },
         {
             "NumberUi": {
-                "number": 4
+                "number": 5
             },
             "cameraDitherEnabled": false,
             "colliderConfig": {
@@ -1992,7 +1992,7 @@
         },
         {
             "NumberUi": {
-                "number": 0
+                "number": 1
             },
             "cameraDitherEnabled": false,
             "colliderConfig": {

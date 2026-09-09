@@ -272,6 +272,47 @@
         },
         {
             "anchor": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "43bbbcd9-7ff1-4922-bf25-428aed65b718",
+            "name": "Sprite2D",
+            "orderInLayer": 200,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "sortingLayerId": 0,
+            "textureGuid": "2fe630f7-3e04-466f-9a24-9cda89542bed",
+            "texturePath": "Textures/Story/UI/skip.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 150.0,
+                    "y": 75.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 990.0,
+                    "y": 650.0,
+                    "z": 0.0
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
+            "anchor": {
                 "x": 0.5,
                 "y": 0.5
             },
@@ -578,8 +619,8 @@
                 "enableSpaceInput": true,
                 "novelSceneGuid": "13f2630b-cb3a-449c-a709-e936940a815d",
                 "playOnStart": true,
-                "skipExecutionDelay": 3.0,
-                "skipGuideDelay": 1.5,
+                "skipExecutionDelay": 2.0,
+                "skipGuideDelay": 0.5,
                 "transitionOnFinished": true
             },
             "colliderConfig": {
@@ -668,7 +709,7 @@
                 },
                 "translation": {
                     "x": 1047.3218994140625,
-                    "y": 626.62109375,
+                    "y": 610.0,
                     "z": 0.0
                 }
             },

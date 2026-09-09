@@ -251,7 +251,7 @@ void NovelPlayerEvent::InitializeSkipUi() {
         return;
     } else {
         skipUi_->GetWorldTransform().scale = { 150.0f,90.0f,1.0f };
-		skipUi_->GetWorldTransform().translation = { 988.0f, 610.0f, 0.0f };
+		skipUi_->GetWorldTransform().translation = { 988.0f, 595.0f, 0.0f };
         skipUi_->SetOrderInLayer(111);
         skipUi_->GetWorldTransform().Update();
     }
@@ -260,7 +260,7 @@ void NovelPlayerEvent::InitializeSkipUi() {
         return;
     } else {
 		skipFrameUi_->GetWorldTransform().scale = { 150.0f,90.0f,1.0f };
-		skipFrameUi_->GetWorldTransform().translation = { 988.0f, 610.0f, 0.0f };  
+		skipFrameUi_->GetWorldTransform().translation = { 988.0f, 595.0f, 0.0f };  
 		skipFrameUi_->SetOrderInLayer(109);
         skipFrameUi_->GetWorldTransform().Update();
     }
@@ -269,7 +269,7 @@ void NovelPlayerEvent::InitializeSkipUi() {
 		return;
     } else {
 		skipBackUi_->GetWorldTransform().scale = { 150.0f,90.0f,1.0f };
-		skipBackUi_->GetWorldTransform().translation = { 988.0f, 610.0f, 0.0f };
+		skipBackUi_->GetWorldTransform().translation = { 988.0f, 595.0f, 0.0f };
         skipBackUi_->SetOrderInLayer(110);
         skipBackUi_->GetWorldTransform().Update();
     }

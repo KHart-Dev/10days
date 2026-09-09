@@ -1,11 +1,120 @@
 {
-  "version": 1,
   "events": [
-    { "guid": "b280cd95-5655-4445-9161-bdb2f8ec3c7b", "type": "ChangeBackground", "data": { "textureGuid": "50c03942-26cc-410d-9c87-b99347927b65" } },
-    { "guid": "3ceac58c-164d-4616-9034-8279c4d17817", "type": "ShowImage", "data": { "textureGuid": "98ee3ac9-6c0b-44ad-b622-9db2ab8d8628", "position": { "x": 480.0, "y": 540.0 }, "scale": { "x": 1.0, "y": 1.0 } } },
-    { "guid": "81acdc8a-b982-4f34-8252-4ef1aa256f70", "type": "Dialogue", "data": { "dialogueAssetGuid": "337b7624-34ea-454a-a98c-94e2d77bb963", "dialogueLineGuid": "1d083102-f14c-4f79-8900-8160457f82dd" } },
-    { "guid": "913f5c46-c007-4f24-ae0a-d1c7e94128df", "type": "Dialogue", "data": { "dialogueAssetGuid": "337b7624-34ea-454a-a98c-94e2d77bb963", "dialogueLineGuid": "bf9fbf31-6cdc-48a6-82ed-cff06093ad3c" } },
-    { "guid": "63991673-8c15-44cf-8aad-3b9c6f294bc9", "type": "Dialogue", "data": { "dialogueAssetGuid": "337b7624-34ea-454a-a98c-94e2d77bb963", "dialogueLineGuid": "a2815558-26cc-4095-861d-47d224998eb7" } },
-    { "guid": "ece8f855-8fc4-410e-b13b-13fac2949183", "type": "Wait", "data": { "duration": 0.5 } }
-  ]
+    {
+      "data": {
+        "advanceMode": "Input",
+        "duration": 1.0,
+        "hideOnComplete": false,
+        "sceneObjectGuid": "449ead54-7fe7-41d3-ae42-deab85f67f7b"
+      },
+      "guid": "58445922-275c-4061-b8e7-9263cd5aa86b",
+      "type": "SceneObject"
+    },
+    {
+      "data": {
+        "advanceMode": "Input",
+        "duration": 1.0,
+        "hideOnComplete": false,
+        "sceneObjectGuid": "f90668e0-7776-42bc-bf3b-733a1a1deb7f"
+      },
+      "guid": "b357a223-cdb4-49cb-95de-3ddd650c65bb",
+      "type": "SceneObject"
+    },
+    {
+      "data": {
+        "advanceMode": "Input",
+        "duration": 1.0,
+        "hideOnComplete": false,
+        "sceneObjectGuid": "1b531745-eeaa-47ed-861b-eceedd57dd4a"
+      },
+      "guid": "5868d6c4-a362-4ec9-9fc8-740311b191dd",
+      "type": "SceneObject"
+    },
+    {
+      "data": {
+        "advanceMode": "Input",
+        "duration": 1.0,
+        "hideOnComplete": false,
+        "sceneObjectGuid": "8484865a-eebb-42b7-85b0-0b531de7ef24"
+      },
+      "guid": "e463897d-06da-4bd0-8cf0-b0a5b7402869",
+      "type": "SceneObject"
+    },
+    {
+      "data": {
+        "advanceMode": "Input",
+        "duration": 1.0,
+        "hideOnComplete": false,
+        "sceneObjectGuid": "8034c56d-de07-4715-a7e1-803f7b3a6971"
+      },
+      "guid": "6e46c06e-bf4e-4ebd-b665-5cf9f0448fee",
+      "type": "SceneObject"
+    },
+    {
+      "data": {
+        "advanceMode": "Input",
+        "duration": 1.0,
+        "hideOnComplete": false,
+        "sceneObjectGuid": "b17b70f1-ab97-4843-a27c-23556108fcb3"
+      },
+      "guid": "5c8b15db-f461-420c-a418-a7e523f8e582",
+      "type": "SceneObject"
+    },
+    {
+      "data": {
+        "advanceMode": "Input",
+        "duration": 1.0,
+        "hideOnComplete": false,
+        "sceneObjectGuid": "b8e0b276-62e8-41d0-9ae6-8c082cda42f2"
+      },
+      "guid": "76c709bf-c06f-4cdf-8628-5ce30e22a105",
+      "type": "SceneObject"
+    }
+  ],
+  "textSettings": {
+    "dialoguePosition": {
+      "x": 80.0,
+      "y": 760.0
+    },
+    "dialogueSize": {
+      "x": 1760.0,
+      "y": 220.0
+    },
+    "dialogueStyle": {
+      "color": {
+        "w": 1.0,
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "fontSize": 32.0,
+      "letterSpacing": 0.0,
+      "lineSpacing": 1.0,
+      "maxWidth": 0.0,
+      "wordWrap": true
+    },
+    "fontGuid": "00000000-0000-0000-0000-000000000000",
+    "speakerPosition": {
+      "x": 80.0,
+      "y": 700.0
+    },
+    "speakerSize": {
+      "x": 600.0,
+      "y": 60.0
+    },
+    "speakerStyle": {
+      "color": {
+        "w": 1.0,
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "fontSize": 28.0,
+      "letterSpacing": 0.0,
+      "lineSpacing": 1.0,
+      "maxWidth": 0.0,
+      "wordWrap": false
+    }
+  },
+  "version": 2
 }

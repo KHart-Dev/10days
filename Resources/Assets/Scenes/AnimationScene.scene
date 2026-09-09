@@ -41,6 +41,49 @@
             "type": "DirectionalLight"
         },
         {
+            "anchor": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "f90668e0-7776-42bc-bf3b-733a1a1deb7f",
+            "name": "StoryImage02",
+            "orderInLayer": 1,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "prefabAssetGuid": "59e30013-f4c3-42ac-b522-7a02ec23e3c4",
+            "prefabSourceGuid": "449ead54-7fe7-41d3-ae42-deab85f67f7b",
+            "sortingLayerId": 0,
+            "textureGuid": "c2613cc8-de62-4440-bed9-92ae1d54f0be",
+            "texturePath": "Textures/Story/story02.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1280.0,
+                    "y": 720.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
             "guid": "5e3126c2-8129-4ac0-bf86-f1adce9398c7",
             "name": "MainCamera",
             "objectType": 0,
@@ -226,6 +269,370 @@
                 "y": 0.0,
                 "z": 0.0
             }
+        },
+        {
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "af75a4a2-1f8c-49d4-baab-f1b93bb63dbe",
+            "name": "TextFrame",
+            "orderInLayer": 99,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "sortingLayerId": 0,
+            "textureGuid": "d3834e8f-5bc3-4b7c-8f0d-4a05c6efd3d2",
+            "texturePath": "Textures/Story/UI/storyTextFrame.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1105.288330078125,
+                    "y": 274.1112060546875,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 640.0,
+                    "y": 577.0816040039063,
+                    "z": 0.0
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
+            "anchor": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "449ead54-7fe7-41d3-ae42-deab85f67f7b",
+            "name": "StoryImage01",
+            "orderInLayer": 0,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "prefabAssetGuid": "59e30013-f4c3-42ac-b522-7a02ec23e3c4",
+            "prefabSourceGuid": "449ead54-7fe7-41d3-ae42-deab85f67f7b",
+            "sortingLayerId": 0,
+            "textureGuid": "6af1d11d-3e39-4071-83a2-88699418df55",
+            "texturePath": "Textures/Story/story01.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1280.0,
+                    "y": 720.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
+            "anchor": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "1b531745-eeaa-47ed-861b-eceedd57dd4a",
+            "name": "StoryImage03",
+            "orderInLayer": 2,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "prefabAssetGuid": "59e30013-f4c3-42ac-b522-7a02ec23e3c4",
+            "prefabSourceGuid": "449ead54-7fe7-41d3-ae42-deab85f67f7b",
+            "sortingLayerId": 0,
+            "textureGuid": "8b061a96-9151-4e2d-a199-8652ae263c68",
+            "texturePath": "Textures/Story/story03.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1280.0,
+                    "y": 720.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
+            "anchor": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "8484865a-eebb-42b7-85b0-0b531de7ef24",
+            "name": "StoryImage04",
+            "orderInLayer": 3,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "prefabAssetGuid": "59e30013-f4c3-42ac-b522-7a02ec23e3c4",
+            "prefabSourceGuid": "449ead54-7fe7-41d3-ae42-deab85f67f7b",
+            "sortingLayerId": 0,
+            "textureGuid": "4b5183a6-ae1b-446d-be20-7be8497deb21",
+            "texturePath": "Textures/Story/story04.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1280.0,
+                    "y": 720.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
+            "anchor": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "8034c56d-de07-4715-a7e1-803f7b3a6971",
+            "name": "StoryImage05",
+            "orderInLayer": 4,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "prefabAssetGuid": "59e30013-f4c3-42ac-b522-7a02ec23e3c4",
+            "prefabSourceGuid": "449ead54-7fe7-41d3-ae42-deab85f67f7b",
+            "sortingLayerId": 0,
+            "textureGuid": "666b2972-5a78-4b50-919e-e7927aacf53c",
+            "texturePath": "Textures/Story/story05.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1280.0,
+                    "y": 720.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
+            "anchor": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "b17b70f1-ab97-4843-a27c-23556108fcb3",
+            "name": "StoryImage06",
+            "orderInLayer": 5,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "prefabAssetGuid": "59e30013-f4c3-42ac-b522-7a02ec23e3c4",
+            "prefabSourceGuid": "449ead54-7fe7-41d3-ae42-deab85f67f7b",
+            "sortingLayerId": 0,
+            "textureGuid": "78ca0ae7-3aff-4a2d-a539-54add56ed39a",
+            "texturePath": "Textures/Story/story06.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1280.0,
+                    "y": 720.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
+            "anchor": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "b8e0b276-62e8-41d0-9ae6-8c082cda42f2",
+            "name": "StoryImage07",
+            "orderInLayer": 6,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "prefabAssetGuid": "59e30013-f4c3-42ac-b522-7a02ec23e3c4",
+            "prefabSourceGuid": "449ead54-7fe7-41d3-ae42-deab85f67f7b",
+            "sortingLayerId": 0,
+            "textureGuid": "0a2fb0f4-e89e-41ad-a986-a11e5c8a14f5",
+            "texturePath": "Textures/Story/story07.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1280.0,
+                    "y": 720.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
+            "NovelPlayerEvent": {
+                "advanceGuideGuid": "00000000-0000-0000-0000-000000000000",
+                "destinationSceneGuid": "3dccd148-8fdb-4659-b09d-ea4060153a70",
+                "enableGamepadAInput": true,
+                "enableHoldToSkip": true,
+                "enableSpaceInput": true,
+                "novelSceneGuid": "13f2630b-cb3a-449c-a709-e936940a815d",
+                "playOnStart": true,
+                "skipExecutionDelay": 3.0,
+                "skipGuideDelay": 1.5,
+                "skipGuideGuid": "00000000-0000-0000-0000-000000000000",
+                "transitionOnFinished": true
+            },
+            "colliderConfig": {
+                "capsuleHeight": 2.0,
+                "capsuleRadius": 0.5,
+                "isCollisionEnabled": true,
+                "isDraw": true,
+                "isTrigger": false,
+                "layerId": 0,
+                "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius": 1.0,
+                "rotate": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "size": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            },
+            "guid": "f05302f5-76d3-43bc-a56e-0f6a1a638838",
+            "name": "Novel Player",
+            "objectType": 5,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 7.420071601867676,
+                    "y": 0.7055330276489258,
+                    "z": -1.4700546264648438
+                }
+            },
+            "type": "NovelPlayerEvent"
         }
     ],
     "sceneName": "AnimationScene",

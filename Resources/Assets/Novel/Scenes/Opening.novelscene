@@ -4,6 +4,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 1.0,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "449ead54-7fe7-41d3-ae42-deab85f67f7b"
       },
@@ -28,21 +29,22 @@
     },
     {
       "data": {
-        "advanceMode": "Input",
-        "duration": 1.0,
-        "hideOnComplete": false,
-        "sceneObjectGuid": "f90668e0-7776-42bc-bf3b-733a1a1deb7f"
-      },
-      "guid": "b357a223-cdb4-49cb-95de-3ddd650c65bb",
-      "type": "SceneObject"
-    },
-    {
-      "data": {
         "dialogueAssetGuid": "316adaf9-4cd0-44fa-8f37-1dd7c28e3a00",
         "dialogueLineGuid": "f8f1be52-0fde-45b5-b69e-dd86957b3db2"
       },
       "guid": "bfc48c29-285e-4218-bedc-7773edbc067e",
       "type": "Dialogue"
+    },
+    {
+      "data": {
+        "advanceMode": "Input",
+        "duration": 1.0,
+        "hideDialogueOnStart": false,
+        "hideOnComplete": false,
+        "sceneObjectGuid": "f90668e0-7776-42bc-bf3b-733a1a1deb7f"
+      },
+      "guid": "cf08343c-6dbe-45f1-b302-33d022c868be",
+      "type": "SceneObject"
     },
     {
       "data": {
@@ -56,6 +58,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 1.0,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "1b531745-eeaa-47ed-861b-eceedd57dd4a"
       },
@@ -90,6 +93,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 1.0,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "8484865a-eebb-42b7-85b0-0b531de7ef24"
       },
@@ -116,6 +120,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 1.0,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "8034c56d-de07-4715-a7e1-803f7b3a6971"
       },
@@ -142,6 +147,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 1.0,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "b17b70f1-ab97-4843-a27c-23556108fcb3"
       },
@@ -168,6 +174,7 @@
       "data": {
         "advanceMode": "Input",
         "duration": 1.0,
+        "hideDialogueOnStart": false,
         "hideOnComplete": false,
         "sceneObjectGuid": "b8e0b276-62e8-41d0-9ae6-8c082cda42f2"
       },
@@ -185,12 +192,12 @@
   ],
   "textSettings": {
     "dialoguePosition": {
-      "x": 150.0,
-      "y": 350.0
+      "x": 175.0,
+      "y": 525.0
     },
     "dialogueSize": {
-      "x": 1760.0,
-      "y": 220.0
+      "x": 1164.0,
+      "y": 251.0
     },
     "dialogueStyle": {
       "color": {
@@ -199,15 +206,15 @@
         "y": 1.0,
         "z": 1.0
       },
-      "fontSize": 32.0,
-      "letterSpacing": 0.0,
+      "fontSize": 45.0,
+      "letterSpacing": 10.199999809265137,
       "lineSpacing": 1.0,
       "maxWidth": 0.0,
       "wordWrap": true
     },
     "fontGuid": "6faeb7f1-d14c-4d08-b254-f2023899aa74",
     "speakerPosition": {
-      "x": 80.0,
+      "x": -594.0,
       "y": 700.0
     },
     "speakerSize": {
@@ -221,8 +228,8 @@
         "y": 1.0,
         "z": 1.0
       },
-      "fontSize": 28.0,
-      "letterSpacing": 0.0,
+      "fontSize": 1.0,
+      "letterSpacing": -1.899999976158142,
       "lineSpacing": 1.0,
       "maxWidth": 0.0,
       "wordWrap": false

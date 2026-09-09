@@ -809,6 +809,14 @@ private:
 
     const bool isText =
         object && dynamic_cast<CalyxEngine::TextSceneObject2d *>(object.get());
+    const bool isSprite =
+        object &&
+        (dynamic_cast<CalyxEngine::SpriteObject2d *>(object.get()) ||
+         dynamic_cast<CalyxEngine::SpriteSceneObject2d *>(object.get()));
+    if (isSprite) {
+      ImGui::Checkbox("テクスチャ切替時に直前の会話テキストを非表示",
+                      &data.hideDialogueOnStart_);
+    }
     if (isText && ImGui::Button("このテキストをすぐ非表示")) {
       data.advanceMode_ = CalyxEngine::NovelClipAdvanceMode::Time;
       data.duration_ = 0.0f;

@@ -30,6 +30,8 @@ namespace {
 		"Textures/GameUI/operationKey.png";
 	constexpr const char* kPadTexture =
 		"Textures/GameUI/operationPad.png";
+	constexpr const char* kForecastTexture =
+		"Textures/GameUI/attentionUI.png";
 
 	// 入力デバイスの判定用。スティックとトリガーは遊びを越えたときだけ触ったと見る
 	constexpr float kDeviceStickThresholdSq = 0.3f * 0.3f;

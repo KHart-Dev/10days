@@ -281,6 +281,7 @@ void Player::Update(float dt) {
 		wt.eulerRotation.x = std::numbers::pi_v<float> / 2.0f;
 		wt.eulerRotation.y += yawVelocity_ * dt;
 		wt.rotationSource = RotationSource::Euler;
+		firstStageRotation_ = true;
 		wt.Update();
 	}
 

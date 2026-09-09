@@ -7,6 +7,8 @@
 #include <Engine/System/Command/EditorCommand/GuiCommand/ImGuiHelper/GuiCmd.h>
 #include <externals/imgui/imgui.h>
 
+#include <Game/Audio/GameAudio.h>
+
 #include <algorithm>
 
 NovelPlayerEvent::NovelPlayerEvent()
@@ -17,6 +19,8 @@ NovelPlayerEvent::NovelPlayerEvent()
 void NovelPlayerEvent::Initialize() {
   BaseEventObject::Initialize();
   UpdateGuideVisibility(false);
+
+  GameAudio::PlayBgm(GameAudio::kBgmStory);
 
   if (playOnStart_) {
     Play();

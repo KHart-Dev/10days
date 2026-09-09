@@ -165,6 +165,7 @@
                 }
             },
             "colliderKind": 1,
+            "drawInForeground": false,
             "guid": "1e1a0a8c-1610-4257-9931-eac8f76a8800",
             "modelConfig": {
                 "blendMode": 5,
@@ -209,9 +210,9 @@
                     "z": 0.0
                 },
                 "scale": {
-                    "x": 8.0,
-                    "y": 1.0,
-                    "z": 8.0
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
                 },
                 "translation": {
                     "x": 0.0,

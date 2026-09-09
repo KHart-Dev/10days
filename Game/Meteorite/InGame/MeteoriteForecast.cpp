@@ -31,6 +31,7 @@ namespace {
 
 	// 予報の絵。ステージごとに1枚ずつ用意する
 	constexpr const char* kForecastTexturePrefix = "Textures/forecast/stage";
+	constexpr const char* kAreaTexturePrefix = "Textures/GameUI/area";
 	constexpr const char* kForecastTextureSuffix = ".png";
 
 	constexpr float kPlaneUnit = 0.5f;
@@ -51,6 +52,52 @@ namespace {
 	float Deg2Rad(float degree) noexcept {
 		return degree * std::numbers::pi_v<float> / 180.0f;
 	}
+
+	/// 0..1 を、両端が速く中央がゆっくりになるよう歪める。
+	float FlowCurve(float t, float power) noexcept {
+
+		if (power <= 1.0f) {
+			return t;
+		}
+
+		const float s = t * 2.0f - 1.0f;
+		const float shaped = std::pow(std::abs(s), power);
+		return 0.5f + 0.5f * (s < 0.0f ? -shaped : shaped);
+	}
+
+	/// 板をカメラの手前に置くのに要る姿勢一式
+	struct CameraBasis {
+		Vector3 right{};
+		Vector3 up{};
+		Vector3 forward{};
+		Vector3 eye{};
+		Quaternion rotation{};
+	};
+
+	bool TryGetCameraBasis(CameraBasis& basis) {
+
+		Camera3d* camera = CameraManager::GetMain3d();
+		if (!camera) {
+			return false;
+		}
+
+		const CalyxEngine::Matrix4x4& cameraMatrix = camera->GetWorldTransform().matrix.world;
+
+		basis.right = Vector3{ cameraMatrix.m[0][0], cameraMatrix.m[0][1], cameraMatrix.m[0][2] }.Normalize();
+		basis.up = Vector3{ cameraMatrix.m[1][0], cameraMatrix.m[1][1], cameraMatrix.m[1][2] }.Normalize();
+		basis.forward = Vector3{ cameraMatrix.m[2][0], cameraMatrix.m[2][1], cameraMatrix.m[2][2] }.Normalize();
+		basis.eye = { cameraMatrix.m[3][0], cameraMatrix.m[3][1], cameraMatrix.m[3][2] };
+		basis.rotation = Quaternion::FromMatrix(cameraMatrix);
+
+		return true;
+	}
+
+	Quaternion RotationOffsetOf(const Vector3& degree) {
+		return Quaternion::EulerToQuaternion({
+			Deg2Rad(degree.x),
+			Deg2Rad(degree.y),
+			Deg2Rad(degree.z) });
+	}
 }
 
 MeteoriteForecast::MeteoriteForecast()
@@ -61,7 +108,7 @@ void MeteoriteForecast::Initialize() {
 
 	param_.LoadParams();
 
-	DisableGravity();
+	DisableGravity(*this);
 
 	// ステージ番号は次ステージへ移る前に ResultCarry へ入る運用。
 	stageIndex_ = ResultCarry::stageIndex;
@@ -93,6 +140,9 @@ void MeteoriteForecast::Update(float dt) {
 		FollowCamera();
 	}
 
+	// 惑星名は板が畳まれた後に流れる。上の if に入れると一度も動かない
+	UpdateStarName(rawDt);
+
 	Actor::Update(dt);
 }
 
@@ -105,6 +155,28 @@ void MeteoriteForecast::SetStage(int stageIndex) {
 void MeteoriteForecast::ApplyStageTexture() {
 
 	SetTexture(kForecastTexturePrefix + std::to_string(stageIndex_) + kForecastTextureSuffix);
+
+	if (IsTransient()) {
+		return;
+	}
+
+	if (!starName_) {
+		starName_ = SceneAPI::Instantiate<Actor>("plane.obj", "StarName");
+
+		auto& wt = starName_->GetWorldTransform();
+		wt.scale = {
+				param_.nameSize.x * kPlaneUnit,
+				param_.nameSize.y * kPlaneUnit,
+				1.0f
+		};
+
+		DisableGravity(*starName_);
+		starName_->SetDrawEnable(false);
+		starName_->SetBlendMode(BlendMode::ADD);
+	}
+
+	// 絵はステージが変わるたびに貼り直す
+	starName_->SetTexture(kAreaTexturePrefix + std::to_string(stageIndex_ + 1) + kForecastTextureSuffix);
 }
 
 void MeteoriteForecast::ShowAtStart() {
@@ -162,6 +234,12 @@ void MeteoriteForecast::UpdatePhase(float dt) {
 			openRate_ = 0.0f;
 			phase_ = Phase::Hidden;
 			SetDrawEnable(false);
+
+			// 開始時の予報を畳み終えたときだけ流す。板と場所が重ならないよう閉じ切ってから
+			if (mode_ == Mode::Start && !nameShown_) {
+				nameShown_ = true;
+				BeginStarNameFlow();
+			}
 		} else if (mode_ == Mode::Peek && IsPeekHeld()) {
 			// 畳んでいる途中で押し直されたら開き直す
 			phase_ = Phase::Opening;
@@ -197,19 +275,10 @@ void MeteoriteForecast::UpdateVisual(float dt) {
 
 void MeteoriteForecast::FollowCamera() {
 
-	Camera3d* camera = CameraManager::GetMain3d();
-	if (!camera) {
+	CameraBasis basis;
+	if (!TryGetCameraBasis(basis)) {
 		return;
 	}
-
-	// カメラの軸
-	const CalyxEngine::Matrix4x4& cameraMatrix = camera->GetWorldTransform().matrix.world;
-	// カメラやその親に拡大率が入っていると軸の長さが 1 でなくなり、
-	// distance も offset も倍率ぶんずれる。正規化してから使う。
-	const Vector3 right = Vector3{ cameraMatrix.m[0][0], cameraMatrix.m[0][1], cameraMatrix.m[0][2] }.Normalize();
-	const Vector3 up = Vector3{ cameraMatrix.m[1][0], cameraMatrix.m[1][1], cameraMatrix.m[1][2] }.Normalize();
-	const Vector3 forward = Vector3{ cameraMatrix.m[2][0], cameraMatrix.m[2][1], cameraMatrix.m[2][2] }.Normalize();
-	const Vector3 eye = { cameraMatrix.m[3][0], cameraMatrix.m[3][1], cameraMatrix.m[3][2] };
 
 	// 揺れ幅は板の高さに対する割合で持つ。
 	// メートルで持つと distance を変えたときだけ画面上の揺れ幅が変わってしまう。
@@ -217,20 +286,71 @@ void MeteoriteForecast::FollowCamera() {
 
 	auto& wt = GetWorldTransform();
 	wt.translation =
-		eye
-		+ forward * param_.distance
-		+ right * param_.offset.x
-		+ up * (param_.offset.y + bob);
+		basis.eye
+		+ basis.forward * param_.distance
+		+ basis.right * param_.offset.x
+		+ basis.up * (param_.offset.y + bob);
 
 	// カメラと同じ向きにする
-	const Quaternion cameraRotation = Quaternion::FromMatrix(cameraMatrix);
-	const Quaternion rotationOffset = Quaternion::EulerToQuaternion({
-		Deg2Rad(param_.rotationOffsetDeg.x),
-		Deg2Rad(param_.rotationOffsetDeg.y),
-		Deg2Rad(param_.rotationOffsetDeg.z) });
-
-	wt.rotation = Quaternion::Multiply(rotationOffset, cameraRotation);
+	wt.rotation = Quaternion::Multiply(RotationOffsetOf(param_.rotationOffsetDeg), basis.rotation);
 	wt.rotationSource = RotationSource::Quaternion;
+}
+
+void MeteoriteForecast::UpdateStarName(float dt) {
+
+	if (!nameFlowing_ || !starName_) {
+		return;
+	}
+
+	CameraBasis basis;
+	if (!TryGetCameraBasis(basis)) {
+		return;
+	}
+
+	nameTime_ += dt;
+
+	const float t = param_.nameFlowTime > 0.0f
+		? Saturate(nameTime_ / param_.nameFlowTime)
+		: 1.0f;
+
+	// 左の外から入り、中央で粘って、右の外へ抜ける
+	const float lateral =
+		param_.nameTravelX * (FlowCurve(t, param_.nameFlowPower) * 2.0f - 1.0f);
+
+	auto& wt = starName_->GetWorldTransform();
+	wt.translation =
+		basis.eye
+		+ basis.forward * param_.nameDistance
+		+ basis.right * lateral
+		+ basis.up * param_.nameHeight;
+
+	// 板と同じ換算。毎フレーム入れているのは ImGui で大きさを詰められるようにするため
+	wt.scale = {
+		param_.nameSize.x * kPlaneUnit,
+		param_.nameSize.y * kPlaneUnit,
+		1.0f };
+
+	wt.rotation = Quaternion::Multiply(RotationOffsetOf(param_.rotationOffsetDeg), basis.rotation);
+	wt.rotationSource = RotationSource::Quaternion;
+
+	if (t >= 1.0f) {
+		nameFlowing_ = false;
+		starName_->SetDrawEnable(false);
+	}
+}
+
+void MeteoriteForecast::BeginStarNameFlow() {
+
+	if (!starName_) {
+		return;
+	}
+
+	nameFlowing_ = true;
+	nameTime_ = 0.0f;
+
+	// 位置を入れてから出す。順番が逆だと原点に 1 フレーム映る
+	UpdateStarName(0.0f);
+	starName_->SetDrawEnable(true);
 }
 
 void MeteoriteForecast::Open(Mode mode) {
@@ -255,8 +375,8 @@ bool MeteoriteForecast::IsPeekHeld() {
 		|| CalyxFoundation::Input::PushGamepadButton(kPeekButton);
 }
 
-void MeteoriteForecast::DisableGravity() {
-	auto& movement = GetCharacterMovement();
+void MeteoriteForecast::DisableGravity(Actor& actor) {
+	auto& movement = actor.GetCharacterMovement();
 	movement.SetGravity(0.0f);
 	movement.SetMaxFallSpeed(0.0f);
 	movement.SetFloorProbeDistance(0.0f);
@@ -278,6 +398,11 @@ void MeteoriteForecast::DerivativeGui() {
 
 	if (ImGui::Button("Show At Start")) {
 		ShowAtStart();
+	}
+
+	// 惑星名の流れ方だけ確認する用
+	if (ImGui::Button("Flow Star Name")) {
+		BeginStarNameFlow();
 	}
 
 	param_.ShowGui();
@@ -329,6 +454,30 @@ MeteoriteForecast::ForecastParam::ForecastParam() {
 	AddField("bobSpeed", bobSpeed)
 		.Category("Look")
 		.Tooltip("上下の揺れの速さ");
+
+	AddField("nameDistance", nameDistance)
+		.Category("StarName")
+		.Tooltip("カメラから惑星名までの距離。近づけるほど大きく映る");
+
+	AddField("nameSize", nameSize)
+		.Category("StarName")
+		.Tooltip("惑星名の板の大きさ (m)");
+
+	AddField("nameHeight", nameHeight)
+		.Category("StarName")
+		.Tooltip("画面内の高さ。+ で上へ");
+
+	AddField("nameTravelX", nameTravelX)
+		.Category("StarName")
+		.Tooltip("左右の折り返し位置。画面外まで抜けるよう、画角の半分より大きめに取る");
+
+	AddField("nameFlowTime", nameFlowTime)
+		.Category("StarName")
+		.Tooltip("左端から右端まで通り過ぎるのにかける秒数");
+
+	AddField("nameFlowPower", nameFlowPower)
+		.Category("StarName")
+		.Tooltip("中央での粘り。1 で等速、大きいほど中央がゆっくりになる。3 で全体の約6割を中央付近に使う");
 }
 
 // パス

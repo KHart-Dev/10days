@@ -60,7 +60,7 @@ void NovelPlayerEvent::AlwaysUpdate(float dt) {
 
     if (enableHoldToSkip_ && inputHoldDuration_ >= skipExecutionDelay_) {
       skipExecuted_ = true;
-      player_->SkipToEnd();
+      //player_->SkipToEnd();
       HandlePlaybackFinished();
     }
 

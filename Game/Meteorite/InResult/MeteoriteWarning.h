@@ -15,7 +15,7 @@ struct MeteoriteFallSettings {
 	float blinkPeriod = 0.4f;		//< 点滅1回ぶんの秒数。落ちるまでの時間はこの2つで決まる
 	float fallHeight = 30.0f;		//< 予告円の何メートル上から落とすか
 	float fallSpeed = 40.0f;		//< 落下速度 (m/s)
-	float colliderRadius = 2.0f;	//< 着弾時に出す判定の半径
+	float colliderRadius = 1.0f;	//< 着弾時に出す判定の半径
 	float impactHold = 0.2f;		//< 判定を出しておく秒数
 };
 

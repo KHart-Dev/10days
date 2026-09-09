@@ -3,7 +3,11 @@
 #include <Engine/Application/UI/Panels/AssetPanel.h>
 #include <Engine/Assets/Database/AssetDatabase.h>
 #include <Engine/Foundation/Input/Input.h>
+#include <Engine/Scene/Utility/SceneUtility.h>
+#include <Engine/System/Command/EditorCommand/GuiCommand/ImGuiHelper/GuiCmd.h>
 #include <externals/imgui/imgui.h>
+
+#include <algorithm>
 
 NovelPlayerEvent::NovelPlayerEvent()
     : BaseEventObject("NovelPlayerEvent"),
@@ -12,21 +16,64 @@ NovelPlayerEvent::NovelPlayerEvent()
 
 void NovelPlayerEvent::Initialize() {
   BaseEventObject::Initialize();
-  if (playOnStart_)
+  UpdateGuideVisibility(false);
+
+  if (playOnStart_) {
     Play();
+  }
 }
 
 void NovelPlayerEvent::AlwaysUpdate(float dt) {
   BaseEventObject::AlwaysUpdate(dt);
-  if (!player_)
+  if (!player_) {
     return;
+  }
 
   player_->Update(dt);
 
-  // Input mapping belongs here. NovelPlayer itself stays device independent.
-  if (CalyxFoundation::Input::TriggerKey(DIK_SPACE)) {
+  if (player_->IsFinished()) {
+    HandlePlaybackFinished();
+    return;
+  }
+
+  if (!player_->IsPlaying()) {
+    return;
+  }
+
+  // SpaceとゲームパッドAを同じ「決定入力」としてまとめる。
+  // 短押しと長押しを区別するため、押した瞬間ではなく離した瞬間にNextする。
+  const bool spaceHeld =
+      enableSpaceInput_ && CalyxFoundation::Input::PushKey(DIK_SPACE);
+  const bool gamepadAHeld =
+      enableGamepadAInput_ &&
+      CalyxFoundation::Input::PushGamepadButton(
+          CalyxFoundation::PadButton::A);
+  const bool inputHeld = spaceHeld || gamepadAHeld;
+
+  if (inputHeld) {
+    inputHoldDuration_ += (std::max)(dt, 0.0f);
+    wasInputHeld_ = true;
+
+    if (enableHoldToSkip_ && inputHoldDuration_ >= skipGuideDelay_) {
+      UpdateGuideVisibility(true);
+    }
+
+    if (enableHoldToSkip_ && inputHoldDuration_ >= skipExecutionDelay_) {
+      skipExecuted_ = true;
+      player_->SkipToEnd();
+      HandlePlaybackFinished();
+    }
+
+    return;
+  }
+
+  // Inputにはキーボード／パッドのRelease APIがないため、
+  // 前フレームの保持状態を使って離した瞬間を判定する。
+  if (wasInputHeld_ && !skipExecuted_) {
     player_->Next();
   }
+
+  ResetAdvanceInput();
 }
 
 void NovelPlayerEvent::Play() {
@@ -34,23 +81,34 @@ void NovelPlayerEvent::Play() {
       novelSceneGuid_.isValid()
           ? AssetDatabase::GetInstance()->Get(novelSceneGuid_)
           : nullptr;
-  if (!record || record->type != AssetType::NovelScene)
+  if (!record || record->type != AssetType::NovelScene) {
     return;
-  if (!scene_.Load(record->sourcePath))
+  }
+
+  if (!scene_.Load(record->sourcePath)) {
     return;
+  }
 
   player_->SetScene(&scene_);
   player_->Play();
+  finishHandled_ = false;
+  ResetAdvanceInput();
+  UpdateGuideVisibility(false);
 }
 
 void NovelPlayerEvent::Stop() {
-  if (player_)
+  if (player_) {
     player_->Stop();
+  }
+
+  finishHandled_ = false;
+  ResetAdvanceInput();
+  UpdateGuideVisibility(false);
 }
 
 void NovelPlayerEvent::DerivativeGui() {
   BaseEventObject::DerivativeGui();
-  ImGui::SeparatorText("Novel Player");
+  ImGui::SeparatorText("ノベルプレイヤー");
 
   Guid droppedGuid = novelSceneGuid_;
   if (CalyxEngine::AssetPanel::DrawAssetDropTarget(AssetType::NovelScene,
@@ -64,27 +122,140 @@ void NovelPlayerEvent::DerivativeGui() {
           : nullptr;
   const std::string filename =
       record ? record->sourcePath.filename().string() : "(none)";
-  ImGui::TextWrapped("Novel Scene: %s", filename.c_str());
-  ImGui::Checkbox("Play On Start", &playOnStart_);
+  ImGui::TextWrapped("ノベルシーン: %s", filename.c_str());
+  ImGui::Checkbox("開始時に再生", &playOnStart_);
 
-  if (ImGui::Button("Play"))
+  ImGui::SeparatorText("進行入力");
+  ImGui::Checkbox("Spaceキーで進む", &enableSpaceInput_);
+  ImGui::Checkbox("ゲームパッドAで進む", &enableGamepadAInput_);
+  ImGui::Checkbox("長押しスキップを有効にする", &enableHoldToSkip_);
+
+  if (!enableHoldToSkip_) {
+    ImGui::BeginDisabled();
+  }
+
+  ImGui::DragFloat("スキップ表示開始（秒）", &skipGuideDelay_, 0.05f,
+                   0.1f, 30.0f, "%.2f");
+  ImGui::DragFloat("スキップ実行（秒）", &skipExecutionDelay_, 0.05f,
+                   0.1f, 30.0f, "%.2f");
+  skipGuideDelay_ = (std::max)(skipGuideDelay_, 0.1f);
+  skipExecutionDelay_ =
+      (std::max)(skipExecutionDelay_, skipGuideDelay_);
+
+  if (!enableHoldToSkip_) {
+    ImGui::EndDisabled();
+  }
+
+  // HierarchyからSceneObjectをドロップして、通常表示とスキップ表示を指定する。
+  GuiCmd::SceneObjectReferenceField("通常ボタンUI", advanceGuide_);
+  GuiCmd::SceneObjectReferenceField("スキップUI", skipGuide_);
+
+  ImGui::SeparatorText("再生終了後");
+  ImGui::Checkbox("終了時にシーン遷移", &transitionOnFinished_);
+
+  if (!transitionOnFinished_) {
+    ImGui::BeginDisabled();
+  }
+
+  Guid destinationGuid = destinationSceneGuid_;
+  if (CalyxEngine::AssetPanel::DrawAssetDropTarget(AssetType::Scene,
+                                                   &destinationGuid)) {
+    destinationSceneGuid_ = destinationGuid;
+  }
+
+  const AssetRecord *destinationRecord =
+      destinationSceneGuid_.isValid()
+          ? AssetDatabase::GetInstance()->Get(destinationSceneGuid_)
+          : nullptr;
+  const std::string destinationName =
+      destinationRecord && destinationRecord->type == AssetType::Scene
+          ? destinationRecord->sourcePath.filename().string()
+          : "（未設定）";
+  ImGui::TextWrapped("遷移先シーン: %s", destinationName.c_str());
+
+  if (!transitionOnFinished_) {
+    ImGui::EndDisabled();
+  }
+
+  if (ImGui::Button("再生")) {
     Play();
+  }
+
   ImGui::SameLine();
-  if (ImGui::Button("Stop"))
+
+  if (ImGui::Button("停止")) {
     Stop();
+  }
 }
 
 void NovelPlayerEvent::ApplyDerivedConfigFromJson(
     [[maybe_unused]] const nlohmann::json &root,
     const nlohmann::json *derived) {
-  if (!derived)
+  if (!derived) {
     return;
+  }
+
   novelSceneGuid_ = derived->value("novelSceneGuid", Guid{});
   playOnStart_ = derived->value("playOnStart", false);
+  enableSpaceInput_ = derived->value("enableSpaceInput", true);
+  enableGamepadAInput_ = derived->value("enableGamepadAInput", true);
+  enableHoldToSkip_ = derived->value("enableHoldToSkip", true);
+  skipGuideDelay_ = derived->value("skipGuideDelay", 1.5f);
+  skipExecutionDelay_ = derived->value("skipExecutionDelay", 3.0f);
+  advanceGuide_.SetGuid(derived->value("advanceGuideGuid", Guid{}));
+  skipGuide_.SetGuid(derived->value("skipGuideGuid", Guid{}));
+  transitionOnFinished_ = derived->value("transitionOnFinished", false);
+  destinationSceneGuid_ = derived->value("destinationSceneGuid", Guid{});
 }
 
 void NovelPlayerEvent::ExtractDerivedConfigToJson(
     [[maybe_unused]] nlohmann::json &root, nlohmann::json &derived) const {
   derived["novelSceneGuid"] = novelSceneGuid_;
   derived["playOnStart"] = playOnStart_;
+  derived["enableSpaceInput"] = enableSpaceInput_;
+  derived["enableGamepadAInput"] = enableGamepadAInput_;
+  derived["enableHoldToSkip"] = enableHoldToSkip_;
+  derived["skipGuideDelay"] = skipGuideDelay_;
+  derived["skipExecutionDelay"] = skipExecutionDelay_;
+  derived["advanceGuideGuid"] = advanceGuide_.GetGuid();
+  derived["skipGuideGuid"] = skipGuide_.GetGuid();
+  derived["transitionOnFinished"] = transitionOnFinished_;
+  derived["destinationSceneGuid"] = destinationSceneGuid_;
+}
+
+void NovelPlayerEvent::RemapSceneObjectReferences(
+    const std::unordered_map<Guid, Guid> &guidMap) {
+  BaseEventObject::RemapSceneObjectReferences(guidMap);
+  advanceGuide_.Remap(guidMap);
+  skipGuide_.Remap(guidMap);
+}
+
+void NovelPlayerEvent::ResetAdvanceInput() {
+  inputHoldDuration_ = 0.0f;
+  wasInputHeld_ = false;
+  skipExecuted_ = false;
+  UpdateGuideVisibility(false);
+}
+
+void NovelPlayerEvent::UpdateGuideVisibility(bool showSkipGuide) {
+  if (auto advanceObject = advanceGuide_.Resolve()) {
+    advanceObject->SetDrawEnable(!showSkipGuide);
+  }
+
+  if (auto skipObject = skipGuide_.Resolve()) {
+    skipObject->SetDrawEnable(showSkipGuide);
+  }
+}
+
+void NovelPlayerEvent::HandlePlaybackFinished() {
+  if (finishHandled_) {
+    return;
+  }
+
+  finishHandled_ = true;
+  ResetAdvanceInput();
+
+  if (transitionOnFinished_ && destinationSceneGuid_.isValid()) {
+    SceneAPI::RequestSceneChange(destinationSceneGuid_);
+  }
 }

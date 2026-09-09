@@ -10,6 +10,6 @@
   "generatedDirectory": "Generated",
   "name": "10days",
   "sourceDirectory": "Game",
-  "startupScene": "Resources/Assets/Scenes/DemoScene.scene",
+  "startupScene": "Resources/Assets/Scenes/TitleScene.scene",
   "template": "Demo"
 }

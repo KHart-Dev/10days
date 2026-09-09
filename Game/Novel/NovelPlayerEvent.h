@@ -6,6 +6,9 @@
 #include <Engine/Novel/Runtime/NovelPlayer.h>
 #include <Engine/Objects/Event/BaseEventObject.h>
 #include <Engine/Scene/Reference/SceneObjectReference.h>
+#include <Engine/Objects/3D/Actor/Actor.h>
+
+#include <Game/Ui/UiSprite.h>
 
 #include <memory>
 
@@ -36,8 +39,11 @@ private:
   // 入力状態を初期化し、スキップ案内を通常表示へ戻す。
   void ResetAdvanceInput();
 
+  void InitializeSkipUi();
+
   // Inspectorで指定された通常ボタンとスキップ案内の表示を切り替える。
   void UpdateGuideVisibility(bool showSkipGuide);
+  void UpdateSkipUi(float dt);
 
   // 再生終了を一度だけ処理し、必要なら次のシーンへ遷移する。
   void HandlePlaybackFinished();
@@ -54,7 +60,9 @@ private:
 
   // ボタンUIはHierarchy上の任意のSceneObjectをGUIDで参照する。
   CalyxEngine::SceneObjectRef<SceneObject> advanceGuide_{};
-  CalyxEngine::SceneObjectRef<SceneObject> skipGuide_{};
+  std::shared_ptr<UiSprite> skipUi_{};
+  std::shared_ptr<UiSprite> skipFrameUi_{};
+  std::shared_ptr<UiSprite> skipBackUi_{};
 
   bool transitionOnFinished_ = false;
   Guid destinationSceneGuid_{};

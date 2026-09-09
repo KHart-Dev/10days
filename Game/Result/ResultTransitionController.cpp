@@ -129,7 +129,7 @@ void ResultTransitionController::TransitionScene() {
         //
         // Stage5へ行かないようにTitleへ戻す
         // =====================================
-        SceneFlow::GoToTitle();
+        SceneFlow::GoToAnimationFinal();
 
         return;
     }

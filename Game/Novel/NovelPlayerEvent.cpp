@@ -18,6 +18,7 @@ NovelPlayerEvent::NovelPlayerEvent()
 
 void NovelPlayerEvent::Initialize() {
   BaseEventObject::Initialize();
+  InitializeSkipUi();
   UpdateGuideVisibility(false);
 
   GameAudio::PlayBgm(GameAudio::kBgmStory);
@@ -67,6 +68,7 @@ void NovelPlayerEvent::AlwaysUpdate(float dt) {
 
     if (enableHoldToSkip_ && inputHoldDuration_ >= skipGuideDelay_) {
       UpdateGuideVisibility(true);
+      UpdateSkipUi(inputHoldDuration_);
     }
 
     if (enableHoldToSkip_ && inputHoldDuration_ >= skipExecutionDelay_) {
@@ -144,7 +146,6 @@ void NovelPlayerEvent::DerivativeGui() {
   if (!enableHoldToSkip_) {
     ImGui::BeginDisabled();
   }
-
   ImGui::DragFloat("スキップ表示開始（秒）", &skipGuideDelay_, 0.05f,
                    0.1f, 30.0f, "%.2f");
   ImGui::DragFloat("スキップ実行（秒）", &skipExecutionDelay_, 0.05f,
@@ -159,7 +160,6 @@ void NovelPlayerEvent::DerivativeGui() {
 
   // HierarchyからSceneObjectをドロップして、通常表示とスキップ表示を指定する。
   GuiCmd::SceneObjectReferenceField("通常ボタンUI", advanceGuide_);
-  GuiCmd::SceneObjectReferenceField("スキップUI", skipGuide_);
 
   ImGui::SeparatorText("再生終了後");
   ImGui::Checkbox("終了時にシーン遷移", &transitionOnFinished_);
@@ -214,7 +214,6 @@ void NovelPlayerEvent::ApplyDerivedConfigFromJson(
   skipGuideDelay_ = derived->value("skipGuideDelay", 1.5f);
   skipExecutionDelay_ = derived->value("skipExecutionDelay", 3.0f);
   advanceGuide_.SetGuid(derived->value("advanceGuideGuid", Guid{}));
-  skipGuide_.SetGuid(derived->value("skipGuideGuid", Guid{}));
   transitionOnFinished_ = derived->value("transitionOnFinished", false);
   destinationSceneGuid_ = derived->value("destinationSceneGuid", Guid{});
 }
@@ -229,7 +228,6 @@ void NovelPlayerEvent::ExtractDerivedConfigToJson(
   derived["skipGuideDelay"] = skipGuideDelay_;
   derived["skipExecutionDelay"] = skipExecutionDelay_;
   derived["advanceGuideGuid"] = advanceGuide_.GetGuid();
-  derived["skipGuideGuid"] = skipGuide_.GetGuid();
   derived["transitionOnFinished"] = transitionOnFinished_;
   derived["destinationSceneGuid"] = destinationSceneGuid_;
 }
@@ -238,7 +236,6 @@ void NovelPlayerEvent::RemapSceneObjectReferences(
     const std::unordered_map<Guid, Guid> &guidMap) {
   BaseEventObject::RemapSceneObjectReferences(guidMap);
   advanceGuide_.Remap(guidMap);
-  skipGuide_.Remap(guidMap);
 }
 
 void NovelPlayerEvent::ResetAdvanceInput() {
@@ -248,14 +245,59 @@ void NovelPlayerEvent::ResetAdvanceInput() {
   UpdateGuideVisibility(false);
 }
 
-void NovelPlayerEvent::UpdateGuideVisibility(bool showSkipGuide) {
-  if (auto advanceObject = advanceGuide_.Resolve()) {
-    advanceObject->SetDrawEnable(!showSkipGuide);
-  }
+void NovelPlayerEvent::InitializeSkipUi() {
+    skipUi_ = SceneAPI::Instantiate<UiSprite>("Textures/Story/UI/skipText.png","skipTextUI");
+    if (!skipUi_) {
+        return;
+    } else {
+        skipUi_->GetWorldTransform().scale = { 150.0f,90.0f,1.0f };
+		skipUi_->GetWorldTransform().translation = { 988.0f, 610.0f, 0.0f };
+        skipUi_->SetOrderInLayer(111);
+        skipUi_->GetWorldTransform().Update();
+    }
+	skipFrameUi_ = SceneAPI::Instantiate<UiSprite>("Textures/Story/UI/skipBackground.png","skipFrameUI");
+    if (!skipFrameUi_) {
+        return;
+    } else {
+		skipFrameUi_->GetWorldTransform().scale = { 150.0f,90.0f,1.0f };
+		skipFrameUi_->GetWorldTransform().translation = { 988.0f, 610.0f, 0.0f };  
+		skipFrameUi_->SetOrderInLayer(109);
+        skipFrameUi_->GetWorldTransform().Update();
+    }
+	skipBackUi_ = SceneAPI::Instantiate<UiSprite>("Textures/Story/UI/skipGauge.png","skipBackUI");
+	if (!skipBackUi_) {
+		return;
+    } else {
+		skipBackUi_->GetWorldTransform().scale = { 150.0f,90.0f,1.0f };
+		skipBackUi_->GetWorldTransform().translation = { 988.0f, 610.0f, 0.0f };
+        skipBackUi_->SetOrderInLayer(110);
+        skipBackUi_->GetWorldTransform().Update();
+    }
+}
 
-  if (auto skipObject = skipGuide_.Resolve()) {
-    skipObject->SetDrawEnable(showSkipGuide);
-  }
+void NovelPlayerEvent::UpdateGuideVisibility(bool showSkipGuide) {
+    if (auto advanceObject = advanceGuide_.Resolve()) {
+        advanceObject->SetDrawEnable(!showSkipGuide);
+    }
+    if (skipUi_) {
+        skipUi_->SetDrawEnable(showSkipGuide);
+    }
+    if (skipFrameUi_) {
+        skipFrameUi_->SetDrawEnable(showSkipGuide);
+    }
+    if (skipBackUi_) {
+        skipBackUi_->SetDrawEnable(showSkipGuide);
+    }
+}
+
+void NovelPlayerEvent::UpdateSkipUi(float dt) {
+    
+    float scale = (dt - skipGuideDelay_) / (skipExecutionDelay_ - skipGuideDelay_);
+    scale = std::clamp(scale, 0.0f, 1.0f);
+	skipBackUi_->GetWorldTransform().scale.x = 150.0f * scale;
+    skipBackUi_->GetWorldTransform().scale.y = 90.0f;
+    skipBackUi_->GetWorldTransform().translation.x = 988.0f + (1.0f - scale) * 6.0f;
+    skipBackUi_->GetWorldTransform().Update();
 }
 
 void NovelPlayerEvent::HandlePlaybackFinished() {

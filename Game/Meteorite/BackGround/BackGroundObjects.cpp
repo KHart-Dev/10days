@@ -78,7 +78,7 @@ void BackGroundObjects::RebuildObjects() {
 		if (motion.object) {
 			motion.object->Initialize();
 
-			motion.object->SetLightingMode(LightingMode::NoLighting);
+			//motion.object->SetLightingMode(LightingMode::NoLighting);
 			motion.object->SetBlendMode(BlendMode::NORMAL);
 			motion.object->SetBillboardMode(BillboardMode::Full);
 			motion.object->SetCastShadow(false);

@@ -309,7 +309,7 @@ public:
 	void SetupResult();
 
 	/// スタート時の天気予報を見せている間か。ゲーム進行を止めたいときに見る
-	bool IsForecastWaiting() const;
+	bool IsForecastBlocking() const;
 	// リザルトで複製済みか
 	bool IsResultChain() const { return isResultChain_; }
 

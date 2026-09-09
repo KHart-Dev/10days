@@ -223,8 +223,9 @@ void Player::Update(float dt) {
 	UpdateControlDevice();
 	ApplyControlUiLayout();
 
-	// 予報を見せている間は自機も止める。閉じる入力は予報側が自分で見ている
-	if (IsForecastWaiting()) {
+	// 予報を見せている間は自機も止める。開始時の待ちだけでなく、
+	// ゲーム中に Y / TAB で覗いている間も止まる。閉じる入力は予報側が自分で見ている
+	if (IsForecastBlocking()) {
 		Actor::Update(dt);
 		return;
 	}
@@ -971,19 +972,19 @@ void Player::SpawnForecast() {
 
 void Player::UpdateForecastPause() {
 
-	const bool waiting = IsForecastWaiting();
-	if (waiting == forecastPaused_) {
+	const bool blocking = IsForecastBlocking();
+	if (blocking == forecastPaused_) {
 		return;
 	}
 
 	// Floater も Meteorite も Spawner も dt だけで動くので、
 	// ここを 0 にすれば個別に手を入れなくても全部止まる
-	ClockManager::GetInstance()->SetTimeScale(waiting ? 0.0f : 1.0f);
-	forecastPaused_ = waiting;
+	ClockManager::GetInstance()->SetTimeScale(blocking ? 0.0f : 1.0f);
+	forecastPaused_ = blocking;
 }
 
-bool Player::IsForecastWaiting() const {
-	return forecast_ && forecast_->IsWaitingAtStart();
+bool Player::IsForecastBlocking() const {
+	return forecast_ && forecast_->IsBlockingPlayer();
 }
 
 bool Player::IsConnectedFloaterHandInsideRadius(

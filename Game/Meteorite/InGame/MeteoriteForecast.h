@@ -38,6 +38,12 @@ public:
 	/// 何かしら映っているか
 	bool IsVisible() const { return phase_ != Phase::Hidden; }
 
+	/// 自機を止めておくべき状態か。開始時の待ちも覗き見も止める。
+	/// 畳み始めた時点で解除するので、閉じる入力の直後から動ける
+	bool IsBlockingPlayer() const {
+		return phase_ == Phase::Opening || phase_ == Phase::Shown;
+	}
+
 	std::string_view GetObjectClassName() const override { return "MeteoriteForecast"; }
 
 private:

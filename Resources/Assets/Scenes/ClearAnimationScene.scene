@@ -1,6 +1,46 @@
 {
     "objects": [
         {
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "direction": {
+                "x": -0.3499999940395355,
+                "y": -1.0,
+                "z": -0.44999998807907104
+            },
+            "guid": "1eed852e-3f4f-4401-8cdf-adafb54215c6",
+            "intensity": 1.0,
+            "name": "DirectionalLight",
+            "objectType": 1,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "type": "DirectionalLight"
+        },
+        {
             "anchor": {
                 "x": 0.0,
                 "y": 0.0
@@ -44,46 +84,6 @@
             "type": "SpriteSceneObject2d"
         },
         {
-            "color": {
-                "w": 1.0,
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "direction": {
-                "x": -0.3499999940395355,
-                "y": -1.0,
-                "z": -0.44999998807907104
-            },
-            "guid": "1eed852e-3f4f-4401-8cdf-adafb54215c6",
-            "intensity": 1.0,
-            "name": "DirectionalLight",
-            "objectType": 1,
-            "parentGuid": "00000000-0000-0000-0000-000000000000",
-            "transform": {
-                "inheritRotate": true,
-                "inheritScale": true,
-                "inheritTranslate": true,
-                "rotation": {
-                    "w": 1.0,
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "translation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "type": "DirectionalLight"
-        },
-        {
             "guid": "9c45a822-b545-4e55-8fd1-c9f34cfbea67",
             "name": "MainCamera",
             "objectType": 0,
@@ -110,6 +110,48 @@
                 }
             },
             "type": "Camera3d"
+        },
+        {
+            "color": {
+                "w": 1.0,
+                "x": 0.7799999713897705,
+                "y": 0.8799999952316284,
+                "z": 1.0
+            },
+            "decay": 1.0,
+            "guid": "8e41462a-4ed5-464c-9c86-5b543f705b4c",
+            "intensity": 0.3499999940395355,
+            "name": "PointLight",
+            "objectType": 1,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "position": {
+                "x": 0.0,
+                "y": 3.0,
+                "z": -2.0
+            },
+            "radius": 18.0,
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 0.0,
+                    "y": 3.0,
+                    "z": -2.0
+                }
+            },
+            "type": "PointLight"
         },
         {
             "anchor": {
@@ -179,48 +221,6 @@
                 }
             },
             "type": "DebugCamera"
-        },
-        {
-            "color": {
-                "w": 1.0,
-                "x": 0.7799999713897705,
-                "y": 0.8799999952316284,
-                "z": 1.0
-            },
-            "decay": 1.0,
-            "guid": "8e41462a-4ed5-464c-9c86-5b543f705b4c",
-            "intensity": 0.3499999940395355,
-            "name": "PointLight",
-            "objectType": 1,
-            "parentGuid": "00000000-0000-0000-0000-000000000000",
-            "position": {
-                "x": 0.0,
-                "y": 3.0,
-                "z": -2.0
-            },
-            "radius": 18.0,
-            "transform": {
-                "inheritRotate": true,
-                "inheritScale": true,
-                "inheritTranslate": true,
-                "rotation": {
-                    "w": 1.0,
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "translation": {
-                    "x": 0.0,
-                    "y": 3.0,
-                    "z": -2.0
-                }
-            },
-            "type": "PointLight"
         },
         {
             "cameraDitherEnabled": false,
@@ -408,49 +408,6 @@
                 "y": 1.0,
                 "z": 1.0
             },
-            "guid": "927d21fa-9e9a-46e8-87d5-5289c291017a",
-            "name": "StoryImage06",
-            "orderInLayer": 4,
-            "parentGuid": "00000000-0000-0000-0000-000000000000",
-            "prefabAssetGuid": "59e30013-f4c3-42ac-b522-7a02ec23e3c4",
-            "prefabSourceGuid": "449ead54-7fe7-41d3-ae42-deab85f67f7b",
-            "sortingLayerId": 0,
-            "textureGuid": "260310dd-65b4-444a-88f1-d066d831b19b",
-            "texturePath": "Textures/Story/endStory06.png",
-            "transform": {
-                "inheritRotate": true,
-                "inheritScale": true,
-                "inheritTranslate": true,
-                "rotation": {
-                    "w": 1.0,
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 1280.0,
-                    "y": 720.0,
-                    "z": 1.0
-                },
-                "translation": {
-                    "x": 5.700780391693115,
-                    "y": -1.121039867401123,
-                    "z": -0.7175922393798828
-                }
-            },
-            "type": "SpriteSceneObject2d"
-        },
-        {
-            "anchor": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "color": {
-                "w": 1.0,
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
             "guid": "73f8431e-5e7a-4e5f-9d5c-21b1780cb671",
             "name": "StoryImage04",
             "orderInLayer": 3,
@@ -479,6 +436,49 @@
                     "x": 7.516133785247803,
                     "y": -1.1401681900024414,
                     "z": -2.5590200424194336
+                }
+            },
+            "type": "SpriteSceneObject2d"
+        },
+        {
+            "anchor": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "color": {
+                "w": 1.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "guid": "927d21fa-9e9a-46e8-87d5-5289c291017a",
+            "name": "StoryImage06",
+            "orderInLayer": 4,
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "prefabAssetGuid": "59e30013-f4c3-42ac-b522-7a02ec23e3c4",
+            "prefabSourceGuid": "449ead54-7fe7-41d3-ae42-deab85f67f7b",
+            "sortingLayerId": 0,
+            "textureGuid": "260310dd-65b4-444a-88f1-d066d831b19b",
+            "texturePath": "Textures/Story/endStory06.png",
+            "transform": {
+                "inheritRotate": true,
+                "inheritScale": true,
+                "inheritTranslate": true,
+                "rotation": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 1280.0,
+                    "y": 720.0,
+                    "z": 1.0
+                },
+                "translation": {
+                    "x": 5.700780391693115,
+                    "y": -1.121039867401123,
+                    "z": -0.7175922393798828
                 }
             },
             "type": "SpriteSceneObject2d"
@@ -572,7 +572,7 @@
         {
             "NovelPlayerEvent": {
                 "advanceGuideGuid": "00000000-0000-0000-0000-000000000000",
-                "destinationSceneGuid": "00000000-0000-0000-0000-000000000000",
+                "destinationSceneGuid": "52e89b60-d8c3-4d8b-b82e-30d9abf00623",
                 "enableGamepadAInput": true,
                 "enableHoldToSkip": true,
                 "enableSpaceInput": true,
@@ -581,7 +581,7 @@
                 "skipExecutionDelay": 3.0,
                 "skipGuideDelay": 1.5,
                 "skipGuideGuid": "00000000-0000-0000-0000-000000000000",
-                "transitionOnFinished": false
+                "transitionOnFinished": true
             },
             "colliderConfig": {
                 "capsuleHeight": 2.0,

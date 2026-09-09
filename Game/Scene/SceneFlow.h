@@ -5,6 +5,7 @@ namespace SceneFlow {
 	// 各シーン固有の処理で遷移先を重複して定義しないよう、シーンパスを一元管理する。
 	inline constexpr const char* kTitleScenePath = "Scenes/TitleScene.scene";
 	inline constexpr const char* kAnimationScenePath = "Scenes/AnimationScene.scene";
+	inline constexpr const char* kAnimationFinalScenePath = "Scenes/ClearAnimationScene.scene";
 	inline constexpr const char* kDemoScenePath = "Scenes/DemoScene.scene";
 	inline constexpr const char* kGameScenePath = "Scenes/stage";
 	inline const char* kSceneSuffix = ".scene";
@@ -14,6 +15,7 @@ namespace SceneFlow {
 	// 入力、メニュー、オプション、アニメーションの終了判定は呼び出し側で実装する。
 	void GoToTitle();
 	void GoToAnimation();
+	void GoToAnimationFinal();
 	void StartStage(int stageIndex);
 	void GoToResult();
 

@@ -22,6 +22,10 @@ void SceneFlow::GoToAnimation() {
 	RequestScene(kAnimationScenePath);
 }
 
+void SceneFlow::GoToAnimationFinal() {
+	RequestScene(kAnimationFinalScenePath);
+}
+
 void SceneFlow::StartStage(int stageIndex) {
 	ResultCarry::chain.clear();
 	ResultCarry::stageIndex = (std::max)(0, stageIndex);

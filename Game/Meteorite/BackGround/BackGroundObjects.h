@@ -133,19 +133,19 @@ private:
 		// 流れ方
 		bool useXYPlane = false;
 		CalyxEngine::Vector3 flowDirection = { -1.0f, 0.0f, -1.0f };
-		float travelHalfLength = 90.0f;
-		float spreadHalfWidth = 70.0f;
-		float flowAngleRandomDeg = 8.0f;
+		float travelHalfLength = 60.0f;
+		float spreadHalfWidth = 50.0f;
+		float flowAngleRandomDeg = 6.25f;
 		float speedJitter = 0.2f;
 
 		// 種類ごとの速さ
 		float speed01 = 3.0f;
-		float speed02 = 14.0f;
-		float speed03 = 7.0f;
+		float speed02 = 20.0f;
+		float speed03 = 10.0f;
 
 		// 見た目
 		float sizeMin = 3.0f;
-		float sizeMax = 7.0f;
+		float sizeMax = 4.0f;
 		float brightness = 1.0f;
 		float alpha = 1.0f;
 	};

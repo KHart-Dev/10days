@@ -5,16 +5,120 @@
       "autoAdvanceDelay": 0.0,
       "charactersPerSecond": 30.0,
       "guid": "a49707a1-066c-4197-816b-e4032fb767dd",
-      "speaker": "man",
-      "text": "こんにちは"
+      "speaker": "narrator",
+      "text": "20--年..."
     },
     {
       "autoAdvance": false,
       "autoAdvanceDelay": 0.0,
       "charactersPerSecond": 30.0,
       "guid": "6ff4636d-f7a7-45f0-b3f3-d8f031bf536b",
-      "speaker": "woman",
-      "text": "はいこんにちは\n(≧▽≦)"
+      "speaker": "narrator",
+      "text": "人類は宇宙で暮らしていました..."
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "328a474e-5522-44c2-a6e6-a55a0cc1af77",
+      "speaker": "none",
+      "text": ""
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "f8f1be52-0fde-45b5-b69e-dd86957b3db2",
+      "speaker": "narrator",
+      "text": "広い宇宙で巡り合った2人..."
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "fffd357e-a3c2-4596-87b3-6a05acce09bc",
+      "speaker": "narrator",
+      "text": "宇宙恋人-ビックバンカップル-"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "3f5cfcda-dec9-4236-9b32-89a6097845de",
+      "speaker": "narrator03",
+      "text": "しかし！"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "85daadf5-3545-4179-b528-7567fc5179e5",
+      "speaker": "narrator03",
+      "text": "遠い！！"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "36c763ae-eb0f-4b5d-8b03-41a54754dd80",
+      "speaker": "narrator03",
+      "text": "こんな遠距離恋愛だと、\n1000年の恋も冷めきってしまいます..."
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "25632286-7789-4236-9d8b-5b8ffc5abedc",
+      "speaker": "narrator04",
+      "text": "そんな2人を遠くからwatchしていたのが"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "0e2ede15-6c1e-41f1-9d7a-c499a116c43b",
+      "speaker": "narrator04",
+      "text": "恋愛エイリアンこと、\nこのゲームの主人公、あなたです"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "6d06e4eb-c393-4807-be82-f372cfb41626",
+      "speaker": "narrator05",
+      "text": "聡明なあなたはひらめきました"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "db00ce71-c9b0-4ac1-a17a-523b145dc74b",
+      "speaker": "narrator05",
+      "text": "「人間をつなぎ合わせて橋を作ろう！」"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "1a66d1a4-f4fd-42ea-85b8-fdc7b2b6672d",
+      "speaker": "narrator06",
+      "text": "そうと決まれば！"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "58d61a7d-a321-4c6c-bc27-2016371b59d8",
+      "speaker": "narrator06",
+      "text": "変身！"
+    },
+    {
+      "autoAdvance": false,
+      "autoAdvanceDelay": 0.0,
+      "charactersPerSecond": 30.0,
+      "guid": "7c10beb0-1346-413b-b663-57ca472eaa01",
+      "speaker": "narrator07",
+      "text": "人間と手をつないで、\nなが～い橋を目指しましょう！"
     }
   ],
   "version": 1

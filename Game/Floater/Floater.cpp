@@ -34,7 +34,7 @@ namespace {
 	constexpr float kBreakBlinkCycle = 0.12f;
 	// 範囲外に湧いた個体が合流するまでの倍率。遠くても10秒弱で中心へ着く
 	constexpr float kEnterSpeedScale = 3.0f;
-	constexpr float kEnterAimSpread = 0.4f;
+	constexpr float kEnterAimSpread = 0.5f;
 
 	void RequestBreakCameraShake() {
 		auto* context = SceneContext::Current();
@@ -340,7 +340,7 @@ void Floater::BeginDrift() {
 		return;
 	}
 
-	const float aimAngle = Random::Generate(0.0f, kEnterAimSpread);
+	const float aimAngle = Random::Generate(0.0f, std::numbers::pi_v<float> *2.0f);
 	const float aimRadius = boundsRadius_ * kEnterAimSpread * std::sqrtf(Random::Generate(0.0f, 1.0f));
 
 	CalyxEngine::Vector3 aim = boundsCenter_;

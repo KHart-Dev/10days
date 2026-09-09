@@ -61,11 +61,15 @@ void MeteoriteSpawner::Spawn() {
 	// 流れに直交する、湧く位置はこの線上
 	const CalyxEngine::Vector3 side{ flow.z, 0.0f, -flow.x };
 	const float lateral = Random::Generate(-param_.spawnSpread, param_.spawnSpread);
+	float lateralNoneZ = lateral;
+	if (std::abs(lateral) <= param_.noneSpawnZ) {
+		lateralNoneZ = lateral < 0.0f ? lateral - param_.noneSpawnZ : lateral + param_.noneSpawnZ;
+	}
 
 	const CalyxEngine::Vector3 pos{
 		center.x - flow.x * param_.spawnDistance + side.x * lateral,
 		center.y + param_.spawnHeight,
-		center.z - flow.z * param_.spawnDistance + side.z * lateral
+		center.z - flow.z * param_.spawnDistance + side.z * lateralNoneZ
 	};
 
 	const float heading = flowYaw + CalyxEngine::ToRadians(

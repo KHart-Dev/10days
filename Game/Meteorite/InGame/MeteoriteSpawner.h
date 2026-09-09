@@ -113,6 +113,7 @@ private:
 		float spawnSpread = 20.0f;
 		float despawnRadius = 60.0f;
 		float spawnHeight = 0.5f;
+		float noneSpawnZ = 6.0f;
 
 		float speedMin = 6.0f;
 		float speedMax = 12.0f;

@@ -40,6 +40,13 @@ void NovelPlayerEvent::AlwaysUpdate(float dt) {
     return;
   }
 
+  // テキスト入力中の Space は入力欄だけに渡し、ノベル操作には使わない。
+  // 押下状態もリセットして、入力終了直後のキーリリースで進まないようにする。
+  if (ImGui::GetCurrentContext() != nullptr && ImGui::GetIO().WantTextInput) {
+    ResetAdvanceInput();
+    return;
+  }
+
   // SpaceとゲームパッドAを同じ「決定入力」としてまとめる。
   // 短押しと長押しを区別するため、押した瞬間ではなく離した瞬間にNextする。
   const bool spaceHeld =

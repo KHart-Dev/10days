@@ -880,10 +880,11 @@ void Player::InitializeControlUi() {
 
 	controlUIKeyboard_ = SceneAPI::Instantiate<UiSprite>(kKeyboardTexture);
 	controlUIPad_ = SceneAPI::Instantiate<UiSprite>(kPadTexture);
+	forecastUI_ = SceneAPI::Instantiate<UiSprite>(kForecastTexture);
 
 	// 中心基準にしておくと、画面の右下から余白ぶん戻すだけで置ける
 	for (const std::shared_ptr<UiSprite>& sprite :
-		{ controlUIKeyboard_, controlUIPad_ }) {
+		{ controlUIKeyboard_, controlUIPad_, forecastUI_ }) {
 		if (!sprite) {
 			continue;
 		}
@@ -921,6 +922,9 @@ void Player::ApplyControlUiLayout() {
 	const bool useGamepad = controlDevice_ == ControlDevice::Gamepad;
 	ApplyControlUiSprite(controlUIKeyboard_, !hideAll && !useGamepad);
 	ApplyControlUiSprite(controlUIPad_, !hideAll && useGamepad);
+
+	// 呼び出し方の絵は Y ボタンと TAB が1枚に入っているので、デバイスでは切り替えない
+	ApplyForecastUiSprite(!hideAll);
 }
 
 void Player::ApplyControlUiSprite(
@@ -934,6 +938,18 @@ void Player::ApplyControlUiSprite(
 	sprite->SetPositionPx(param_.controlUiCenterX, param_.controlUiCenterY);
 	sprite->SetOrderInLayer(param_.controlUiOrderInLayer);
 	sprite->SetVisible(visible);
+}
+
+void Player::ApplyForecastUiSprite(bool visible) {
+
+	if (!forecastUI_) {
+		return;
+	}
+
+	forecastUI_->SetSizePx(param_.forecastUiWidth, param_.forecastUiHeight);
+	forecastUI_->SetPositionPx(param_.forecastUiCenterX, param_.forecastUiCenterY);
+	forecastUI_->SetOrderInLayer(param_.forecastUiOrderInLayer);
+	forecastUI_->SetVisible(visible);
 }
 
 void Player::SpawnForecast() {

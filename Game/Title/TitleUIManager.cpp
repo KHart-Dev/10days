@@ -87,8 +87,8 @@ void TitleUIManager::UpdateInput() {
 
 	// A / Space : AnimationSceneへ
 	if (CalyxFoundation::Input::TriggerGamepadButton(
-		CalyxFoundation::PadButton::A)/* ||
-		CalyxFoundation::Input::TriggerKey(DIK_SPACE)*/) {
+		CalyxFoundation::PadButton::A) ||
+		CalyxFoundation::Input::TriggerKey(DIK_SPACE)) {
 
 		transitionRequested_ = true;
 		GameAudio::PlaySe(GameAudio::kSeStart);

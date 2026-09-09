@@ -85,6 +85,9 @@ private:
 	/// 操作説明UIの配置と表示切り替え
 	void ApplyControlUiSprite(const std::shared_ptr<UiSprite>& sprite, bool visible);
 
+	/// 予報の呼び出し方を出す。操作説明とは別の場所に置くのでレイアウトも別
+	void ApplyForecastUiSprite(bool visible);
+
 	PlayerInput input_;
 
 	// 回転慣性（Y軸）
@@ -173,6 +176,26 @@ private:
 			AddField("controlUiOrderInLayer", controlUiOrderInLayer)
 				.Category("ControlUI")
 				.Tooltip("操作説明UIのOrderInLayer。大きいほど手前に出る");
+
+			AddField("forecastUiCenterX", forecastUiCenterX)
+				.Category("ForecastUI")
+				.Tooltip("注意報の呼び出し方UIの中心X座標(px)。1280x720基準で左端が0");
+
+			AddField("forecastUiCenterY", forecastUiCenterY)
+				.Category("ForecastUI")
+				.Tooltip("注意報の呼び出し方UIの中心Y座標(px)。1280x720基準で上端が0");
+
+			AddField("forecastUiWidth", forecastUiWidth)
+				.Category("ForecastUI")
+				.Tooltip("注意報の呼び出し方UIの横サイズ(px)。絵は横長なので縦の3倍が目安");
+
+			AddField("forecastUiHeight", forecastUiHeight)
+				.Category("ForecastUI")
+				.Tooltip("注意報の呼び出し方UIの縦サイズ(px)");
+
+			AddField("forecastUiOrderInLayer", forecastUiOrderInLayer)
+				.Category("ForecastUI")
+				.Tooltip("注意報の呼び出し方UIのOrderInLayer。大きいほど手前に出る");
 		}
 
 		CalyxEngine::ParamPath GetParamPath() const override {
@@ -207,6 +230,13 @@ private:
 		float controlUiWidth = 320.0f;
 		float controlUiHeight = 180.0f;
 		int32_t controlUiOrderInLayer = 100;
+
+		// 注意報の呼び出し方UI。操作説明のすぐ上に置く
+		float forecastUiCenterX = 1090.0f;
+		float forecastUiCenterY = 460.0f;
+		float forecastUiWidth = 300.0f;
+		float forecastUiHeight = 100.0f;
+		int32_t forecastUiOrderInLayer = 100;
 	};
 
 	PlayerParam param_;
@@ -260,6 +290,7 @@ private:
 
 	std::shared_ptr<UiSprite> controlUIKeyboard_;
 	std::shared_ptr<UiSprite> controlUIPad_;
+	std::shared_ptr<UiSprite> forecastUI_;
 
 	// 最初はキーボード。パッドを触った時点で入れ替わる
 	ControlDevice controlDevice_ = ControlDevice::Keyboard;

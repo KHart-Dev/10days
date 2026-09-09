@@ -1,0 +1,7 @@
+{
+    "fields": {
+        "addNumberFadeTime": 1.0,
+        "addTimePerConnect": 3.0,
+        "maxTime": 11.0
+    }
+}

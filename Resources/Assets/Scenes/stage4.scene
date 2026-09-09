@@ -13,7 +13,7 @@
                 "z": -0.8379999995231628
             },
             "guid": "260f6a73-56cb-4004-bedb-47d1a8171382",
-            "intensity": 0.5730000138282776,
+            "intensity": 1.0,
             "name": "DirectionalLight",
             "objectType": 1,
             "parentGuid": "00000000-0000-0000-0000-000000000000",
@@ -78,10 +78,10 @@
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.718216061592102,
-                    "x": 0.6935083270072937,
-                    "y": -0.04076901823282242,
-                    "z": 0.03936650604009628
+                    "w": 0.7209104895591736,
+                    "x": 0.6926367878913879,
+                    "y": -0.016793640330433846,
+                    "z": 0.01613500341773033
                 },
                 "scale": {
                     "x": 1.0,
@@ -89,9 +89,9 @@
                     "z": 1.0
                 },
                 "translation": {
-                    "x": 43.65232849121094,
-                    "y": 15.394287109375,
-                    "z": 5.145009517669678
+                    "x": 27.391307830810547,
+                    "y": 21.202213287353516,
+                    "z": -1.7423375844955444
                 }
             },
             "type": "DebugCamera"
@@ -183,7 +183,7 @@
                 },
                 "translation": {
                     "x": -2.8404934406280518,
-                    "y": 0.10000000149011612,
+                    "y": 0.7600001096725464,
                     "z": 0.0
                 }
             },
@@ -425,7 +425,7 @@
                 },
                 "translation": {
                     "x": 0.0,
-                    "y": 0.0,
+                    "y": 0.000400543212890625,
                     "z": -1.0
                 }
             },
@@ -797,20 +797,20 @@
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 1.0,
+                    "w": -0.1535116732120514,
+                    "x": -0.1535116732120514,
+                    "y": 0.6902421116828918,
+                    "z": 0.6902421116828918
+                },
+                "scale": {
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
                 },
-                "scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
                 "translation": {
-                    "x": -5.799493312835693,
-                    "y": 0.006011319812387228,
-                    "z": 1.5510295629501343
+                    "x": 10.0,
+                    "y": 17.999998092651367,
+                    "z": -0.006370425224304199
                 }
             },
             "type": "OptionManager",
@@ -900,7 +900,7 @@
                 },
                 "translation": {
                     "x": 0.0,
-                    "y": 0.0,
+                    "y": 0.000400543212890625,
                     "z": -1.0
                 }
             },
@@ -911,7 +911,6 @@
                 "z": 0.0
             }
         },
-
         {
             "anchor": {
                 "x": 0.0,
@@ -953,7 +952,6 @@
             },
             "type": "SpriteSceneObject2d"
         },
-
         {
             "cameraDitherEnabled": false,
             "colliderConfig": {
@@ -1253,7 +1251,7 @@
                 },
                 "translation": {
                     "x": -1.0,
-                    "y": 0.0,
+                    "y": 1.1920928955078125e-07,
                     "z": 0.0
                 }
             },
@@ -1344,7 +1342,7 @@
                 },
                 "translation": {
                     "x": 0.0,
-                    "y": 0.0,
+                    "y": 0.0004006624221801758,
                     "z": -1.0
                 }
             },
@@ -1535,7 +1533,7 @@
                 },
                 "translation": {
                     "x": -1.0,
-                    "y": 0.0,
+                    "y": 1.1920928955078125e-07,
                     "z": 0.0
                 }
             },
@@ -1626,7 +1624,7 @@
                 },
                 "translation": {
                     "x": 1.0,
-                    "y": 0.0,
+                    "y": 1.1920928955078125e-07,
                     "z": 0.0
                 }
             },
@@ -1717,7 +1715,7 @@
                 },
                 "translation": {
                     "x": -1.0,
-                    "y": 0.0,
+                    "y": 1.1920928955078125e-07,
                     "z": 0.0
                 }
             },
@@ -1808,7 +1806,7 @@
                 },
                 "translation": {
                     "x": 12.704000473022461,
-                    "y": 1.100000023841858,
+                    "y": 0.5053357481956482,
                     "z": 9.550000190734863
                 }
             },
@@ -1899,7 +1897,7 @@
                 },
                 "translation": {
                     "x": 0.0,
-                    "y": 0.0,
+                    "y": -0.0004004240036010742,
                     "z": 1.0
                 }
             },
@@ -1990,7 +1988,7 @@
                 },
                 "translation": {
                     "x": 1.0,
-                    "y": 0.0,
+                    "y": 1.1920928955078125e-07,
                     "z": 0.0
                 }
             },
@@ -2081,7 +2079,7 @@
                 },
                 "translation": {
                     "x": 0.0,
-                    "y": 0.0,
+                    "y": -0.00040030479431152344,
                     "z": 1.0
                 }
             },
@@ -2172,7 +2170,7 @@
                 },
                 "translation": {
                     "x": 12.255999565124512,
-                    "y": 1.100000023841858,
+                    "y": 0.5149864554405212,
                     "z": -10.210000038146973
                 }
             },
@@ -2263,7 +2261,7 @@
                 },
                 "translation": {
                     "x": 1.0,
-                    "y": 0.0,
+                    "y": 1.1920928955078125e-07,
                     "z": 0.0
                 }
             },
@@ -2354,7 +2352,7 @@
                 },
                 "translation": {
                     "x": -15.5649995803833,
-                    "y": 1.100000023841858,
+                    "y": 0.5097879767417908,
                     "z": 0.4339999854564667
                 }
             },
@@ -2445,7 +2443,7 @@
                 },
                 "translation": {
                     "x": 0.0,
-                    "y": 0.0,
+                    "y": -0.0004004240036010742,
                     "z": 1.0
                 }
             },
@@ -2484,12 +2482,12 @@
             },
             "colliderKind": 0,
             "drawInForeground": false,
-            "guid": "1267635a-2f35-43af-ae6e-84f85f07b4b2",
+            "guid": "ef492687-4eb2-4191-8f0d-a12e3158a391",
             "modelConfig": {
-                "blendMode": 5,
+                "blendMode": 1,
                 "materialGuid": "00000000-0000-0000-0000-000000000000",
                 "modelName": "plane.obj",
-                "textureGuid": "336936cd-86c0-4371-8351-81468cf7520a",
+                "textureGuid": "6b2b4397-62d9-43c1-a0ef-6ef2c1fe3506",
                 "uvTransConfig": {
                     "rotation": 0.0,
                     "scale": {
@@ -2508,7 +2506,7 @@
             },
             "outlineEnabled": false,
             "outlineThickness": 0.03500000014901161,
-            "parentGuid": "00000000-0000-0000-0000-000000000000",
+            "parentGuid": "9555a285-7030-4d2e-92c9-ad924a74a998",
             "physicsBodyConfig": {
                 "bodyType": 0,
                 "enabled": true,
@@ -2517,27 +2515,27 @@
                 "pushbackRatio": 1.0,
                 "useGravity": true
             },
-            "prefabAssetGuid": "d5cbce4f-7f7d-4541-b53a-96705b5c700d",
-            "prefabSourceGuid": "5f9ac04b-46db-4f2d-9114-3b9cf5592672",
+            "prefabAssetGuid": "d6d14de6-a61d-41c3-956c-150b3f5df45d",
+            "prefabSourceGuid": "9d295a77-003b-42b1-ae47-77e0df9e7f9d",
             "transform": {
                 "inheritRotate": true,
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 0.7038542628288269,
-                    "x": 0.703294038772583,
-                    "y": 0.07056477665901184,
-                    "z": 0.07062098383903503
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
                 },
                 "scale": {
-                    "x": 5.0,
-                    "y": 4.0,
-                    "z": 5.0
+                    "x": 1.9299999475479126,
+                    "y": 2.0299999713897705,
+                    "z": 1.0
                 },
                 "translation": {
-                    "x": 37.5,
-                    "y": 0.0,
-                    "z": 5.0
+                    "x": 4.869999885559082,
+                    "y": -3.5899999141693115,
+                    "z": 10.500003814697266
                 }
             },
             "type": "StaticModelObject",
@@ -2647,7 +2645,7 @@
                 "z": 0.0
             }
         },
-{
+        {
             "cameraDitherEnabled": false,
             "colliderConfig": {
                 "capsuleHeight": 2.0,
@@ -2675,12 +2673,12 @@
             },
             "colliderKind": 0,
             "drawInForeground": false,
-            "guid": "ef492687-4eb2-4191-8f0d-a12e3158a391",
+            "guid": "1267635a-2f35-43af-ae6e-84f85f07b4b2",
             "modelConfig": {
-                "blendMode": 1,
+                "blendMode": 5,
                 "materialGuid": "00000000-0000-0000-0000-000000000000",
                 "modelName": "plane.obj",
-                "textureGuid": "6b2b4397-62d9-43c1-a0ef-6ef2c1fe3506",
+                "textureGuid": "336936cd-86c0-4371-8351-81468cf7520a",
                 "uvTransConfig": {
                     "rotation": 0.0,
                     "scale": {
@@ -2699,7 +2697,7 @@
             },
             "outlineEnabled": false,
             "outlineThickness": 0.03500000014901161,
-            "parentGuid": "9555a285-7030-4d2e-92c9-ad924a74a998",
+            "parentGuid": "00000000-0000-0000-0000-000000000000",
             "physicsBodyConfig": {
                 "bodyType": 0,
                 "enabled": true,
@@ -2708,27 +2706,27 @@
                 "pushbackRatio": 1.0,
                 "useGravity": true
             },
-            "prefabAssetGuid": "d6d14de6-a61d-41c3-956c-150b3f5df45d",
-            "prefabSourceGuid": "9d295a77-003b-42b1-ae47-77e0df9e7f9d",
+            "prefabAssetGuid": "d5cbce4f-7f7d-4541-b53a-96705b5c700d",
+            "prefabSourceGuid": "5f9ac04b-46db-4f2d-9114-3b9cf5592672",
             "transform": {
                 "inheritRotate": true,
                 "inheritScale": true,
                 "inheritTranslate": true,
                 "rotation": {
-                    "w": 1.0,
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
+                    "w": 0.7038542628288269,
+                    "x": 0.703294038772583,
+                    "y": 0.07056477665901184,
+                    "z": 0.07062098383903503
                 },
                 "scale": {
-                    "x": 1.9299999475479126,
-                    "y": 2.0299999713897705,
-                    "z": 1.0
+                    "x": 5.0,
+                    "y": 4.0,
+                    "z": 5.0
                 },
                 "translation": {
-                    "x": 4.869999885559082,
-                    "y": -3.5899999141693115,
-                    "z": 10.500003814697266
+                    "x": 37.5,
+                    "y": 0.0,
+                    "z": 5.0
                 }
             },
             "type": "StaticModelObject",
@@ -2738,7 +2736,7 @@
                 "z": 0.0
             }
         },
-{
+        {
             "cameraDitherEnabled": false,
             "colliderConfig": {
                 "capsuleHeight": 2.0,

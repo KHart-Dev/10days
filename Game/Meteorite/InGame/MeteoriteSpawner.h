@@ -101,7 +101,8 @@ private:
 
 		Guid ownerGuid_;
 		CalyxEngine::ParamPath GetParamPath() const override {
-			return { CalyxEngine::ParamDomain::Game, ownerGuid_.ToString(), "Actor/Meteorite/MeteoriteSpawner" };
+			// パス長対策: GUID全体だと <guid>/<guid>.json で78文字消費し、提出フォルダ名と合わせてMAX_PATHを超える
+			return { CalyxEngine::ParamDomain::Game, ownerGuid_.ToString().substr(0, 8), "Actor/Meteorite/MeteoriteSpawner" };
 		}
 
 		float intervalMin = 1.0f;
